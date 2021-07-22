@@ -1,15 +1,26 @@
 Package: phsopendata
-Title: What the Package Does (One Line, Title Case)
+Title: Extract Open Data from opendata.nhs.scot
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    c(person(given = "Csilla",
+           family = "Scharle",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+           email = "csilla.scharle2@phs.scot"),
+           person("James", "McMahon", email = "james.mcmahon@phs.scot", role = "aut"))
+Description: Functions to extract and interact with data from the Scottish Health and Social Care Open Data platform.
+License: GPL (>= 2)
+Imports:
+    ckanr,
+    dplyr,
+    httr,
+    glue,
+    purrr,
+    tibble,
+    jsonlite,
+    magrittr
+Suggests: 
+    stringdist,
+    testthat (>= 2.0.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

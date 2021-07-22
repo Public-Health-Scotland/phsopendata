@@ -8,6 +8,7 @@
 #' use this when testing code to reduce the size of the request
 #' it will default to all data
 #'
+#' @importFrom magrittr %>%
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
