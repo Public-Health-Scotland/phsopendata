@@ -51,7 +51,8 @@ To extract all resources from a dataset, you will need to use the dataset name. 
 In this example, we are downloading GP Practice Population Demographics from: opendata.nhs.scot/dataset/gp-practice-populations, so the dataset name will be gp-practice-populations.
 
 ``` r
-#if max_resources is not set, all resources will be returned by default. Here we pull 10 rows from the first 2 #resources only
+#if max_resources is not set, all resources will be returned by default. 
+#Here we pull 10 rows from the first 2 resources only
 opendata_get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 ```
 
