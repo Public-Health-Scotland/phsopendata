@@ -9,9 +9,9 @@
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
-#' @examples opendata_get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
-opendata_get_resource <- function(res_id, rows = NULL) {
-  if (!opendata_check_res_id(res_id)) {
+#' @examples get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
+get_resource <- function(res_id, rows = NULL) {
+  if (!check_res_id(res_id)) {
     stop(glue::glue("The resource ID supplied ('{res_id}') is invalid"))
   }
 
@@ -26,7 +26,7 @@ opendata_get_resource <- function(res_id, rows = NULL) {
       message("Queries for more than 99,999 rows of data will return the full resource.")
     }
 
-    response <- httr::GET(url = opendata_ds_dump_url(res_id), user_agent = ua)
+    response <- httr::GET(url = ds_dump_url(res_id), user_agent = ua)
 
     httr::stop_for_status(response)
 
@@ -42,7 +42,7 @@ opendata_get_resource <- function(res_id, rows = NULL) {
       limit = rows
     )
 
-    url <- httr::modify_url(opendata_ds_search_url(),
+    url <- httr::modify_url(ds_search_url(),
                             query = query
     )
 
@@ -82,7 +82,7 @@ opendata_ua <- function() {
 #' @param res_id a resource ID
 #'
 #' @return TRUE / FALSE indicating the validity of the res_id
-opendata_check_res_id <- function(res_id) {
+check_res_id <- function(res_id) {
   res_id_regex <- "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
 
 
@@ -98,7 +98,7 @@ opendata_check_res_id <- function(res_id) {
 #' Creates the URL for the datastore search end-point
 #'
 #' @return a url
-opendata_ds_search_url <- function() {
+ds_search_url <- function() {
   httr::modify_url("https://www.opendata.nhs.scot",
                    path = "/api/3/action/datastore_search"
   )
@@ -108,7 +108,7 @@ opendata_ds_search_url <- function() {
 #'
 #' @param res_id a resource ID
 #' @return a url
-opendata_ds_dump_url <- function(res_id) {
+ds_dump_url <- function(res_id) {
   httr::modify_url("https://www.opendata.nhs.scot",
                    path = glue::glue("/datastore/dump/{res_id}?bom=true")
   )

@@ -12,17 +12,17 @@
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
-#' @examples opendata_get_dataset("gp-practice-populations",
+#' @examples get_dataset("gp-practice-populations",
 #'   max_resources = 2, rows = 10
 #' )
-opendata_get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
-  if (!opendata_check_dataset_name(dataset_name)) {
+get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
+  if (!check_dataset_name(dataset_name)) {
     stop(glue::glue("The dataset name supplied ('{dataset_name}') is invalid"))
   }
 
   query <- list(id = dataset_name)
 
-  url <- httr::modify_url(opendata_package_show_url(),
+  url <- httr::modify_url(package_show_url(),
                           query = query
   )
 
@@ -78,7 +78,7 @@ opendata_get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL
       as.list()
   }
 
-  all_data <- purrr::map_dfr(resource_id_list, opendata_get_resource, rows = rows)
+  all_data <- purrr::map_dfr(resource_id_list, get_resource, rows = rows)
 
   return(all_data)
 }
@@ -86,7 +86,7 @@ opendata_get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL
 #' Creates the URL for the package_show end-point
 #'
 #' @return a url
-opendata_package_show_url <- function() {
+package_show_url <- function() {
   httr::modify_url("https://www.opendata.nhs.scot",
                    path = "/api/3/action/package_show"
   )
@@ -100,7 +100,7 @@ opendata_package_show_url <- function() {
 #' @param dataset_name a resource ID
 #'
 #' @return TRUE / FALSE indicating the validity of the dataset name
-opendata_check_dataset_name <- function(dataset_name) {
+check_dataset_name <- function(dataset_name) {
   # Starts and ends in a lowercase letter or number
   # Has only lowercase alphanum or hyphens inbetween
   dataset_name_regex <- "^[a-z0-9][a-z0-9\\-]+?[a-z0-9]$"

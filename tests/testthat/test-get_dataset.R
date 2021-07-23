@@ -1,5 +1,5 @@
 test_that("returns data in the expected format", {
-  data <- opendata_get_dataset(
+  data <- get_dataset(
     dataset_name = "gp-practice-populations",
     max_resources = 2,
     rows = 2
@@ -11,12 +11,12 @@ test_that("returns data in the expected format", {
 })
 
 test_that("errors properly", {
-  expect_error(opendata_get_dataset("Mal-formed-name"),
+  expect_error(get_dataset("Mal-formed-name"),
                regexp = "The dataset name supplied \\('.+?'\\) is invalid"
   )
-  expect_error(opendata_get_dataset("non-existent-data"),
+  expect_error(get_dataset("non-existent-data"),
                regexp = "The dataset name 'non-existent-data' was not found"
   )
-  expect_error(opendata_get_dataset("gp-practice-pops"),
+  expect_error(get_dataset("gp-practice-pops"),
                regexp = "The dataset name 'gp-practice-pops' is incorrect\\.\\nDid you mean 'gp-practice-populations'\\?")
 })
