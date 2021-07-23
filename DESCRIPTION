@@ -1,6 +1,6 @@
 Package: phsopendata
 Title: Extract Open Data from opendata.nhs.scot
-Version: 0.1
+Version: 0.0.0.900
 Authors@R: 
     c(person(given = "Csilla",
            family = "Scharle",
@@ -11,13 +11,13 @@ Description: Functions to extract and interact with data from the Scottish Healt
 License: GPL (>= 2)
 Imports:
     ckanr,
-    dplyr,
-    httr,
-    glue,
+    dplyr (>= 1.0.0),
+    httr (>= 1.0.0),
+    glue (>= 1.0.0),
     purrr,
-    tibble,
-    jsonlite,
-    magrittr
+    tibble (>= 3.0.0),
+    jsonlite (>= 1.0.0),
+    magrittr (>= 1.0.0)
 Suggests: 
     stringdist,
     testthat (>= 2.0.0)
