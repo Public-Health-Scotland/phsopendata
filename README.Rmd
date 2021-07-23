@@ -45,7 +45,7 @@ remotes::install_github("Public-Health-Scotland/phsopendata",
 
 To extract a specific resource, you will need it`s unique identifier - resource id. This can be found in the dataset metadata by visiting the website, or extracted using ckanr::package_show.
 
-```{r example resource}
+```{r example resource, eval = FALSE}
 library(phsopendata)
 
 #by default the full resource is returned
@@ -62,7 +62,7 @@ To extract all resources from a dataset, you will need to use the dataset name. 
 In this example, we are downloading GP Practice Population Demographics from: opendata.nhs.scot/dataset/gp-practice-populations, so the dataset name will be gp-practice-populations.
 
 
-```{r example dataset}
+```{r example dataset, eval = FALSE}
 #if max_resources is not set, all resources will be returned by default. Here we pull 10 rows from the first 2 #resources only
 opendata_get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 ```
