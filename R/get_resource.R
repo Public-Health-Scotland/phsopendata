@@ -1,9 +1,13 @@
 #' Get Open Data resource
 #'
-#' @param res_id The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
+#' @param res_id The resource ID as found on
+#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
 #' @param rows (optional) specify the max number of rows to return
 #' use this when testing code to reduce the size of the request
 #' it will default to all data
+#'
+#' @seealso [get_dataset()] for downloading all resources
+#' from a given dataset.
 #'
 #' @importFrom magrittr %>%
 #' @return a [tibble][tibble::tibble-package] with the data
@@ -43,7 +47,7 @@ get_resource <- function(res_id, rows = NULL) {
     )
 
     url <- httr::modify_url(ds_search_url(),
-                            query = query
+      query = query
     )
 
     response <- httr::GET(url = url, user_agent = ua)
@@ -83,7 +87,8 @@ opendata_ua <- function() {
 #'
 #' @return TRUE / FALSE indicating the validity of the res_id
 check_res_id <- function(res_id) {
-  res_id_regex <- "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+  res_id_regex <-
+    "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
 
 
   if (!inherits(res_id, "character")) {
@@ -100,7 +105,7 @@ check_res_id <- function(res_id) {
 #' @return a url
 ds_search_url <- function() {
   httr::modify_url("https://www.opendata.nhs.scot",
-                   path = "/api/3/action/datastore_search"
+    path = "/api/3/action/datastore_search"
   )
 }
 
@@ -110,6 +115,6 @@ ds_search_url <- function() {
 #' @return a url
 ds_dump_url <- function(res_id) {
   httr::modify_url("https://www.opendata.nhs.scot",
-                   path = glue::glue("/datastore/dump/{res_id}?bom=true")
+    path = glue::glue("/datastore/dump/{res_id}?bom=true")
   )
 }

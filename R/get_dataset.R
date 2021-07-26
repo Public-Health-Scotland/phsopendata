@@ -1,12 +1,17 @@
 #' Get Open Data resources from a dataset
 #'
-#' @param dataset_name name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
+#' @param dataset_name name of the dataset as found on
+#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
 #' @param max_resources (optional) the maximum number of resources
 #' to return, use for testing code,
 #' it will retunr the n latest resources
-#' @param rows (optional) specify the max number of rows to return for each resource
-#' use this when testing code to reduce the size of the request
-#' it will default to all data
+#' @param rows (optional) specify the max number of rows
+#' to return for each resource use this when testing code
+#' to reduce the size of the request it will default to
+#' all data
+#'
+#' @seealso [get_resource()] for downloading a single resource
+#' from a dataset.
 #'
 #' @importFrom magrittr %>%
 #' @return a [tibble][tibble::tibble-package] with the data
@@ -23,7 +28,7 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   query <- list(id = dataset_name)
 
   url <- httr::modify_url(package_show_url(),
-                          query = query
+    query = query
   )
 
   ua <- opendata_ua()
@@ -31,37 +36,44 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   response <- httr::GET(url = url, user_agent = ua)
 
   tryCatch(httr::stop_for_status(response),
-           error = function(cond) {
-             url <- httr::modify_url("https://www.opendata.nhs.scot", path = "api/3/action/package_list")
+    error = function(cond) {
+      url <- httr::modify_url("https://www.opendata.nhs.scot",
+        path = "api/3/action/package_list"
+      )
 
-             response <- httr::GET(url = url, user_agent = ua)
+      response <- httr::GET(url = url, user_agent = ua)
 
-             httr::stop_for_status(response)
+      httr::stop_for_status(response)
 
-             dataset_names <- httr::content(response)$result %>%
-               unlist()
+      dataset_names <- httr::content(response)$result %>%
+        unlist()
 
-             if (dataset_name %in% dataset_names) {
-               stop(glue::glue("The dataset name '{dataset_name}' looks correct but the server didn't respond as expected.\nPlease try again in a few minutes."))
-             } else {
-               # stringdist has a nicer algroithm for assessing distances and is faster than base R
-               if (requireNamespace("stringdist", quietly = TRUE)) {
-                 string_distances <- stringdist::stringdist(dataset_name, dataset_names)
-               } else {
-                 string_distances <- utils::adist(dataset_name, dataset_names)
-               }
+      if (dataset_name %in% dataset_names) {
+        stop(glue::glue("The dataset name '{dataset_name}'
+                        looks correct but the server didn't respond as expected.
+                        \nPlease try again in a few minutes."))
+      } else {
+        # stringdist has a nicer algroithm for assessing distances
+        # and is faster than base R
+        if (requireNamespace("stringdist", quietly = TRUE)) {
+          string_distances <- stringdist::stringdist(dataset_name, dataset_names)
+        } else {
+          string_distances <- utils::adist(dataset_name, dataset_names)
+        }
 
-               # Only proceed with a reasonably close match
-               if (min(string_distances) < 10) {
-                 closest_match <- dataset_names[which.min(string_distances)]
+        # Only proceed with a reasonably close match
+        if (min(string_distances) < 10) {
+          closest_match <- dataset_names[which.min(string_distances)]
 
-                 stop(glue::glue("The dataset name '{dataset_name}' is incorrect.\nDid you mean '{closest_match}'?"))
-               } else {
-                 stop(glue::glue("The dataset name '{dataset_name}' was not found.\nPlease check the name and try again."))
-               }
-             }
-             return(NA)
-           }
+          stop(glue::glue("The dataset name '{dataset_name}' is incorrect.
+                          Did you mean '{closest_match}'?"))
+        } else {
+          stop(glue::glue("The dataset name '{dataset_name}' was not found.
+                          Please check the name and try again."))
+        }
+      }
+      return(NA)
+    }
   )
 
   stopifnot(httr::http_type(response) == "application/json")
@@ -74,7 +86,8 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
       as.list()
   } else {
     n_res <- length(parsed$result$resources$id)
-    resource_id_list <- parsed$result$resources$id[1:min(n_res, max_resources)] %>%
+    first_n_res <- 1:min(n_res, max_resources)
+    resource_id_list <- parsed$result$resources$id[first_n_res] %>%
       as.list()
   }
 
@@ -88,7 +101,7 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
 #' @return a url
 package_show_url <- function() {
   httr::modify_url("https://www.opendata.nhs.scot",
-                   path = "/api/3/action/package_show"
+    path = "/api/3/action/package_show"
   )
 }
 
