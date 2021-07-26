@@ -10,7 +10,6 @@ Authors@R:
 Description: Functions to extract and interact with data from the Scottish Health and Social Care Open Data platform.
 License: GPL (>= 2)
 Imports:
-    ckanr,
     dplyr (>= 1.0.0),
     httr (>= 1.0.0),
     glue (>= 1.0.0),
