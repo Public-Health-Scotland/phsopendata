@@ -17,7 +17,8 @@ Imports:
     purrr,
     tibble (>= 3.0.0),
     jsonlite (>= 1.0.0),
-    magrittr (>= 1.0.0)
+    magrittr (>= 1.0.0),
+    readr (>= 1.0.0)
 Suggests: 
     stringdist,
     testthat (>= 2.0.0)
