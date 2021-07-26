@@ -7,7 +7,8 @@
 get_resource(res_id, rows = NULL)
 }
 \arguments{
-\item{res_id}{The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
+\item{res_id}{The resource ID as found on
+\href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 
 \item{rows}{(optional) specify the max number of rows to return
 use this when testing code to reduce the size of the request
@@ -21,4 +22,8 @@ Get Open Data resource
 }
 \examples{
 get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
+}
+\seealso{
+\code{\link[=get_dataset]{get_dataset()}} for downloading all resources
+from a given dataset.
 }

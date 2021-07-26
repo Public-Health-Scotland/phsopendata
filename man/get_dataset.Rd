@@ -7,15 +7,17 @@
 get_dataset(dataset_name, max_resources = NULL, rows = NULL)
 }
 \arguments{
-\item{dataset_name}{name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
+\item{dataset_name}{name of the dataset as found on
+\href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 
 \item{max_resources}{(optional) the maximum number of resources
 to return, use for testing code,
 it will retunr the n latest resources}
 
-\item{rows}{(optional) specify the max number of rows to return for each resource
-use this when testing code to reduce the size of the request
-it will default to all data}
+\item{rows}{(optional) specify the max number of rows
+to return for each resource use this when testing code
+to reduce the size of the request it will default to
+all data}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data
@@ -27,4 +29,8 @@ Get Open Data resources from a dataset
 get_dataset("gp-practice-populations",
   max_resources = 2, rows = 10
 )
+}
+\seealso{
+\code{\link[=get_resource]{get_resource()}} for downloading a single resource
+from a dataset.
 }
