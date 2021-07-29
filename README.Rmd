@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # phsopendata
 
 <!-- badges: start -->
+[![R build status](https://github.com/Public-Health-Scotland/phsopendata/workflows/R-CMD-check/badge.svg)](https://github.com/Public-Health-Scotland/phsopendata/actions)
 <!-- badges: end -->
 
 `phsopendata` contains functions to interact with open data from the [Scottish Health and Social Care Open Data platform](https://www.opendata.nhs.scot/) via the CKAN API. 
