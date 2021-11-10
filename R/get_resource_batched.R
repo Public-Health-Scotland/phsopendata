@@ -15,6 +15,8 @@
 #' @seealso [get_resource()] for downloading resources without this batch mechanism.
 #'
 #' @importFrom magrittr %>%
+#' @importFrom glue glue
+#' @importFrom dplyr bind_rows
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
@@ -23,7 +25,7 @@ get_resource_batched <- function(res_id, num_batches = NULL, rows_each = NULL, v
 
   # stop if res_id is invalid
   if (!check_res_id(res_id)) stop(
-    glue::glue("The resource ID supplied ('{res_id}') is invalid")
+    glue("The resource ID supplied ('{res_id}') is invalid")
   )
 
   # stop if num_batches and rows_each are defined
@@ -96,7 +98,7 @@ get_resource_batched <- function(res_id, num_batches = NULL, rows_each = NULL, v
 
   # join all batches together
   if (verbose) cat("Joining batches")
-  data <- dplyr::bind_rows(batches)
+  data <- bind_rows(batches)
 
   return(data)
 
@@ -107,11 +109,11 @@ get_resource_batched <- function(res_id, num_batches = NULL, rows_each = NULL, v
 #' @description
 #'
 #' @param res_id a resource ID
-#'
+#' @importFrom jsonlite fromJSON
 #' @return integer
 get_total_records <- function(res_id) {
   return(
-    jsonlite::fromJSON(
+    fromJSON(
       paste0("https://www.opendata.nhs.scot/api/3/action/datastore_search?id=", res_id)
     )$result$total
   )
