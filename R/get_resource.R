@@ -5,18 +5,43 @@
 #' @param rows (optional) specify the max number of rows to return
 #' use this when testing code to reduce the size of the request
 #' it will default to all data
+#' @param offset (optional) row in resource from which `rows` argument should start.
+#' I.e., if `rows` = 100 and `offset` = 50, `get_resources()` with return row 51-100
+#' of the resource.
 #'
 #' @seealso [get_dataset()] for downloading all resources
 #' from a given dataset.
 #'
 #' @importFrom magrittr %>%
+#' @importFrom httr GET modify_url user_agent stop_for_status http_type content
+#' @importFrom tibble as_tibble
+#' @importFrom jsonlite fromJSON
+#' @importFrom glue glue
+#'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
 #' @examples get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
-get_resource <- function(res_id, rows = NULL) {
+get_resource <- function(res_id, rows = NULL, offset = NULL) {
+
+  # check res_id is valid
   if (!check_res_id(res_id)) {
-    stop(glue::glue("The resource ID supplied ('{res_id}') is invalid"))
+    stop(glue("The resource ID supplied ('{res_id}') is invalid"))
+  }
+
+  # if rows argument is null
+  # set rows to large number
+  # to ensure all records are shown
+  if (is.null(rows)) {
+    rows <- 999999999999999
+    # `rows` needs to be larger than resource with most rows
+  }
+
+  # if offset argument is null
+  # set offset to 0 to ensure
+  # records shown start at 1
+  if (is.null(offset)) {
+    offset <- 0
   }
 
   # set resource id-s to use
@@ -25,45 +50,31 @@ get_resource <- function(res_id, rows = NULL) {
   # Define the User Agent to be used for the API call
   ua <- opendata_ua()
 
-  if (is.null(rows) || rows > 99999) {
-    if (!is.null(rows)) {
-      message("Queries for more than 99,999 rows of data will return the full resource.")
-    }
+  # define api query
+  query <- list(
+    id = res_id,
+    limit = rows,
+    offset = offset
+  )
 
-    response <- httr::GET(url = ds_dump_url(res_id), user_agent = ua)
+  url <- modify_url(ds_search_url(),
+                          query = query
+  )
 
-    httr::stop_for_status(response)
+  response <- GET(url = url, user_agent = ua)
 
-    stopifnot(httr::http_type(response) == "text/csv")
+  stop_for_status(response)
 
-    data <- httr::content(response, "parsed") %>%
-      dplyr::select(-"_id")
+  stopifnot(http_type(response) == "application/json")
 
-    return(data)
-  } else {
-    query <- list(
-      id = res_id,
-      limit = rows
-    )
+  parsed <- content(response, "text") %>%
+    fromJSON()
 
-    url <- httr::modify_url(ds_search_url(),
-      query = query
-    )
+  data <- parsed$result$records %>%
+    as_tibble()
 
-    response <- httr::GET(url = url, user_agent = ua)
+  return(data)
 
-    httr::stop_for_status(response)
-
-    stopifnot(httr::http_type(response) == "application/json")
-
-    parsed <- httr::content(response, "text") %>%
-      jsonlite::fromJSON()
-
-    data <- parsed$result$records %>%
-      tibble::as_tibble()
-
-    return(data)
-  }
 }
 
 #' Open Data user agent
@@ -74,7 +85,7 @@ get_resource <- function(res_id, rows = NULL) {
 #'
 #' @return a {httr} user_agent string
 opendata_ua <- function() {
-  httr::user_agent("https://github.com/Public-Health-Scotland/phsmethods")
+  user_agent("https://github.com/Public-Health-Scotland/phsmethods")
 }
 
 
@@ -104,7 +115,7 @@ check_res_id <- function(res_id) {
 #'
 #' @return a url
 ds_search_url <- function() {
-  httr::modify_url("https://www.opendata.nhs.scot",
+  modify_url("https://www.opendata.nhs.scot",
     path = "/api/3/action/datastore_search"
   )
 }
@@ -114,7 +125,7 @@ ds_search_url <- function() {
 #' @param res_id a resource ID
 #' @return a url
 ds_dump_url <- function(res_id) {
-  httr::modify_url("https://www.opendata.nhs.scot",
-    path = glue::glue("/datastore/dump/{res_id}?bom=true")
+  modify_url("https://www.opendata.nhs.scot",
+    path = glue("/datastore/dump/{res_id}?bom=true")
   )
 }
