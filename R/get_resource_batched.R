@@ -4,7 +4,7 @@
 #' It downloads whole resources a group of rows at a time in order to avoid API timeouts for large files.
 #' You must assign a value to either `num_batches` or `rows_each`.
 #'
-#' @param res_id The resource ID as found on
+#' @param query Should include at least a resource ID as found on
 #' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
 #' @param num_batches (optional) sets the number of batches into which a download will be split
 #' @param rows_each (optional) sets the number of rows to download in each batch
@@ -20,8 +20,17 @@
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
-#' @examples get_resource_batched(res_id = "a794d603-95ab-4309-8c92-b48970478c14", num_batches = 10)
-get_resource_batched <- function(res_id, num_batches = NULL, rows_each = NULL, verbose = TRUE) {
+#' @examples get_resource_batched(query = list(id = "a794d603-95ab-4309-8c92-b48970478c14", filters = ...), num_batches = 10)
+get_resource_batched <- function(query, num_batches = NULL, rows_each = NULL, verbose = FALSE) {
+
+  res_id <- query$res_id
+
+  if (is.null(query$filters) && is.null(query$fields)) {
+    warning("You are attempting to download a full resource, using `get_resource()` instead.")
+    return(
+      get_resource(res_id)
+    )
+  }
 
   # stop if res_id is invalid
   if (!check_res_id(res_id)) stop(
