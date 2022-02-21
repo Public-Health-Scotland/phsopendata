@@ -15,9 +15,7 @@ to return, use for testing code,
 it will retunr the n latest resources}
 
 \item{rows}{(optional) specify the max number of rows
-to return for each resource use this when testing code
-to reduce the size of the request it will default to
-all data}
+to return for each resource.}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data

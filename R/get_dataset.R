@@ -6,9 +6,7 @@
 #' to return, use for testing code,
 #' it will retunr the n latest resources
 #' @param rows (optional) specify the max number of rows
-#' to return for each resource use this when testing code
-#' to reduce the size of the request it will default to
-#' all data
+#' to return for each resource.
 #'
 #' @seealso [get_resource()] for downloading a single resource
 #' from a dataset.
@@ -21,6 +19,9 @@
 #'   max_resources = 2, rows = 10
 #' )
 get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
+
+  check_connection()
+
   if (!check_dataset_name(dataset_name)) {
     stop(glue::glue("The dataset name supplied ('{dataset_name}') is invalid"))
   }

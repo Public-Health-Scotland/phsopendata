@@ -4,15 +4,19 @@
 \alias{get_resource}
 \title{Get Open Data resource}
 \usage{
-get_resource(res_id, rows = NULL)
+get_resource(res_id, rows = NULL, row_filters = NULL, col_select = NULL)
 }
 \arguments{
 \item{res_id}{The resource ID as found on
 \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 
-\item{rows}{(optional) specify the max number of rows to return
-use this when testing code to reduce the size of the request
-it will default to all data}
+\item{rows}{(optional) specify the max number of rows to return.}
+
+\item{row_filters}{(optional) a named list or vector that specifies values of columns/fields to keep.
+e.g. list(Date = 20220216, Sex = "Female").}
+
+\item{col_select}{(optional) a character vector containing the names of desired columns/fields.
+e.g. c("Date", "Sex").}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data
@@ -21,7 +25,11 @@ a \link[tibble:tibble-package]{tibble} with the data
 Get Open Data resource
 }
 \examples{
-get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
+res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
+filters <- list("HB" = "S08000030", "Month" = "202109")
+wanted_cols <- c("HB", "Month", "TotalPatientsSeen")
+
+df <- get_resource(res_id = res_id, row_filters = filters, col_select = wanted_cols)
 }
 \seealso{
 \code{\link[=get_dataset]{get_dataset()}} for downloading all resources
