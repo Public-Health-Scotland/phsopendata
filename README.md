@@ -50,10 +50,10 @@ website, or extracted using `ckanr::package_show`.
     library(phsopendata)
 
     #by default the full resource is returned
-    opendata_get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
+    get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
 
     #but you can set the number of rows to return
-    opendata_get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14", rows = 10)
+    get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14", rows = 10)
 
 ### get\_dataset
 
@@ -68,16 +68,16 @@ name will be gp-practice-populations.
 
     #if max_resources is not set, all resources will be returned by default. 
     #Here we pull 10 rows from the first 2 resources only
-    opendata_get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+    get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 
 Contributing to phsopendata
 ---------------------------
 
-At present, this package is maintained by [Csilla
+At present, this package is maintained by [David Aikman](https://github.com/daikman) and [Csilla
 Scharle](https://github.com/csillasch).
 
 If you have requests or suggestions for additional functionality, please
-contact the package maintainer and/or the [PHS Open Data
+contact a package maintainer and/or the [PHS Open Data
 team](phs.opendata@phs.scot).
 
 If you would like to share examples of how you work with open data, you
