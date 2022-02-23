@@ -251,6 +251,7 @@ parse_row_filters <- function(row_filters) {
 #' @description
 #' Produces a comma separated list
 #'
+#' @param col_select a character vector identifying the columns to select.
 #' @return a character string
 parse_col_select <- function(col_select) {
 
