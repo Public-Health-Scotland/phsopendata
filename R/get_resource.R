@@ -73,7 +73,7 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
     if (is.null(query$limit)) {
       # if there is no row limit set
       # set limit to CKAN default
-      query$limit <- 100
+      query$limit <- 99999
     }
 
     # remove null values from query
@@ -82,7 +82,7 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
 
     # define url to include the query
     url <- httr::modify_url(ds_search_url(),
-      query = query
+                            query = query
     )
 
     # fetch the data
@@ -104,11 +104,11 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
       # warn the user about this limit.
       warning(
         paste0("Returning the first ", query$limit,
-            " results (rows) of your query. ",
-            total_rows,
-            " rows match your query in total. ",
-            "To get ALL matching rows set the `rows` argument to ",
-            total_rows, "."),
+               " results (rows) of your query. ",
+               total_rows,
+               " rows match your query in total. ",
+               "To get ALL matching rows you will need to download",
+               " the whole resource and apply filters/selections locally."),
         call. = FALSE
       )
     }
@@ -224,7 +224,7 @@ parse_row_filters <- function(row_filters) {
         'K' or c('K'), not c('K', 'J')"
       ),
       .call = FALSE
-    )
+      )
   }
 
   # check if any items in the list/vector have the same name
@@ -270,7 +270,7 @@ parse_col_select <- function(col_select) {
 #' @return a url
 ds_search_url <- function() {
   httr::modify_url("https://www.opendata.nhs.scot",
-    path = "/api/3/action/datastore_search"
+                   path = "/api/3/action/datastore_search"
   )
 }
 
@@ -280,6 +280,6 @@ ds_search_url <- function() {
 #' @return a url
 ds_dump_url <- function(res_id) {
   httr::modify_url("https://www.opendata.nhs.scot",
-    path = glue::glue("/datastore/dump/{res_id}?bom=true")
+                   path = glue::glue("/datastore/dump/{res_id}?bom=true")
   )
 }
