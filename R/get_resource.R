@@ -38,7 +38,7 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
   )
 
   # if no query input (i.e. only res_id)
-  no_query <- is.null(query$q) && is.null(query$filter) && is.null(rows)
+  no_query <- is.null(query$q) && is.null(query$filter) && is.null(col_select) && is.null(rows)
   # OR rows > 99999
   rows_in_range <- rows < 100000 || is.null(rows)
   # then use GET datastore_dump
@@ -124,11 +124,11 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
 
     data <- parsed$result$records %>%
       tibble::as_tibble() %>%
-      # there is a strange behaviour of datastore_search that when
-      # you filter on a field, e.g., {"Month":"202109"}
-      # it returns an extra "rank" field, e.g., "rank Month"
-      # temporary fix:
-      dplyr::select(-dplyr::starts_with("rank "))
+      # remove unwanted columns if they exist
+      dplyr::select(
+        -dplyr::starts_with("rank "),
+        -dplyr::matches("_id")
+      )
 
     return(data)
   }
@@ -153,51 +153,47 @@ opendata_ua <- function() {
 #' @param res_id a resource ID
 #'
 #' @return TRUE / FALSE indicating the validity of the res_id
-#' @importFrom httr GET
 check_res_id <- function(res_id) {
 
+  # check res_id is single value
+  if (length(res_id) > 1) {
+    stop(
+      paste0("argument res_id should be of length 1."),
+      " `get_resource` does not currently support requests for multiple resources simultaneously.",
+      call. = FALSE
+    )
+  }
+
+  # check res_id is character
+  if (!inherits(res_id, "character")) {
+    stop(
+      paste0("argument res_id is should be of type character. Not ", class(res_id), "."),
+      call. = FALSE
+    )
+  }
+
+  # check regex pattern
   res_id_regex <-
     "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-
-
-  if (!inherits(res_id, "character")) {
-
+  if (!grepl(res_id_regex, res_id)) {
     stop(
-      "`res_id` should be of type character.",
+      paste0("'", res_id, "' is not a valid resource id."),
       call. = FALSE
     )
+  }
 
-  } else if (length(res_id) > 1) {
-
+  # check if res_id is on the platform
+  response <- httr::GET(
+    paste0(
+      "https://www.opendata.nhs.scot/api/3/action/resource_show?id=",
+      res_id
+    )
+  )
+  if (response$status_code != 200) {
     stop(
-      "`res_id` should be of length 1.
-      `get_resource` does not currently support requests for multiple resources simultaneously.",
+      paste0("the resource id, '", res_id, "', cannot be found on opendata.nhs.scot."),
       call. = FALSE
     )
-
-  } else if (!grepl(res_id_regex, res_id)) {
-
-    stop(
-      "`res_id` is not a valid resource id.",
-      call. = FALSE
-    )
-
-  } else {
-    # check if res_id is on the platform
-    response <- GET(
-      paste0(
-        "https://www.opendata.nhs.scot/api/3/action/resource_show?id=",
-        res_id
-      )
-    )
-
-    if (response$status_code != 200) {
-      stop(
-        "`res_id` cannot be found on opendata.nhs.scot.",
-        call. = FALSE
-      )
-    }
-
   }
 
 }
@@ -223,7 +219,7 @@ parse_row_filters <- function(row_filters) {
         "The `row_filters` argument can only take vectors of length 1, e.g.:
         'K' or c('K'), not c('K', 'J')"
       ),
-      .call = FALSE
+      call. = FALSE
       )
   }
 

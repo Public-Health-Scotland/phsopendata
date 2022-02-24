@@ -6,6 +6,9 @@
 \usage{
 parse_col_select(col_select)
 }
+\arguments{
+\item{col_select}{a character vector identifying the columns to select.}
+}
 \value{
 a character string
 }

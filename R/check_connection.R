@@ -11,7 +11,7 @@ check_connection <- function() {
   if (response$status_code != 200) {
     stop(
       "Connection to CKAN (https://www.opendata.nhs.scot/) failed.",
-      .call = FALSE
+      call. = FALSE
     )
   }
 }
