@@ -6,6 +6,9 @@
 \usage{
 parse_row_filters(row_filters)
 }
+\arguments{
+\item{row_filters}{list or named vectors matching fileds to values}
+}
 \value{
 a json as a character string
 }
