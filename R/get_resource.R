@@ -201,7 +201,7 @@ check_res_id <- function(res_id) {
 #' Create json 'dict' from named list or vector
 #' @description
 #' Formats a list or named vector into a valid query
-#'
+#' @param row_filters list or named vectors matching fileds to values
 #' @return a json as a character string
 parse_row_filters <- function(row_filters) {
 
