@@ -2,5 +2,4 @@
 
 export(get_dataset)
 export(get_resource)
-importFrom(httr,GET)
 importFrom(magrittr,"%>%")

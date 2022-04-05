@@ -2,11 +2,9 @@ Package: phsopendata
 Title: Extract Open Data from opendata.nhs.scot
 Version: 0.0.0.900
 Authors@R: 
-    c(person(given = "Csilla",
-           family = "Scharle",
-           role = c("aut", "cre"),
-           email = "csilla.scharle2@phs.scot"),
-           person("James", "McMahon", email = "james.mcmahon@phs.scot", role = "aut"))
+    c(person(given = "Csilla", family = "Scharle", role = c("aut", "cre"), email = "csilla.scharle2@phs.scot"),
+      person("James", "McMahon", email = "james.mcmahon@phs.scot", role = "aut"),
+      person("David", "Aikman", email = "david.aikman@phs.scot", role = "aut"))
 Description: Functions to extract and interact with data from the Scottish Health and Social Care Open Data platform.
 License: GPL (>= 2)
 Imports:
@@ -17,9 +15,9 @@ Imports:
     tibble (>= 3.0.0),
     jsonlite (>= 1.0.0),
     magrittr (>= 1.0.0),
-    readr (>= 1.0.0)
+    readr (>= 1.0.0),
+    stringdist
 Suggests: 
-    stringdist,
     testthat (>= 3.0.0)
 Encoding: UTF-8
 LazyData: true

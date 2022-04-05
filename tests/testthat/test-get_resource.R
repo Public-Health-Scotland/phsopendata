@@ -23,22 +23,22 @@ test_that("checks res_id properly", {
   # wrong type
   expect_error(
     get_resource(res_id = 123),
-    regexp = "*(should be of type character.)"
+    regexp = "(must be of type character)"
   )
   # Invalid format (doesn't match regex)
   expect_error(
     get_resource("a794d603-95ab-4309-8c92-b48970478c1"),
-    regexp = "(is not a valid resource id.)"
+    regexp = "(is in an invalid format.)"
   )
   # res_id is a vector of length > 1
   expect_error(
     get_resource(1:5),
-    regexp = "(should be of length 1.)"
+    regexp = "(must be of length 1.)"
   )
   # Correct format but not real
   expect_error(
     get_resource("00000000-0000-0000-0000-000000000000"),
-    regexp = "(cannot be found on opendata.nhs.scot.)"
+    regexp = "(Can't find resource with ID)"
   )
 })
 
@@ -56,9 +56,10 @@ test_that("returns full data if rows is set to over 99999", {
   expect_warning(
     data <- get_resource(
       res_id = gp_list_apr_2021,
-      rows = 100000
+      rows = 9999999,
+      row_filters = c("GPPracticeName" = "The Blue Practice")
     ),
-    regexp = "Queries matching more than 99,999 rows of data will return the full resource. Any row filters and/or column selections have been ignored. All rows and columns are now being downloaded."
+    regexp = "Can't request over 99,999 rows"
   )
 
   expect_equal(nrow(data), 926)
@@ -69,7 +70,7 @@ test_that("first 99999 rows returned if query matches > 99999 rows", {
 
   expect_warning(
     df <- get_resource(prescriptions_apr_2021, col_select = c("HBT")),
-    regexp = "(Returning the first 99999 results (rows) of your query.)*"
+    regexp = "(Returning the first 99999 results)"
   )
 
   expect_true(nrow(df) == 99999)
