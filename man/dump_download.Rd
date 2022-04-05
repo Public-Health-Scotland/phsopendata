@@ -4,10 +4,10 @@
 \alias{dump_download}
 \title{Use datastore dump to download whole files}
 \usage{
-dump_download(id)
+dump_download(res_id)
 }
 \arguments{
-\item{id}{a resource ID}
+\item{res_id}{a resource ID}
 }
 \value{
 dataframe containing resource records
