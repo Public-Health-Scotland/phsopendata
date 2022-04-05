@@ -9,9 +9,9 @@ test_that("throws error for non-existent res_ids", {
 
 test_that("downloads full resource", {
 
-  data <- phsopendata:::dump_download("a965ee86-0974-4c93-bbea-e839e27d7085")
+  data <- phsopendata:::dump_download("a794d603-95ab-4309-8c92-b48970478c14")
 
-  expect_equal(nrow(data), 5)
-  expect_equal(ncol(data), 10)
+  expect_equal(nrow(data), 926)
+  expect_equal(ncol(data), 15)
 
 })
