@@ -16,7 +16,9 @@ Imports:
     jsonlite (>= 1.0.0),
     magrittr (>= 1.0.0),
     readr (>= 1.0.0),
-    stringdist
+    stringdist,
+    cli,
+    xml2
 Suggests: 
     testthat (>= 3.0.0)
 Encoding: UTF-8
