@@ -2,4 +2,5 @@
 
 export(get_dataset)
 export(get_resource)
+export(get_resource_sql)
 importFrom(magrittr,"%>%")
