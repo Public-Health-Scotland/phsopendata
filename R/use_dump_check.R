@@ -32,6 +32,8 @@ use_dump_check <- function(query, rows) {
 
   # warn users if they haven't queried
   # the data but have requested rows > 99999
+
+  if (is.null(rows)) rows <- 0
   if (!queried && rows > 99999)
     cli::cli_warn(c(
       "Getting all rows of resource.",
