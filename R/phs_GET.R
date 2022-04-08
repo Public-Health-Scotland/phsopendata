@@ -19,8 +19,7 @@ phs_GET <- function(action, query, verbose = FALSE) {
   )
 
   # Check for response from server
-  is_response <- httr:::is.response(response)
-  if (!is_response)
+  if (!inherits(response, "response"))
     cli::cli_abort(c(
       "Can't connect to the CKAN server.",
       i = "Check your network/proxy settings."
