@@ -19,9 +19,12 @@ parse_row_filters <- function(row_filters) {
     ))
 
   # check if any items in the list/vector have the same name
-  unique_names <- length(
-    unique(names(row_filters))) == length(names(row_filters)
-  )
+  # find number of unique names
+  n_u_row_filters <- length(unique(names(row_filters)))
+  # find total number of names
+  n_row_filters <- length(names(row_filters))
+  # if same, all names are unique
+  unique_names <- n_u_row_filters == n_row_filters
 
   if (!unique_names)
     cli::cli_abort(c(

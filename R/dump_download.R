@@ -6,7 +6,9 @@
 dump_download <- function(res_id) {
 
   # fetch the data
-  content <- phs_GET("dump", res_id)
+  content <- suppressMessages(
+    phs_GET("dump", res_id)
+  )
 
   # if content is a web page
   if ("xml_document" %in% class(content))
