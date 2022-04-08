@@ -67,7 +67,7 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
   # if more rows were requested than received
   # let the user know
   if (!is.null(rows) && query$limit > total_rows)
-    cli::cli_warn(c(
+    cli::cli_alert_warning(c(
       "You set {.var rows} to {query$limit} but
       only {total_rows} rows matched your query."
     ))
