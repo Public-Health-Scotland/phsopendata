@@ -104,7 +104,7 @@ At present, this package is maintained by [David
 Aikman](https://github.com/daikman).
 
 If you have requests or suggestions for additional functionality, please
-contact a package maintainer and/or the [PHS Open Data
+contact the package maintainer and/or the [PHS Open Data
 team](phs.opendata@phs.scot).
 
 If you would like to share examples of how you work with open data, you
