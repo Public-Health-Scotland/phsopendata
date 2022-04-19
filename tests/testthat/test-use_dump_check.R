@@ -7,7 +7,9 @@ test_that("returns true as expected", {
 
   # rows > 99999 and all query is NULL
   expect_true(
-    phsopendata:::use_dump_check(list(), 100000)
+    suppressWarnings(
+      phsopendata:::use_dump_check(list(), 100000)
+    )
   )
 
   # query entries are not all NULL and rows > 99999
@@ -16,9 +18,11 @@ test_that("returns true as expected", {
       phsopendata:::use_dump_check(list(q = 4), 100000)
     )
   )
-  expect_warning(
-    phsopendata:::use_dump_check(list(q = 4), 100000),
-    regexp = "Can't request over 99,999 rows of a resource AND query its rows/columns"
+
+  expect_true(
+    suppressWarnings(
+      phsopendata:::use_dump_check(list(q = 4), 100000)
+    )
   )
 
 })
