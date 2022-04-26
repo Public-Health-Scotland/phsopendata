@@ -2,130 +2,83 @@
 #'
 #' @param res_id The resource ID as found on
 #' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
-#' @param rows (optional) specify the max number of rows to return
-#' use this when testing code to reduce the size of the request
-#' it will default to all data
-#' @param offset (optional) row in resource from which `rows` argument should start.
-#' I.e., if `rows` = 100 and `offset` = 50, `get_resources()` with return row 51-100
-#' of the resource.
+#' @param rows (optional) specify the max number of rows to return.
+#' @param row_filters (optional) a named list or vector that specifies values of columns/fields to keep.
+#' e.g. list(Date = 20220216, Sex = "Female").
+#' @param col_select (optional) a character vector containing the names of desired columns/fields.
+#' e.g. c("Date", "Sex").
 #'
 #' @seealso [get_dataset()] for downloading all resources
 #' from a given dataset.
 #'
 #' @importFrom magrittr %>%
-#' @importFrom httr GET modify_url user_agent stop_for_status http_type content
-#' @importFrom tibble as_tibble
-#' @importFrom jsonlite fromJSON
-#' @importFrom glue glue
-#'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
-#' @examples get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
-get_resource <- function(res_id, rows = NULL, offset = NULL) {
+#' @examples
+#' res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
+#' filters <- list("HB" = "S08000030", "Month" = "202109")
+#' wanted_cols <- c("HB", "Month", "TotalPatientsSeen")
+#'
+#' df <- get_resource(res_id = res_id, row_filters = filters, col_select = wanted_cols)
+get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = NULL) {
 
-  # check res_id is valid
-  if (!check_res_id(res_id)) {
-    stop(glue("The resource ID supplied ('{res_id}') is invalid"))
-  }
+  # check res_id
+  check_res_id(res_id)
 
-  # if rows argument is null
-  # set rows to large number
-  # to ensure all records are shown
-  if (is.null(rows)) {
-    rows <- 999999999999999
-    # `rows` needs to be larger than resource with most rows
-  }
-
-  # if offset argument is null
-  # set offset to 0 to ensure
-  # records shown start at 1
-  if (is.null(offset)) {
-    offset <- 0
-  }
-
-  # set resource id-s to use
-  res_id <- res_id
-
-  # Define the User Agent to be used for the API call
-  ua <- opendata_ua()
-
-  # define api query
+  # define query
   query <- list(
     id = res_id,
     limit = rows,
-    offset = offset
+    q = parse_row_filters(row_filters),
+    fields = parse_col_select(col_select)
   )
 
-  url <- modify_url(ds_search_url(),
-                          query = query
+  # if dump should be used, use it
+  if (use_dump_check(query, rows))
+    return(dump_download(res_id))
+
+  # if there is no row limit set
+  # set limit to CKAN max
+  if (is.null(query$limit)) query$limit <- 99999
+
+  # remove null values from query
+  null_q_field <- sapply(query, is.null)
+  query[null_q_field] <- NULL
+
+  # fetch the data
+  q <- paste0(paste0(names(query), "=", query), collapse = "&")
+  res_content <- phs_GET("datastore_search", q)
+
+  # if the total number of rows is greater than the
+  # number of rows fetched
+  # AND the user was not aware of this limit (`rows` defaulted to NULL)
+  # warn the user about this limit.
+  total_rows <- res_content$result$total
+  if (is.null(rows) && query$limit < total_rows)
+    cli::cli_warn(c(
+      "Returning the first {query$limit}
+      results (rows) of your query.
+      {total_rows} rows match your query in total.",
+      i = "To get ALL matching rows you will need to download
+      the whole resource and apply filters/selections locally."
+    ))
+
+  # if more rows were requested than received
+  # let the user know
+  if (!is.null(rows) && query$limit > total_rows)
+    cli::cli_alert_warning(c(
+      "You set {.var rows} to {query$limit} but
+      only {total_rows} rows matched your query."
+    ))
+
+  # extract data from response content
+  data <- purrr::map_dfr(
+    res_content$result$records, ~.x
+  ) %>% dplyr::select(
+    -dplyr::starts_with("rank "),
+    -dplyr::matches("_id")
   )
-
-  response <- GET(url = url, user_agent = ua)
-
-  stop_for_status(response)
-
-  stopifnot(http_type(response) == "application/json")
-
-  parsed <- content(response, "text") %>%
-    fromJSON()
-
-  data <- parsed$result$records %>%
-    as_tibble()
 
   return(data)
-
-}
-
-#' Open Data user agent
-#' @description
-#' This is used internally to return a standard useragent
-#' Supplying a user agent means requests using the package
-#' can be tracked more easily
-#'
-#' @return a {httr} user_agent string
-opendata_ua <- function() {
-  user_agent("https://github.com/Public-Health-Scotland/phsmethods")
-}
-
-
-#' Check if a resource ID is valid
-#'
-#' @description
-#' Used to attempt to validate a res_id before submitting it to the API
-#'
-#' @param res_id a resource ID
-#'
-#' @return TRUE / FALSE indicating the validity of the res_id
-check_res_id <- function(res_id) {
-  res_id_regex <-
-    "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-
-
-  if (!inherits(res_id, "character")) {
-    return(FALSE)
-  } else if (!grepl(res_id_regex, res_id)) {
-    return(FALSE)
-  } else {
-    return(TRUE)
-  }
-}
-
-#' Creates the URL for the datastore search end-point
-#'
-#' @return a url
-ds_search_url <- function() {
-  modify_url("https://www.opendata.nhs.scot",
-    path = "/api/3/action/datastore_search"
-  )
-}
-
-#' Creates the URL for the datastore dump end-point
-#'
-#' @param res_id a resource ID
-#' @return a url
-ds_dump_url <- function(res_id) {
-  modify_url("https://www.opendata.nhs.scot",
-    path = glue("/datastore/dump/{res_id}?bom=true")
-  )
 }

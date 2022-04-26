@@ -29,10 +29,10 @@ be configured with `use_proxy()`.
 Installation
 ------------
 
-To install `phsopendata`, the package `remotes` is required, and can be
-installed with `install.packages("remotes")`.
+You need to install `phsopendata` from GitHub, which requires a package
+like `remotes` or `devtools`.
 
-You can then install `phsopendata` on RStudio server from GitHub with:
+Using `remotes` you run this to install the package:
 
     remotes::install_github("Public-Health-Scotland/phsopendata",
       upgrade = "never"
@@ -41,21 +41,47 @@ You can then install `phsopendata` on RStudio server from GitHub with:
 Examples
 --------
 
-### get\_resource
+### Downloading a data table with `get_resource()`
 
 To extract a specific resource, you will need it’s unique identifier -
-resource id. This can be found in the dataset metadata by visiting the
-website, or extracted using `ckanr::package_show`.
+resource id. This can be found in the dataset metadata, the URL of a
+resource’s page on
+<a href="https://www.opendata.nhs.scot/" class="uri">https://www.opendata.nhs.scot/</a>,
+or extracted using `ckanr::package_show`.
 
     library(phsopendata)
 
-    #by default the full resource is returned
-    opendata_get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
+    # define a resource ID
+    res_id <- "a794d603-95ab-4309-8c92-b48970478c14"
 
-    #but you can set the number of rows to return
-    opendata_get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14", rows = 10)
+    # download the data from the CKAN database
+    data <- get_resource(res_id = "a794d603-95ab-4309-8c92-b48970478c14")
 
-### get\_dataset
+### Querying/filtering data with `get_resource()`
+
+You can define a row limit with the `rows` argument to get the first *N*
+rows of a table.
+
+    # get first 100 rows
+    get_resource(
+      res_id = "a794d603-95ab-4309-8c92-b48970478c14",
+      rows = 100
+    )
+
+You can use `col_select` and `row_filters` to query the data server-side
+(i.e., the data is filtered before it is downloaded to your machine).
+
+    # get first 100 rows
+    get_resource(
+      res_id = "a794d603-95ab-4309-8c92-b48970478c14",
+      col_select = c("GPPracticeName", "TelephoneNumber"),
+      row_filters = list(
+        HB = "S08000017",
+        Dispensing = "Y"
+      )
+    )
+
+### Downloading multiple tables with `get_dataset()`
 
 To extract all resources from a dataset, you will need to use the
 *dataset name*. Note that this will differ from the *dataset title* that
@@ -63,18 +89,19 @@ displays on the website. This can be found in the dataset metadata
 extracted using `ckanr::package_show`, or taken from the dataset URL.
 
 In this example, we are downloading GP Practice Population Demographics
-from: opendata.nhs.scot/dataset/gp-practice-populations, so the dataset
-name will be gp-practice-populations.
+from:
+[opendata.nhs.scot/dataset/*gp-practice-populations*](https://www.opendata.nhs.scot/dataset/gp-practice-populations),
+so the dataset name will be gp-practice-populations.
 
-    #if max_resources is not set, all resources will be returned by default. 
-    #Here we pull 10 rows from the first 2 resources only
-    opendata_get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+    # if max_resources is not set, all resources will be returned by default. 
+    # Here we pull 10 rows from the first 2 resources only
+    get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 
 Contributing to phsopendata
 ---------------------------
 
-At present, this package is maintained by [Csilla
-Scharle](https://github.com/csillasch).
+At present, this package is maintained by [David
+Aikman](https://github.com/daikman).
 
 If you have requests or suggestions for additional functionality, please
 contact the package maintainer and/or the [PHS Open Data
