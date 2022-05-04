@@ -40,11 +40,59 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   res_index <- 1:min(n_res, max_resources)
   ids_selection <- all_ids[res_index]
 
-  all_data <- purrr::map_dfr(
+  # get all resources
+  all_data <- purrr::map(
     ids_selection,
     get_resource,
     rows = rows
   )
 
-  return(all_data)
+  # resolve class issues
+  types <- purrr::map(
+    all_data,
+    ~unlist(lapply(.x, class))
+  )
+
+  # for each df, check if next df class matches
+  inconsistencies = vector(length = length(types) - 1, mode = "list")
+  for (i in seq_along(types)) {
+    if (i == length(types)) break
+
+    this_types = types[[i]]
+    next_types = types[[i + 1]]
+
+    # find matching names
+    matching_names = suppressWarnings(
+      names(this_types) == names(next_types)
+    )
+
+    # of matching name cols, find if types match too
+    inconsistent_index = this_types[matching_names] != next_types[matching_names]
+    inconsistencies[[i]] = this_types[matching_names][inconsistent_index]
+  }
+
+  # define which columns to coerce and warn
+  conflicts <- unlist(inconsistencies)
+  to_coerce <- unique(names(conflicts))
+
+  if (length(to_coerce) > 0)
+    cli::cli_warn(c(
+      "Due to conflicts between column types across resources,
+      the following columns have been coerced to type character:\n
+      {paste0(to_coerce, collapse = ', ')}"
+    ))
+
+  # combine
+  combined <- purrr::map_df(
+    all_data,
+    ~dplyr::mutate(.x,
+                   dplyr::across(
+                     dplyr::any_of(to_coerce),
+                     as.character
+                   )
+    )
+  )
+
+  return(combined)
 }
+
