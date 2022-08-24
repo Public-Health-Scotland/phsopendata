@@ -6,6 +6,8 @@ phsopendata
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/Public-Health-Scotland/phsopendata/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Public-Health-Scotland/phsopendata?branch=master)
 <!-- badges: end -->
 
 `phsopendata` contains functions to interact with open data from the
