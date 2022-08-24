@@ -21,7 +21,7 @@ use_dump_check <- function(query, rows) {
   # if user queried the data
   queried <- !is.null(query$q) || !is.null(query$filter) || !is.null(query$fields)
 
-  if (queried && use_dump)
+  if (queried && use_dump) {
     cli::cli_warn(c(
       "Invalid combination of {.var rows}, {.var row_filters}
       and/or {.var col_select}.",
@@ -29,12 +29,13 @@ use_dump_check <- function(query, rows) {
       AND query its rows/columns.",
       i = "ALL rows and columns of the resource will be downloaded."
     ))
+  }
 
   # warn users if they haven't queried
   # the data but have requested rows > 99999
 
   if (is.null(rows)) rows <- 0
-  if (!queried && rows > 99999)
+  if (!queried && rows > 99999) {
     cli::cli_warn(c(
       "Getting all rows of resource.",
       i = "All rows will be returned if you
@@ -42,8 +43,8 @@ use_dump_check <- function(query, rows) {
       i = "You set {.var rows} to
       {format(rows, big.mark = ',', scientific = FALSE)}"
     ))
+  }
 
 
   return(use_dump)
 }
-

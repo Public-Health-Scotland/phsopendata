@@ -11,12 +11,12 @@ dump_download <- function(res_id) {
   )
 
   # if content is a web page
-  if ("xml_document" %in% class(content))
+  if ("xml_document" %in% class(content)) {
     cli::cli_abort(c(
       "Can't find resource with ID {.var {res_id}} in datastore."
     ))
+  }
 
   # return data
   return(content[, -1])
-
 }

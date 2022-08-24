@@ -11,15 +11,16 @@ check_dataset_name <- function(dataset_name) {
   # Has only lowercase alphanum or hyphens inbetween
   dataset_name_regex <- "^[a-z0-9][a-z0-9\\-]+?[a-z0-9]$"
 
-  if (!inherits(dataset_name, "character"))
+  if (!inherits(dataset_name, "character")) {
     cli::cli_abort(c(
       "The dataset name supplied {.var {dataset_name}} is invalid.",
       "x" = "dataset_name must be of type character.",
       "i" = "You supplied a {.cls {class(dataset_name)[0]}} value."
     ))
+  }
 
 
-  if (!grepl(dataset_name_regex, dataset_name))
+  if (!grepl(dataset_name_regex, dataset_name)) {
     cli::cli_abort(c(
       "The dataset name supplied {.var {dataset_name}} is invalid",
       "x" = "dataset_name must be in dash-case
@@ -27,5 +28,5 @@ check_dataset_name <- function(dataset_name) {
       "i" = "You can find dataset names in the URL
       of a dataset's page on {.url www.opendata.nhs.scot}."
     ))
-
+  }
 }
