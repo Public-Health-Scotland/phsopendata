@@ -22,8 +22,8 @@ knitr::opts_chunk$set(
 
 `phsopendata` contains functions to interact with open data from the [Scottish Health and Social Care Open Data platform](https://www.opendata.nhs.scot/) via the CKAN API. 
 
-- `get-resource` extracts a single resource from an open dataset by resource id
-- `get-dataset` extracts multiple resources from an open dataset by dataset name
+- `get_resource()` extracts a single resource from an open dataset by resource id
+- `get_dataset()` extracts multiple resources from an open dataset by dataset name
 
 For extracting metadata and search functionality, we recommend using the [ckanr package](https://docs.ropensci.org/ckanr/). 
 

@@ -14,9 +14,9 @@ coverage](https://codecov.io/gh/Public-Health-Scotland/phsopendata/branch/master
 [Scottish Health and Social Care Open Data
 platform](https://www.opendata.nhs.scot/) via the CKAN API.
 
--   `get-resource` extracts a single resource from an open dataset by
+-   `get_resource()` extracts a single resource from an open dataset by
     resource id
--   `get-dataset` extracts multiple resources from an open dataset by
+-   `get_dataset()` extracts multiple resources from an open dataset by
     dataset name
 
 For extracting metadata and search functionality, we recommend using the
