@@ -101,8 +101,8 @@ so the dataset name will be gp-practice-populations.
 Contributing to phsopendata
 ---------------------------
 
-At present, this package is maintained by [David
-Aikman](https://github.com/daikman).
+At present, this package is maintained by the [PHS Open Data
+team](phs.opendata@phs.scot).
 
 If you have requests or suggestions for additional functionality, please
 contact the package maintainer and/or the [PHS Open Data
