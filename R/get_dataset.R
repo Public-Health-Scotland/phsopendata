@@ -75,12 +75,13 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   conflicts <- unlist(inconsistencies)
   to_coerce <- unique(names(conflicts))
 
-  if (length(to_coerce) > 0)
+  if (length(to_coerce) > 0) {
     cli::cli_warn(c(
       "Due to conflicts between column types across resources,
-      the following columns have been coerced to type character:\n
-      {paste0(to_coerce, collapse = ', ')}"
+      the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to type character:",
+      "{.val {to_coerce}}"
     ))
+  }
 
   # combine
   combined <- purrr::map_df(
