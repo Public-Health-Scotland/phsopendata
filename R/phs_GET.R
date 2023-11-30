@@ -6,7 +6,6 @@
 #' @return content of a httr::GET request
 #'
 phs_GET <- function(action, query, verbose = FALSE) {
-
   # define URL
   url <- request_url(action, query)
 

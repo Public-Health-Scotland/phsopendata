@@ -3,7 +3,6 @@
 #' @param row_filters list or named vectors matching fileds to values
 #' @return a json as a character string
 parse_row_filters <- function(row_filters) {
-
   # exit function if no filters
   if (is.null(row_filters)) {
     return(NULL)

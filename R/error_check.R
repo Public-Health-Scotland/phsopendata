@@ -3,7 +3,6 @@
 #' @param content object produced by `httr::content`
 #'
 error_check <- function(content) {
-
   # if content is not a list,
   # stop for content (a string describing an error)
   if (!is.list(content)) {

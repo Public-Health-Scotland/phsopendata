@@ -1,5 +1,4 @@
 test_that("returns true as expected", {
-
   # all are null
   expect_true(
     phsopendata:::use_dump_check(list(), NULL)
@@ -24,11 +23,9 @@ test_that("returns true as expected", {
       phsopendata:::use_dump_check(list(q = 4), 100000)
     )
   )
-
 })
 
 test_that("returns false as expected", {
-
   # rows is NULL and query list is not all NULL
   expect_false(
     phsopendata:::use_dump_check(list(fields = "Age"), NULL)
@@ -43,5 +40,4 @@ test_that("returns false as expected", {
   expect_false(
     phsopendata:::use_dump_check(list(), 100)
   )
-
 })

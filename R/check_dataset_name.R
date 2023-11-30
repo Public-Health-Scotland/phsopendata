@@ -6,7 +6,6 @@
 #' @param dataset_name a resource ID
 #'
 check_dataset_name <- function(dataset_name) {
-
   # Starts and ends in a lowercase letter or number
   # Has only lowercase alphanum or hyphens inbetween
   dataset_name_regex <- "^[a-z0-9][a-z0-9\\-]+?[a-z0-9]$"

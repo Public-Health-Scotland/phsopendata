@@ -4,7 +4,6 @@
 #' @return dataframe containing resource records
 #'
 dump_download <- function(res_id) {
-
   # fetch the data
   content <- suppressMessages(
     phs_GET("dump", res_id)

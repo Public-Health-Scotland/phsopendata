@@ -1,5 +1,4 @@
 test_that("throws errors on invalid sql argument", {
-
   # wrong class
   expect_error(
     get_resource_sql(9000),
@@ -17,11 +16,9 @@ test_that("throws errors on invalid sql argument", {
     get_resource_sql("this is wrong"),
     regexp = "`sql` must start with SELECT"
   )
-
 })
 
 test_that("gets expected data", {
-
   sql <- "
      SELECT
        \"TotalCancelled\",\"TotalOperations\",\"Hospital\",\"Month\"
@@ -37,11 +34,9 @@ test_that("gets expected data", {
     c("TotalCancelled", "TotalOperations", "Hospital", "Month"),
     names(df)
   )
-
 })
 
 test_that("SQL errors", {
-
   # non-existent column in real table
   expect_error(
     get_resource_sql(
@@ -66,5 +61,4 @@ test_that("SQL errors", {
     ),
     regexp = "syntax error at or near \"'donut'\""
   )
-
 })

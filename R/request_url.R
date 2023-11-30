@@ -5,7 +5,6 @@
 #' @return a URL as a character string
 #'
 request_url <- function(action, query) {
-
   # check action is valid
   valid_actions <- c("datastore_search", "datastore_search_sql", "dump", "package_show", "package_list")
   if (!(action %in% valid_actions)) {

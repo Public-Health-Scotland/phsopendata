@@ -19,23 +19,24 @@
 #'   max_resources = 2, rows = 10
 #' )
 get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
-
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
   # define query and try API call
   query <- paste0("id=", dataset_name)
   content <- try(
-    phs_GET("package_show", query), silent = TRUE
+    phs_GET("package_show", query),
+    silent = TRUE
   )
 
   # if content contains a 'Not Found Error'
   # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1]))
+  if (grepl("Not Found Error", content[1])) {
     suggest_dataset_name(dataset_name)
+  }
 
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~.x$id)
+  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
   n_res <- length(all_ids)
   res_index <- 1:min(n_res, max_resources)
   ids_selection <- all_ids[res_index]
@@ -50,25 +51,25 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   # resolve class issues
   types <- purrr::map(
     all_data,
-    ~unlist(lapply(.x, class))
+    ~ unlist(lapply(.x, class))
   )
 
   # for each df, check if next df class matches
-  inconsistencies = vector(length = length(types) - 1, mode = "list")
+  inconsistencies <- vector(length = length(types) - 1, mode = "list")
   for (i in seq_along(types)) {
     if (i == length(types)) break
 
-    this_types = types[[i]]
-    next_types = types[[i + 1]]
+    this_types <- types[[i]]
+    next_types <- types[[i + 1]]
 
     # find matching names
-    matching_names = suppressWarnings(
+    matching_names <- suppressWarnings(
       names(this_types) == names(next_types)
     )
 
     # of matching name cols, find if types match too
-    inconsistent_index = this_types[matching_names] != next_types[matching_names]
-    inconsistencies[[i]] = this_types[matching_names][inconsistent_index]
+    inconsistent_index <- this_types[matching_names] != next_types[matching_names]
+    inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
   }
 
   # define which columns to coerce and warn
@@ -86,14 +87,14 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   # combine
   combined <- purrr::map_df(
     all_data,
-    ~dplyr::mutate(.x,
-                   dplyr::across(
-                     dplyr::any_of(to_coerce),
-                     as.character
-                   )
+    ~ dplyr::mutate(
+      .x,
+      dplyr::across(
+        dplyr::any_of(to_coerce),
+        as.character
+      )
     )
   )
 
   return(combined)
 }
-

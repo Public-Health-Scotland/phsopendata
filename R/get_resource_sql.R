@@ -45,42 +45,44 @@
 #'
 #' # This is equivalent to:
 #' cols <- c(
-#'    "TotalCancelled", "TotalOperations",
-#'    "Hospital", "Month"
+#'   "TotalCancelled", "TotalOperations",
+#'   "Hospital", "Month"
 #' )
 #' row_filter <- c(Hospital = "D102H")
 #'
 #' df2 <- get_resource(
-#'    "bcc860a4-49f4-4232-a76b-f559cf6eb885",
-#'    col_select = cols,
-#'    row_filters = row_filter
+#'   "bcc860a4-49f4-4232-a76b-f559cf6eb885",
+#'   col_select = cols,
+#'   row_filters = row_filter
 #' )
 get_resource_sql <- function(sql) {
-
-  if (length(sql) > 1)
+  if (length(sql) > 1) {
     cli::cli_abort(c(
       "SQL validation error.",
       i = "{.var sql} must be of length 1",
       x = "You entered an object of length {length(sql)}."
     ))
+  }
 
-  if (!("character" %in% class(sql)))
+  if (!("character" %in% class(sql))) {
     cli::cli_abort(c(
       "SQL validation error.",
       i = "{.var sql} must be of class {.cls character}",
       x = "You entered an object of class {.cls {class(sql)[1]}}."
     ))
+  }
 
   # remove spaces
   sql <- gsub(" ", "", sql)
   sql <- gsub("\n", "", sql)
 
   # check query is a SELECT statement
-  if (substr(sql, 1, 6) != "SELECT")
+  if (substr(sql, 1, 6) != "SELECT") {
     cli::cli_abort(c(
       "SQL validation error.",
       i = "{.var sql} must start with SELECT"
     ))
+  }
 
   # add query field prefix
   query <- paste0("sql=", sql)
@@ -91,19 +93,19 @@ get_resource_sql <- function(sql) {
   # get correct order of columns
   order <- purrr::map_chr(
     content$result$fields,
-    ~.x$id
+    ~ .x$id
   )
 
   # extract the records (rows) from content
   data <- purrr::map_dfr(
     content$result$records,
-    ~{
-       # replace NULL with "" so tibble works
-       is_null <- purrr::map_lgl(.x, is.null)
-       .x[is_null] <- ""
+    ~ {
+      # replace NULL with "" so tibble works
+      is_null <- purrr::map_lgl(.x, is.null)
+      .x[is_null] <- ""
 
-       tibble::as_tibble(.x)
-     }
+      tibble::as_tibble(.x)
+    }
   )
 
   # select and reorder columns to reflect
@@ -123,6 +125,4 @@ get_resource_sql <- function(sql) {
   }
 
   return(cleaner)
-
 }
-

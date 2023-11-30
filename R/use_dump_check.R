@@ -5,7 +5,6 @@
 #' @return a logical value. TRUE indicates that the dump should be used
 #'
 use_dump_check <- function(query, rows) {
-
   # if row input is > 99999 or NULL
   # or all queries (inc. rows) are null
   # then use GET datastore_dump
