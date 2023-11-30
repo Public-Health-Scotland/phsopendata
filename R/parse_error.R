@@ -14,13 +14,11 @@ parse_error <- function(error) {
 
   # special case for validation errors
   if (error_type == "Validation Error") {
-
     error_output <- paste0(names(error[1][1]), ": ", error[1][[1]])
 
     # translate message for package users
     error_output <- sub("fields", "col_select", error_output)
     error_output <- sub("q", "row_filters", error_output)
-
   }
 
   # special case for SQL validation errors

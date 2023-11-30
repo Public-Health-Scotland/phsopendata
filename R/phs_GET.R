@@ -19,11 +19,12 @@ phs_GET <- function(action, query, verbose = FALSE) {
   )
 
   # Check for response from server
-  if (!inherits(response, "response"))
+  if (!inherits(response, "response")) {
     cli::cli_abort(c(
       "Can't connect to the CKAN server.",
       i = "Check your network/proxy settings."
     ))
+  }
 
   # extract content from HTTP response
   content <- httr::content(
@@ -35,5 +36,4 @@ phs_GET <- function(action, query, verbose = FALSE) {
 
   if (verbose) cat("GET request successful.\n")
   return(content)
-
 }
