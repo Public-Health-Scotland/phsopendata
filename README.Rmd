@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # phsopendata
 
 <!-- badges: start -->
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/Public-Health-Scotland/phsopendata)](https://github.com/Public-Health-Scotland/phsopendata/releases/latest)
 [![R build status](https://github.com/Public-Health-Scotland/phsopendata/workflows/R-CMD-check/badge.svg)](https://github.com/Public-Health-Scotland/phsopendata/actions)
 <!-- badges: end -->
 
