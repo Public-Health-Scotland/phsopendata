@@ -22,7 +22,6 @@
 #'
 #' df <- get_resource(res_id = res_id, row_filters = filters, col_select = wanted_cols)
 get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = NULL) {
-
   # check res_id
   check_res_id(res_id)
 
@@ -35,8 +34,9 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
   )
 
   # if dump should be used, use it
-  if (use_dump_check(query, rows))
+  if (use_dump_check(query, rows)) {
     return(dump_download(res_id))
+  }
 
   # if there is no row limit set
   # set limit to CKAN max
@@ -55,7 +55,7 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
   # AND the user was not aware of this limit (`rows` defaulted to NULL)
   # warn the user about this limit.
   total_rows <- res_content$result$total
-  if (is.null(rows) && query$limit < total_rows)
+  if (is.null(rows) && query$limit < total_rows) {
     cli::cli_warn(c(
       "Returning the first {query$limit}
       results (rows) of your query.
@@ -63,14 +63,16 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
       i = "To get ALL matching rows you will need to download
       the whole resource and apply filters/selections locally."
     ))
+  }
 
   # if more rows were requested than received
   # let the user know
-  if (!is.null(rows) && query$limit > total_rows)
+  if (!is.null(rows) && query$limit > total_rows) {
     cli::cli_alert_warning(c(
       "You set {.var rows} to {query$limit} but
       only {total_rows} rows matched your query."
     ))
+  }
 
   # extract data from response content
   data <- purrr::map_dfr(

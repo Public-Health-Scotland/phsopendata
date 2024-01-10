@@ -1,4 +1,4 @@
-test_that("returns nothing if no error",  {
+test_that("returns nothing if no error", {
   content <- httr::content(
     httr::GET(
       phsopendata:::request_url("package_list", "")
@@ -9,7 +9,7 @@ test_that("returns nothing if no error",  {
   )
 })
 
-test_that("throws error if error in httr content",  {
+test_that("throws error if error in httr content", {
   content <- httr::content(
     httr::GET(
       phsopendata:::request_url("datastore_search", "id=doop")

@@ -12,11 +12,12 @@ test_that("returns data in the expected format", {
 
 test_that("errors properly", {
   expect_error(get_dataset("Mal-formed-name"),
-               regexp = "The dataset name supplied `Mal-formed-name` is invalid"
+    regexp = "The dataset name supplied `Mal-formed-name` is invalid"
   )
   expect_error(get_dataset("dataset-name-with-no-close-match"),
-               regexp = "Can't find the dataset name `dataset-name-with-no-close-match`"
+    regexp = "Can't find the dataset name `dataset-name-with-no-close-match`"
   )
   expect_error(get_dataset("gp-practice-population"),
-               regexp = "Did you mean 'gp-practice-populations'?")
+    regexp = "Did you mean 'gp-practice-populations'?"
+  )
 })
