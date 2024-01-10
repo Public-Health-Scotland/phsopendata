@@ -4,7 +4,7 @@
 #' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
 #' @param max_resources (optional) the maximum number of resources
 #' to return, use for testing code,
-#' it will retunr the n latest resources
+#' it will return the n latest resources
 #' @param rows (optional) specify the max number of rows
 #' to return for each resource.
 #'

@@ -14,7 +14,7 @@
 #'
 #'
 #' Column names must be double-quoted,
-#' while character values in filters must be single-quoated.
+#' while character values in filters must be single-quoted.
 #' e.g.,
 #'
 #' ```"Age" = '34'```

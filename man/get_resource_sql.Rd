@@ -15,7 +15,7 @@ e.g.,
 \verb{SELECT * from "58527343-a930-4058-bf9e-3c6e5cb04010"}
 
 Column names must be double-quoted,
-while character values in filters must be single-quoated.
+while character values in filters must be single-quoted.
 e.g.,
 
 \code{"Age" = '34'}
