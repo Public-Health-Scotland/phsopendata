@@ -108,8 +108,8 @@ get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 
 ## Contributing to phsopendata
 
-At present, this package is maintained by [David
-Aikman](https://github.com/daikman).
+At present, this package is maintained by [Csilla
+Scharle](https://github.com/csillasch).
 
 If you have requests or suggestions for additional functionality, please
 contact the package maintainer and/or the [PHS Open Data
