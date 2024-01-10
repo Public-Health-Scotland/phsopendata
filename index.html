@@ -79,9 +79,10 @@
 </h2>
 <p>You need to install <code>phsopendata</code> from GitHub, which requires a package like <code>remotes</code> or <code>devtools</code>.</p>
 <p>Using <code>remotes</code> you run this to install the package:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"Public-Health-Scotland/phsopendata"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">upgrade =</span> <span class="st">"never"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"Public-Health-Scotland/phsopendata"</span>,</span>
+<span>  upgrade <span class="op">=</span> <span class="st">"never"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -91,34 +92,37 @@
 <a class="anchor" aria-label="anchor" href="#downloading-a-data-table-with-get_resource"></a>
 </h3>
 <p>To extract a specific resource, you will need it’s unique identifier - resource id. This can be found in the dataset metadata, the URL of a resource’s page on <a href="https://www.opendata.nhs.scot/" class="external-link uri">https://www.opendata.nhs.scot/</a>, or extracted using <code>ckanr::package_show</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phsopendata)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define a resource ID</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>res_id <span class="ot">&lt;-</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># download the data from the CKAN database</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">get_resource</span>(<span class="at">res_id =</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Public-Health-Scotland/phsopendata" class="external-link">phsopendata</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># define a resource ID</span></span>
+<span><span class="va">res_id</span> <span class="op">&lt;-</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span></span>
+<span></span>
+<span><span class="co"># download the data from the CKAN database</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span>res_id <span class="op">=</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="queryingfiltering-data-with-get_resource">Querying/filtering data with <code>get_resource()</code>
 <a class="anchor" aria-label="anchor" href="#queryingfiltering-data-with-get_resource"></a>
 </h3>
 <p>You can define a row limit with the <code>rows</code> argument to get the first <em>N</em> rows of a table.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get first 100 rows</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_resource</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">res_id =</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rows =</span> <span class="dv">100</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get first 100 rows</span></span>
+<span><span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span></span>
+<span>  res_id <span class="op">=</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span>,</span>
+<span>  rows <span class="op">=</span> <span class="fl">100</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>You can use <code>col_select</code> and <code>row_filters</code> to query the data server-side (i.e., the data is filtered before it is downloaded to your machine).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get first 100 rows</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_resource</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">res_id =</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_select =</span> <span class="fu">c</span>(<span class="st">"GPPracticeName"</span>, <span class="st">"TelephoneNumber"</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_filters =</span> <span class="fu">list</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">HB =</span> <span class="st">"S08000017"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Dispensing =</span> <span class="st">"Y"</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get first 100 rows</span></span>
+<span><span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span></span>
+<span>  res_id <span class="op">=</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GPPracticeName"</span>, <span class="st">"TelephoneNumber"</span><span class="op">)</span>,</span>
+<span>  row_filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    HB <span class="op">=</span> <span class="st">"S08000017"</span>,</span>
+<span>    Dispensing <span class="op">=</span> <span class="st">"Y"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="downloading-multiple-tables-with-get_dataset">Downloading multiple tables with <code>get_dataset()</code>
@@ -126,15 +130,16 @@
 </h3>
 <p>To extract all resources from a dataset, you will need to use the <em>dataset name</em>. Note that this will differ from the <em>dataset title</em> that displays on the website. This can be found in the dataset metadata extracted using <code>ckanr::package_show</code>, or taken from the dataset URL.</p>
 <p>In this example, we are downloading GP Practice Population Demographics from: <a href="https://www.opendata.nhs.scot/dataset/gp-practice-populations" class="external-link">opendata.nhs.scot/dataset/<em>gp-practice-populations</em></a>, so the dataset name will be gp-practice-populations.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if max_resources is not set, all resources will be returned by default. </span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we pull 10 rows from the first 2 resources only</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_dataset</span>(<span class="st">"gp-practice-populations"</span>, <span class="at">max_resources =</span> <span class="dv">2</span>, <span class="at">rows =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># if max_resources is not set, all resources will be returned by default. </span></span>
+<span><span class="co"># Here we pull 10 rows from the first 2 resources only</span></span>
+<span><span class="fu"><a href="reference/get_dataset.html">get_dataset</a></span><span class="op">(</span><span class="st">"gp-practice-populations"</span>, max_resources <span class="op">=</span> <span class="fl">2</span>, rows <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="contributing-to-phsopendata">Contributing to phsopendata<a class="anchor" aria-label="anchor" href="#contributing-to-phsopendata"></a>
 </h2>
-<p>At present, this package is maintained by the <a href="phs.opendata@phs.scot">PHS Open Data team</a>.</p>
+<p>At present, this package is maintained by <a href="https://github.com/csillasch" class="external-link">Csilla Scharle</a>.</p>
 <p>If you have requests or suggestions for additional functionality, please contact the package maintainer and/or the <a href="phs.opendata@phs.scot">PHS Open Data team</a>.</p>
 <p>If you would like to share examples of how you work with open data, you can also do so in the <a href="https://github.com/Public-Health-Scotland/Open-Data" class="external-link">Open Data repository</a>, where example scripts and resources are collated.</p>
 </div>
@@ -174,6 +179,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://github.com/Public-Health-Scotland/phsopendata/releases/latest" class="external-link"><img src="https://img.shields.io/github/v/release/Public-Health-Scotland/phsopendata" alt="GitHub release (latest by date)"></a></li>
 <li><a href="https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/Public-Health-Scotland/phsopendata?branch=master" class="external-link"><img src="https://codecov.io/gh/Public-Health-Scotland/phsopendata/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
