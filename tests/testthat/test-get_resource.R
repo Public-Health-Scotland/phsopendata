@@ -74,5 +74,4 @@ test_that("first 99999 rows returned if query matches > 99999 rows", {
   )
 
   expect_true(nrow(df) == 99999)
-
 })

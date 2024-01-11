@@ -1,4 +1,4 @@
-test_that("correctly extracts error from API response",  {
+test_that("correctly extracts error from API response", {
   content <- httr::content(
     httr::GET(
       phsopendata:::request_url("datastore_search", "id=doop")
@@ -18,5 +18,4 @@ test_that("correctly extracts error from API response",  {
     phsopendata:::parse_error(content$error),
     "resource_id: Missing value"
   )
-
 })
