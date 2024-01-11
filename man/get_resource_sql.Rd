@@ -47,15 +47,15 @@ df <- get_resource_sql(sql)
 
 # This is equivalent to:
 cols <- c(
-   "TotalCancelled", "TotalOperations",
-   "Hospital", "Month"
+  "TotalCancelled", "TotalOperations",
+  "Hospital", "Month"
 )
 row_filter <- c(Hospital = "D102H")
 
 df2 <- get_resource(
-   "bcc860a4-49f4-4232-a76b-f559cf6eb885",
-   col_select = cols,
-   row_filters = row_filter
+  "bcc860a4-49f4-4232-a76b-f559cf6eb885",
+  col_select = cols,
+  row_filters = row_filter
 )
 }
 \seealso{
