@@ -12,7 +12,7 @@ get_dataset(dataset_name, max_resources = NULL, rows = NULL)
 
 \item{max_resources}{(optional) the maximum number of resources
 to return, use for testing code,
-it will retunr the n latest resources}
+it will return the n latest resources}
 
 \item{rows}{(optional) specify the max number of rows
 to return for each resource.}
