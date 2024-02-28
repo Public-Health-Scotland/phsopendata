@@ -18,7 +18,8 @@ Imports:
     readr (>= 1.0.0),
     stringdist,
     cli,
-    xml2
+    xml2,
+    ckanr
 Suggests: 
     covr,
     testthat (>= 3.0.0)
