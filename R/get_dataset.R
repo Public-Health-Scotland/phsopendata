@@ -11,7 +11,6 @@
 #' @seealso [get_resource()] for downloading a single resource
 #' from a dataset.
 #'
-#' @importFrom magrittr %>%
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
@@ -37,13 +36,17 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
 
   # define list of resource IDs to get
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
+
   n_res <- length(all_ids)
   res_index <- 1:min(n_res, max_resources)
-  ids_selection <- all_ids[res_index]
+
+  selection_ids <- all_ids[res_index]
+  selection_names <- all_names[res_index]
 
   # get all resources
   all_data <- purrr::map(
-    ids_selection,
+    selection_ids,
     get_resource,
     rows = rows
   )
@@ -51,8 +54,9 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   # resolve class issues
   types <- purrr::map(
     all_data,
-    ~ unlist(lapply(.x, class))
+    ~ purrr::map_chr(.x, class)
   )
+
 
   # for each df, check if next df class matches
   inconsistencies <- vector(length = length(types) - 1, mode = "list")
@@ -73,8 +77,7 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   }
 
   # define which columns to coerce and warn
-  conflicts <- unlist(inconsistencies)
-  to_coerce <- unique(names(conflicts))
+  to_coerce <- unique(names(unlist(inconsistencies)))
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -82,19 +85,38 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
       the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to type character:",
       "{.val {to_coerce}}"
     ))
-  }
 
-  # combine
-  combined <- purrr::map_df(
-    all_data,
-    ~ dplyr::mutate(
-      .x,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
+    all_data <- purrr::map(
+      all_data,
+      ~ dplyr::mutate(
+        .x,
+        dplyr::across(
+          dplyr::any_of(to_coerce),
+          as.character
+        )
       )
     )
+  }
+
+  # Add names
+  all_data <- purrr::pmap(
+    list(
+      "data" = all_data,
+      "ids" = selection_ids,
+      "names" = selection_names
+    ),
+    function(data, ids, names) {
+      dplyr::mutate(
+        data,
+        "res_id" = ids,
+        "res_name" = names,
+        .before = dplyr::everything()
+      )
+    }
   )
+
+  # combine
+  combined <- purrr::list_rbind(all_data)
 
   return(combined)
 }
