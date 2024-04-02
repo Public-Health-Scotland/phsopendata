@@ -47,8 +47,7 @@ get_resource <- function(res_id, rows = NULL, row_filters = NULL, col_select = N
   query[null_q_field] <- NULL
 
   # fetch the data
-  q <- paste0(paste0(names(query), "=", query), collapse = "&")
-  res_content <- phs_GET("datastore_search", q)
+  res_content <- phs_GET("datastore_search", query)
 
   # if the total number of rows is greater than the
   # number of rows fetched
