@@ -4,7 +4,13 @@
 \alias{get_resource}
 \title{Get Open Data resource}
 \usage{
-get_resource(res_id, rows = NULL, row_filters = NULL, col_select = NULL)
+get_resource(
+  res_id,
+  rows = NULL,
+  row_filters = NULL,
+  col_select = NULL,
+  include_context = FALSE
+)
 }
 \arguments{
 \item{res_id}{The resource ID as found on
@@ -12,11 +18,17 @@ get_resource(res_id, rows = NULL, row_filters = NULL, col_select = NULL)
 
 \item{rows}{(optional) specify the max number of rows to return.}
 
-\item{row_filters}{(optional) a named list or vector that specifies values of columns/fields to keep.
+\item{row_filters}{(optional) a named list or vector that specifies values of
+columns/fields to keep.
 e.g. list(Date = 20220216, Sex = "Female").}
 
-\item{col_select}{(optional) a character vector containing the names of desired columns/fields.
+\item{col_select}{(optional) a character vector containing the names of
+desired columns/fields.
 e.g. c("Date", "Sex").}
+
+\item{include_context}{(optional) If \code{TRUE} additional information about the
+resource will be added as columns to the data, including the resource ID, the
+resource name, the creation date and the last modified/updated date.}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data
@@ -26,10 +38,17 @@ Get Open Data resource
 }
 \examples{
 res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
+
+data <- get_resource(res_id)
+
 filters <- list("HB" = "S08000030", "Month" = "202109")
 wanted_cols <- c("HB", "Month", "TotalPatientsSeen")
 
-df <- get_resource(res_id = res_id, row_filters = filters, col_select = wanted_cols)
+filtered_data <- get_resource(
+  res_id = res_id,
+  row_filters = filters,
+  col_select = wanted_cols
+)
 }
 \seealso{
 \code{\link[=get_dataset]{get_dataset()}} for downloading all resources
