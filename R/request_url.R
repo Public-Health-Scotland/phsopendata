@@ -6,11 +6,18 @@
 #'
 request_url <- function(action, query) {
   # check action is valid
-  valid_actions <- c("datastore_search", "datastore_search_sql", "dump", "package_show", "package_list")
+  valid_actions <- c(
+    "datastore_search",
+    "datastore_search_sql",
+    "dump",
+    "package_show",
+    "package_list",
+    "resource_show"
+  )
   if (!(action %in% valid_actions)) {
     cli::cli_abort(c(
       "API call failed.",
-      x = "Invalid {.var action} argument in request."
+      x = "{.val {action}} is an invalid {.arg action} argument."
     ))
   }
 
