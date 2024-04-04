@@ -4,7 +4,12 @@
 \alias{get_dataset}
 \title{Get Open Data resources from a dataset}
 \usage{
-get_dataset(dataset_name, max_resources = NULL, rows = NULL)
+get_dataset(
+  dataset_name,
+  max_resources = NULL,
+  rows = NULL,
+  include_context = FALSE
+)
 }
 \arguments{
 \item{dataset_name}{name of the dataset as found on
@@ -16,6 +21,10 @@ it will return the n latest resources}
 
 \item{rows}{(optional) specify the max number of rows
 to return for each resource.}
+
+\item{include_context}{(optional) If \code{TRUE} additional information about the
+resource will be added as columns to the data, including the resource ID, the
+resource name, the creation date and the last modified/updated date.}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data
