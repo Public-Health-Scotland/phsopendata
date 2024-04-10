@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("returns data in the expected format", {
   gp_list_apr_2021 <- "a794d603-95ab-4309-8c92-b48970478c14"
 
@@ -7,6 +9,7 @@ test_that("returns data in the expected format", {
   expect_s3_class(data, "tbl_df")
   expect_length(data, 15)
   expect_equal(nrow(data), 1)
+  expect_named(data)
 
   # with query
   data_q <- get_resource(
@@ -15,8 +18,49 @@ test_that("returns data in the expected format", {
     col_select = c("PracticeCode", "AddressLine1")
   )
 
-  expect_true(all(names(data_q) == c("PracticeCode", "AddressLine1")))
-  expect_true(all(data_q$PracticeCode == 10002))
+  expect_named(data_q, c("PracticeCode", "AddressLine1"))
+  expect_equal(data_q[["PracticeCode"]], 10002)
+})
+
+test_that("returns expected context with the data", {
+  gp_list_apr_2021 <- "a794d603-95ab-4309-8c92-b48970478c14"
+  data_col_names <- names(get_resource(res_id = gp_list_apr_2021, rows = 1))
+
+  # without query
+  data <- get_resource(
+    res_id = gp_list_apr_2021,
+    rows = 1,
+    include_context = TRUE
+  )
+
+  expect_s3_class(data, "tbl_df")
+  expect_length(data, 19)
+  expect_equal(nrow(data), 1)
+  expect_named(data, c(
+    "res_id",
+    "res_name",
+    "res_created_date",
+    "res_modified_date",
+    data_col_names
+  ))
+
+  # with query
+  data_q <- get_resource(
+    gp_list_apr_2021,
+    row_filters = list(PracticeCode = 10002),
+    col_select = c("PracticeCode", "AddressLine1"),
+    include_context = TRUE
+  )
+
+  expect_named(data_q, c(
+    "res_id",
+    "res_name",
+    "res_created_date",
+    "res_modified_date",
+    "PracticeCode",
+    "AddressLine1"
+  ))
+  expect_equal(data_q[["PracticeCode"]], 10002)
 })
 
 test_that("checks res_id properly", {

@@ -111,6 +111,11 @@ get_resource <- function(res_id,
     res_created_date <- context_content$result$created
     res_modified_date <- context_content$result$modified
 
+    # Catch if the resource has never been modified
+    if (is.null(res_modified_date)) {
+      res_modified_date <- NA_character_
+    }
+
     data <- data %>%
       dplyr::mutate(
         res_id = res_id,
