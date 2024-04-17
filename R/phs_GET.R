@@ -1,7 +1,6 @@
 #' Send a GET request to the PHS CKAN API
 #'
-#' @param action The API endpoint you want to use, e.g., "package_show" / "datastore_search".
-#' @param query The query to pass to the endpoint defined by the action argument.
+#' @inheritParams request_url
 #' @param verbose TRUE or FALSE. If TRUE, a success message will be printed to the console.
 #' @return content of a httr::GET request
 #'
@@ -11,7 +10,7 @@ phs_GET <- function(action, query, verbose = FALSE) {
 
   # attempt GET request
   response <- httr::GET(
-    url,
+    url = url,
     user_agent = httr::user_agent(
       "https://github.com/Public-Health-Scotland/phsmethods"
     )

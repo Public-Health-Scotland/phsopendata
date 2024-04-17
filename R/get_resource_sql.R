@@ -85,7 +85,7 @@ get_resource_sql <- function(sql) {
   }
 
   # add query field prefix
-  query <- paste0("sql=", sql)
+  query <- list("sql" = sql)
 
   # attempt get request
   content <- phs_GET("datastore_search_sql", query)
