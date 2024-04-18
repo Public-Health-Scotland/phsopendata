@@ -51,53 +51,51 @@ get_resource <- function(res_id,
 
   # if dump should be used, use it
   if (use_dump_check(query, rows)) {
-    return(dump_download(res_id))
-  }
+    data <- dump_download(res_id)
+  } else {
+    # if there is no row limit set
+    # set limit to CKAN max
+    if (is.null(query$limit)) query$limit <- 99999
 
-  # if there is no row limit set
-  # set limit to CKAN max
-  if (is.null(query$limit)) query$limit <- 99999
+    # remove null values from query
+    null_q_field <- sapply(query, is.null)
+    query[null_q_field] <- NULL
 
-  # remove null values from query
-  null_q_field <- sapply(query, is.null)
-  query[null_q_field] <- NULL
+    # fetch the data
+    q <- paste0(paste0(names(query), "=", query), collapse = "&")
+    res_content <- phs_GET("datastore_search", q)
 
-  # fetch the data
-  q <- paste0(paste0(names(query), "=", query), collapse = "&")
-  res_content <- phs_GET("datastore_search", q)
-
-  # if the total number of rows is greater than the
-  # number of rows fetched
-  # AND the user was not aware of this limit (`rows` defaulted to NULL)
-  # warn the user about this limit.
-  total_rows <- res_content$result$total
-  if (is.null(rows) && query$limit < total_rows) {
-    cli::cli_warn(c(
-      "Returning the first {query$limit}
+    # if the total number of rows is greater than the
+    # number of rows fetched
+    # AND the user was not aware of this limit (`rows` defaulted to NULL)
+    # warn the user about this limit.
+    total_rows <- res_content$result$total
+    if (is.null(rows) && query$limit < total_rows) {
+      cli::cli_warn(c(
+        "Returning the first {query$limit}
       results (rows) of your query.
       {total_rows} rows match your query in total.",
-      i = "To get ALL matching rows you will need to download
+        i = "To get ALL matching rows you will need to download
       the whole resource and apply filters/selections locally."
-    ))
+      ))
+    }
+
+    # if more rows were requested than received
+    # let the user know
+    if (!is.null(rows) && query$limit > total_rows) {
+      cli::cli_warn(
+        "You set {.var rows} to {.val {query$limit}} but only {.val {total_rows}} rows matched your query."
+      )
+    }
+
+    # extract data from response content
+    data <- purrr::map_dfr(
+      res_content$result$records, ~.x
+    ) %>% dplyr::select(
+      -dplyr::starts_with("rank "),
+      -dplyr::matches("_id")
+    )
   }
-
-  # if more rows were requested than received
-  # let the user know
-  if (!is.null(rows) && query$limit > total_rows) {
-    cli::cli_alert_warning(c(
-      "You set {.var rows} to {query$limit} but
-      only {total_rows} rows matched your query."
-    ))
-  }
-
-
-  # extract data from response content
-  data <- purrr::map_dfr(
-    res_content$result$records, ~.x
-  ) %>% dplyr::select(
-    -dplyr::starts_with("rank "),
-    -dplyr::matches("_id")
-  )
 
   if (include_context) {
     # Get resource context if required
