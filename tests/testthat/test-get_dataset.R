@@ -18,6 +18,6 @@ test_that("errors properly", {
     regexp = "Can't find the dataset name `dataset-name-with-no-close-match`"
   )
   expect_error(get_dataset("gp-practice-population"),
-    regexp = "Did you mean 'gp-practice-populations'?"
+    regexp = "Did you mean .+?gp-practice-populations.+?\\?"
   )
 })
