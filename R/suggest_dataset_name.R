@@ -17,7 +17,7 @@ suggest_dataset_name <- function(dataset_name) {
       "Can't find the dataset name
       {.var {dataset_name}}, or a close match.",
       i = "Find a dataset's name in the URL
-      of it's page on {.url www.opendata.nhs.scot.}"
+      of its page on {.url www.opendata.nhs.scot.}"
     ))
   }
 
