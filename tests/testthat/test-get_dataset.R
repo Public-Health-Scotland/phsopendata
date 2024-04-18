@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("returns data in the expected format", {
   data <- get_dataset(
     dataset_name = "gp-practice-populations",

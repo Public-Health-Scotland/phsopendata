@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("returns data in the expected format", {
   gp_list_apr_2021 <- "a794d603-95ab-4309-8c92-b48970478c14"
 
