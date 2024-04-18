@@ -12,6 +12,13 @@ test_that("throws error and does suggest for close matches", {
     phsopendata:::suggest_dataset_name(
       "rospital-codes"
     ),
-    regexp = "Did you mean 'hospital-codes'?"
+    regexp = "Did you mean .+?\\?"
+  )
+
+  expect_error(
+    suggest_dataset_name(
+      "population"
+    ),
+    regexp = "Did you mean any of .+?\\?"
   )
 })
