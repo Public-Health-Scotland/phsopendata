@@ -105,21 +105,12 @@ get_dataset <- function(dataset_name,
     all_data <- purrr::pmap(
       list(
         "data" = all_data,
-        "ids" = selection_ids,
-        "names" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        "created_dates" = purrr::map_chr(content$result$resources[res_index], ~ .x$created),
-        "modified_dates" = purrr::map_chr(content$result$resources[res_index], ~ .x$last_modified)
+        "id" = selection_ids,
+        "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
+        "created_date" = purrr::map_chr(content$result$resources[res_index], ~ .x$created),
+        "modified_date" = purrr::map_chr(content$result$resources[res_index], ~ .x$last_modified)
       ),
-      function(data, ids, names, created_dates, modified_dates) {
-        dplyr::mutate(
-          data,
-          "res_id" = ids,
-          "res_name" = names,
-          "res_created_date" = created_dates,
-          "res_modified_date" = modified_dates,
-          .before = dplyr::everything()
-        )
-      }
+      add_context
     )
   }
 
