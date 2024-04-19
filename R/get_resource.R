@@ -11,7 +11,6 @@
 #' @seealso [get_dataset()] for downloading all resources
 #' from a given dataset.
 #'
-#' @importFrom magrittr %>%
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
