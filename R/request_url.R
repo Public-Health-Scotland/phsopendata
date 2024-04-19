@@ -21,17 +21,23 @@ request_url <- function(action, query) {
     ))
   }
 
-  # return dump URL
+  base_url <- "https://www.opendata.nhs.scot"
+
   if (action == "dump") {
-    return(paste0(
-      "https://www.opendata.nhs.scot/datastore/dump/",
-      query, "?bom=true"
-    ))
+    # return dump URL
+    url <- httr::modify_url(
+      url = base_url,
+      path = c("datastore/dump", query),
+      query = list(bom = "true")
+    )
+  } else {
+    url <- httr::modify_url(
+      url = base_url,
+      path = c("api/3/action", action),
+      query = query
+    )
   }
 
   # return standard API endpoint (i.e., not dump)
-  return(paste0(
-    "https://www.opendata.nhs.scot/api/3/action/",
-    action, "?", query
-  ))
+  return(url)
 }

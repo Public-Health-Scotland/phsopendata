@@ -26,7 +26,7 @@ get_dataset <- function(dataset_name,
   check_dataset_name(dataset_name)
 
   # define query and try API call
-  query <- paste0("id=", dataset_name)
+  query <- list("id" = dataset_name)
   content <- try(
     phs_GET("package_show", query),
     silent = TRUE
