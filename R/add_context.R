@@ -4,6 +4,10 @@ add_context <- function(data, id, name, created_date, modified_date) {
     modified_date <- NA_character_
   }
 
+  # Parse the date values
+  created_date <- strptime(created_date, format = "%FT%X", tz = "UTC")
+  modified_date <- strptime(modified_date, format = "%FT%X", tz = "UTC")
+
   data_with_context <- dplyr::mutate(
     data,
     "res_id" = id,

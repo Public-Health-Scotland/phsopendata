@@ -7,13 +7,18 @@ test_that("returns expected context with the data", {
   # without query
   data <- get_resource(
     res_id = gp_list_apr_2021,
-    rows = 1,
+    rows = 10,
     include_context = TRUE
   )
 
   expect_s3_class(data, "tbl_df")
+  expect_type(data$res_id, "character")
+  expect_type(data$res_name, "character")
+  expect_s3_class(data$res_created_date, "POSIXlt")
+  expect_s3_class(data$res_modified_date, "POSIXlt")
+
   expect_length(data, 19)
-  expect_equal(nrow(data), 1)
+  expect_equal(nrow(data), 10)
   expect_named(data, c(
     "res_id",
     "res_name",
