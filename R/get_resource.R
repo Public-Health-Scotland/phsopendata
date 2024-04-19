@@ -61,17 +61,17 @@ get_resource <- function(res_id,
     null_q_field <- sapply(query, is.null)
     query[null_q_field] <- NULL
 
-  # fetch the data
-  res_content <- phs_GET("datastore_search", query)
+    # fetch the data
+    res_content <- phs_GET("datastore_search", query)
 
-  # if the total number of rows is greater than the
-  # number of rows fetched
-  # AND the user was not aware of this limit (`rows` defaulted to NULL)
-  # warn the user about this limit.
-  total_rows <- res_content$result$total
-  if (is.null(rows) && query$limit < total_rows) {
-    cli::cli_warn(c(
-      "Returning the first {query$limit}
+    # if the total number of rows is greater than the
+    # number of rows fetched
+    # AND the user was not aware of this limit (`rows` defaulted to NULL)
+    # warn the user about this limit.
+    total_rows <- res_content$result$total
+    if (is.null(rows) && query$limit < total_rows) {
+      cli::cli_warn(c(
+        "Returning the first {query$limit}
       results (rows) of your query.
       {total_rows} rows match your query in total.",
         i = "To get ALL matching rows you will need to download
