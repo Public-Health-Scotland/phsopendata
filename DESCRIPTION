@@ -10,7 +10,6 @@ License: GPL (>= 2)
 Imports:
     dplyr (>= 1.0.0),
     httr (>= 1.0.0),
-    glue (>= 1.0.0),
     purrr,
     tibble (>= 3.0.0),
     jsonlite (>= 1.0.0),
