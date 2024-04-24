@@ -27,26 +27,28 @@ test_that("Returned context is the same for resource and dataset", {
   # If this test fails, that's good (probably) and this can all be removed
   expect_error(stopifnot(dataset_has_POSIXlt))
 
-  if(!dataset_has_POSIXlt) {
-  dataset <- dataset %>%
-    dplyr::mutate(
-      dplyr::across(c("res_created_date","res_modified_date"),
-                      as.POSIXlt)
-    )
+  if (!dataset_has_POSIXlt) {
+    dataset <- dataset %>%
+      dplyr::mutate(
+        dplyr::across(
+          c("res_created_date", "res_modified_date"),
+          as.POSIXlt
+        )
+      )
   }
   # --- Remove to here
 
   expect_equal(
     dataset %>%
       dplyr::filter(res_id == res_id_1) %>%
-      dplyr::select(!dplyr::where(~anyNA(.x))),
+      dplyr::select(!dplyr::where(~ anyNA(.x))),
     resource_1,
     list_as_map = TRUE
   )
   expect_equal(
     dataset %>%
       dplyr::filter(res_id == res_id_2) %>%
-      dplyr::select(!dplyr::where(~anyNA(.x))),
+      dplyr::select(!dplyr::where(~ anyNA(.x))),
     resource_2,
     list_as_map = TRUE
   )
