@@ -106,7 +106,7 @@ get_resource <- function(res_id,
     res_id <- context_content$result$id
     res_name <- context_content$result$name
     res_created_date <- context_content$result$created
-    res_modified_date <- context_content$result$modified
+    res_modified_date <- context_content$result$last_modified
 
     data <- data %>%
       add_context(
