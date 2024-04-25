@@ -14,8 +14,8 @@ test_that("returns expected context with the data", {
   expect_s3_class(data, "tbl_df")
   expect_type(data$res_id, "character")
   expect_type(data$res_name, "character")
-  expect_s3_class(data$res_created_date, "POSIXlt")
-  expect_s3_class(data$res_modified_date, "POSIXlt")
+  expect_s3_class(data$res_created_date, "POSIXct")
+  expect_s3_class(data$res_modified_date, "POSIXct")
 
   expect_length(data, 19)
   expect_equal(nrow(data), 10)

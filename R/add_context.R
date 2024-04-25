@@ -5,8 +5,8 @@ add_context <- function(data, id, name, created_date, modified_date) {
   }
 
   # Parse the date values
-  created_date <- strptime(created_date, format = "%FT%X", tz = "UTC")
-  modified_date <- strptime(modified_date, format = "%FT%X", tz = "UTC")
+  created_date <- as.POSIXct(created_date, format = "%FT%X", tz = "UTC")
+  modified_date <- as.POSIXct(modified_date, format = "%FT%X", tz = "UTC")
 
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure

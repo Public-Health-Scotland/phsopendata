@@ -19,25 +19,6 @@ test_that("Returned context is the same for resource and dataset", {
     include_context = TRUE
   )
 
-  # --- Remove from here
-  # This code works around an issue with vctrs
-  # https://github.com/r-lib/vctrs/issues/1930
-  dataset_has_POSIXlt <- inherits(dataset$res_created_date, "POSIXlt")
-
-  # If this test fails, that's good (probably) and this can all be removed
-  expect_error(stopifnot(dataset_has_POSIXlt))
-
-  if (!dataset_has_POSIXlt) {
-    dataset <- dataset %>%
-      dplyr::mutate(
-        dplyr::across(
-          c("res_created_date", "res_modified_date"),
-          as.POSIXlt
-        )
-      )
-  }
-  # --- Remove to here
-
   expect_equal(
     dataset %>%
       dplyr::filter(res_id == res_id_1) %>%
