@@ -39,15 +39,12 @@ get_latest_resource <- function(dataset_name, max_resources = NULL, rows = NULL)
                       created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
                       modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC"))
 
-  print(all_id_data)
 
-  #all_id_data
+  df <- data.frame(all_id_data) %>%
+    subset(created_date == max(created_date))
 
-  #df <- data.frame(all_id_data) %>%
-  #  subset(created_date == max(created_date))
-#
-  #df$id
-#
+  df$id
+
 }
 
 
