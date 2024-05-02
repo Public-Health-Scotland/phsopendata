@@ -1,21 +1,58 @@
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# RStudio Workbench is strictly for use by Public Health Scotland staff and
-# authorised users only, and is governed by the Acceptable Usage Policy https://github.com/Public-Health-Scotland/R-Resources/blob/master/posit_workbench_acceptable_use_policy.md.
+get_latest_resource <- function(dataset_name, max_resources = NULL, rows = NULL){
+  # throw error if name type/format is invalid
+  check_dataset_name(dataset_name)
+
+  # define query and try API call
+  query <- list("id" = dataset_name)
+  content <- try(
+    phs_GET("package_show", query),
+    silent = TRUE
+  )
+
+  # if content contains a 'Not Found Error'
+  # throw error with suggested dataset name
+  if (grepl("Not Found Error", content[1])) {
+    suggest_dataset_name(dataset_name)
+  }
+
+  query <- list("id" = dataset_name)
+  content <- try(
+    phs_GET("package_show", query),
+    silent = TRUE
+  )
+
+  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  res_index <- 1:length(all_ids)
+
+  id <- c()
+  created_date <- c()
+  modified_date <- c()
+
+  for(i in content$result$resources){
+    id <-  append(id, i$id)
+    created_date <- append(created_date, i$created)
+    modified_date <- append(modified_date, i$last_modified)
+  }
+
+
+  all_id_data <- list(id = id,
+                      created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
+                      modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC"))
+
+  print(all_id_data)
+
+  #all_id_data
+
+  #df <- data.frame(all_id_data) %>%
+  #  subset(created_date == max(created_date))
 #
-# This is a shared resource and is hosted on a pay-as-you-go cloud computing
-# platform.  Your usage will incur direct financial cost to Public Health
-# Scotland.  As such, please ensure
+  #df$id
 #
-#   1. that this session is appropriately sized with the minimum number of CPUs
-#      and memory required for the size and scale of your analysis;
-#   2. the code you write in this script is optimal and only writes out the
-#      data required, nothing more.
-#   3. you close this session when not in use; idle sessions still cost PHS
-#      money!
-#
-# For further guidance, please see https://github.com/Public-Health-Scotland/R-Resources/blob/master/posit_workbench_best_practice_with_r.md.
-#
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+}
+
+
+
+
 
 
 
