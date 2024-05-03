@@ -1,4 +1,9 @@
-get_latest_resource <- function(dataset_name, max_resources = NULL, rows = NULL){
+get_latest_resource <- function(dataset_name, rows = NULL){
+  applicable_datasets <- c("gp-practice-populations", "gp-practice-contact-details-and-list-sizes",
+                           "nhsscotland-payments-to-general-practice", "dental-practices-and-patient-registrations",
+                           "general-practitioner-contact-details", "prescribed-dispensed",
+                           "prescriptions-in-the-community", "community-pharmacy-contractor-activity")
+
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
@@ -9,21 +14,36 @@ get_latest_resource <- function(dataset_name, max_resources = NULL, rows = NULL)
     silent = TRUE
   )
 
+
+  #check if data set is within applicable datasets
+  #throw error if not
+  if(!dataset_name %in% applicable_datasets){
+    cli::cli_abort(c(
+      "The dataset name supplied {.var {dataset_name}} is not within the applicable datasets",
+      "x" = "Please see documentation.",
+      "i" = "You can find dataset names in the URL
+      of a dataset's page on {.url www.opendata.nhs.scot}."
+    ))
+  }
+
   # if content contains a 'Not Found Error'
   # throw error with suggested dataset name
   if (grepl("Not Found Error", content[1])) {
     suggest_dataset_name(dataset_name)
   }
 
+  #sned the api request
   query <- list("id" = dataset_name)
   content <- try(
     phs_GET("package_show", query),
     silent = TRUE
   )
 
+  #retrieve the resource id's from returned contect
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
-  res_index <- 1:length(all_ids)
 
+
+  #add the id, created date and last_modified to a dataframe
   id <- c()
   created_date <- c()
   modified_date <- c()
@@ -33,17 +53,15 @@ get_latest_resource <- function(dataset_name, max_resources = NULL, rows = NULL)
     created_date <- append(created_date, i$created)
     modified_date <- append(modified_date, i$last_modified)
   }
-
-
   all_id_data <- list(id = id,
                       created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
                       modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC"))
 
-
+  #filter for the id with the most recent created date
   df <- data.frame(all_id_data) %>%
     subset(created_date == max(created_date))
 
-  df$id
+  return(df$id)
 
 }
 
