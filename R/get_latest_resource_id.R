@@ -1,4 +1,4 @@
-get_latest_resource_id <- function(dataset_name, rows = NULL){
+get_latest_resource_id <- function(dataset_name){
   applicable_datasets <- c("gp-practice-populations", "gp-practice-contact-details-and-list-sizes",
                            "nhsscotland-payments-to-general-practice", "dental-practices-and-patient-registrations",
                            "general-practitioner-contact-details", "prescribed-dispensed",
