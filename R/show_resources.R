@@ -1,4 +1,4 @@
-show_resources <- function(dataset_name){
+show_resources <- function(dataset_name) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
@@ -21,4 +21,4 @@ show_resources <- function(dataset_name){
   return_value <- list("id" = all_ids, "names" = all_names)
 
   return(return_value)
-  }
+}
