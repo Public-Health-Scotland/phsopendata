@@ -18,16 +18,16 @@ test_that("returns expected context with the data", {
   )
 
   expect_s3_class(data, "tbl_df")
-  expect_type(data$res_id, "character")
-  expect_type(data$res_name, "character")
-  expect_s3_class(data$res_created_date, "POSIXct")
-  expect_s3_class(data$res_modified_date, "POSIXct")
+  expect_type(data$ResID, "character")
+  expect_type(data$ResName, "character")
+  expect_s3_class(data$ResCreatedDate, "POSIXct")
+  expect_s3_class(data$ResModifiedDate, "POSIXct")
 
   expect_equal(nrow(data), n_resources * n_rows)
   expect_length(data, 28)
   expect_named(
     data,
-    c("res_id", "res_name", "res_created_date", "res_modified_date", data_col_names)
+    c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate", data_col_names)
   )
-  expect_length(unique(data[["res_id"]]), n_resources)
+  expect_length(unique(data[["ResID"]]), n_resources)
 })

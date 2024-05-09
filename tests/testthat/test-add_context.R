@@ -21,14 +21,14 @@ test_that("Returned context is the same for resource and dataset", {
 
   expect_equal(
     dataset %>%
-      dplyr::filter(res_id == res_id_1) %>%
+      dplyr::filter(ResID == res_id_1) %>%
       dplyr::select(!dplyr::where(~ anyNA(.x))),
     resource_1,
     list_as_map = TRUE
   )
   expect_equal(
     dataset %>%
-      dplyr::filter(res_id == res_id_2) %>%
+      dplyr::filter(ResID == res_id_2) %>%
       dplyr::select(!dplyr::where(~ anyNA(.x))),
     resource_2,
     list_as_map = TRUE

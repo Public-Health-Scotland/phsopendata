@@ -17,10 +17,10 @@ add_context <- function(data, id, name, created_date, modified_date) {
 
   data_with_context <- dplyr::mutate(
     data,
-    "res_id" = id,
-    "res_name" = name,
-    "res_created_date" = created_date,
-    "res_modified_date" = modified_date,
+    "ResID" = id,
+    "ResName" = name,
+    "ResCreatedDate" = created_date,
+    "ResModifiedDate" = modified_date,
     .before = dplyr::everything()
   )
 
