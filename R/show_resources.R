@@ -1,3 +1,12 @@
+#' Show all available resources for a dataset
+#'
+#' @param dataset_name
+#'
+#' @return a [tibble][tibble::tibble-package] with the data
+#' @export
+#'
+#' @examples
+#' show_resources("weekly-accident-and-emergency-activity-and-waiting-times")
 show_resources <- function(dataset_name) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
