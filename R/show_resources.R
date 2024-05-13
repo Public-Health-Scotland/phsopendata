@@ -1,5 +1,8 @@
 #' Show all available resources for a dataset
 #'
+#' show_resources() returns all of the resources associated
+#' with a dataset
+#'
 #' @param dataset_name
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
