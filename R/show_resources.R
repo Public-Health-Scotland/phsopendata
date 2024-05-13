@@ -20,8 +20,10 @@ show_resources <- function(dataset_name) {
   all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
   all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created)
   all_date_modified <- purrr::map_chr(content$result$resources, ~ .x$last_modified)
-  return_value <- tibble::tibble("res_id" = all_ids, "name" = all_names,
-                                 "created" = all_date_created, "last_modified" = all_date_modified)
+  return_value <- tibble::tibble(
+    "res_id" = all_ids, "name" = all_names,
+    "created" = all_date_created, "last_modified" = all_date_modified
+  )
 
   return(return_value)
 }
