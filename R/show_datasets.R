@@ -1,6 +1,6 @@
 #' Show all available datasets
 #'
-#' `show_datasets()`Shows all datasets available form phs open data platform.
+#' `show_datasets()` shows all of the datasets hosted on the phs open data platform.
 #'
 #' @return A character vector.
 #' @export
