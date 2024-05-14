@@ -3,7 +3,7 @@
 #' show_resources() returns all of the resources associated
 #' with a dataset
 #'
-#' @param dataset_name
+#' @inheritParams get_dataset
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
