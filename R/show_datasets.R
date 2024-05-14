@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' show_datasets()
+#' head(show_datasets())
 #'
 show_datasets <- function() {
   data_sets <- phs_GET("package_list", "")$result %>%
