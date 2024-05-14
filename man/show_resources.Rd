@@ -13,7 +13,8 @@ show_resources(dataset_name)
 a \link[tibble:tibble-package]{tibble} with the data
 }
 \description{
-Show all available resources for a dataset
+show_resources() returns all of the resources associated
+with a dataset
 }
 \examples{
 show_resources("weekly-accident-and-emergency-activity-and-waiting-times")
