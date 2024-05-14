@@ -7,7 +7,8 @@
 show_resources(dataset_name)
 }
 \arguments{
-\item{dataset_name}{}
+\item{dataset_name}{name of the dataset as found on
+\href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data

@@ -13,6 +13,6 @@ A character vector.
 \code{show_datasets()} shows all of the datasets hosted on the phs open data platform.
 }
 \examples{
-show_datasets()
+head(show_datasets())
 
 }
