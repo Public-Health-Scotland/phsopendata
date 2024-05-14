@@ -3,6 +3,6 @@
 export(get_dataset)
 export(get_resource)
 export(get_resource_sql)
-export(show_datasets)
+export(list_datasets)
 export(show_resources)
 importFrom(magrittr,"%>%")
