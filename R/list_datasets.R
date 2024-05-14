@@ -1,4 +1,4 @@
-#' Show all available datasets
+#' Lists all available datasets
 #'
 #' `list_datasets()` shows all of the datasets hosted on the phs open data platform.
 #'
@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' head(show_datasets())
+#' head(list_datasets())
 #'
 list_datasets <- function() {
   data_sets <- phs_GET("package_list", "")$result %>%

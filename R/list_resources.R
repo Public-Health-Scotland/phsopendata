@@ -1,6 +1,6 @@
-#' Show all available resources for a dataset
+#' Lists all available resources for a dataset
 #'
-#' show_resources() returns all of the resources associated
+#' list_resources() returns all of the resources associated
 #' with a dataset
 #'
 #' @inheritParams get_dataset
@@ -9,8 +9,8 @@
 #' @export
 #'
 #' @examples
-#' show_resources("weekly-accident-and-emergency-activity-and-waiting-times")
-show_resources <- function(dataset_name) {
+#' list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
+list_resources <- function(dataset_name) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
