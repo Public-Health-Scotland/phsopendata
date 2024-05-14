@@ -10,7 +10,7 @@ show_datasets()
 A character vector.
 }
 \description{
-\code{show_datasets()}Shows all datasets available form phs open data platform.
+\code{show_datasets()} shows all of the datasets hosted on the phs open data platform.
 }
 \examples{
 show_datasets()
