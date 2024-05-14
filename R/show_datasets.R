@@ -1,6 +1,6 @@
 #' Show all available datasets
 #'
-#' `show_datasets()` shows all of the datasets hosted on the phs open data platform.
+#' `list_datasets()` shows all of the datasets hosted on the phs open data platform.
 #'
 #' @return A character vector.
 #' @export
@@ -8,7 +8,7 @@
 #' @examples
 #' head(show_datasets())
 #'
-show_datasets <- function() {
+list_datasets <- function() {
   data_sets <- phs_GET("package_list", "")$result %>%
     unlist()
 
