@@ -4,7 +4,11 @@
 \alias{list_datasets}
 \title{Lists all available datasets}
 \usage{
-list_datasets()
+list_datasets(include_additional_info = F)
+}
+\arguments{
+\item{include_additional_info}{(optional) set to true to return the number
+of resources per dataset and the date the dataset was last updated}
 }
 \value{
 A character vector.
@@ -14,5 +18,6 @@ A character vector.
 }
 \examples{
 head(list_datasets())
+head(list_datasets(include_additional_info = T))
 
 }
