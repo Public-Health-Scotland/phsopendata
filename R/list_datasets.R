@@ -2,11 +2,15 @@
 #'
 #' `list_datasets()` shows all of the datasets hosted on the phs open data platform.
 #'
+#' @param include_additional_info (optional) set to true to return the number
+#' of resources per dataset and the date the dataset was last updated
+#'
 #' @return A character vector.
 #' @export
 #'
 #' @examples
 #' head(list_datasets())
+#' head(list_datasets(include_additional_info = T))
 #'
 list_datasets <- function(include_additional_info = F) {
   data_sets <- phs_GET("package_list", "")$result

@@ -1,3 +1,11 @@
+#' returns a list of dataset names alongwith additional information,
+#' such as the amount of resources and the date it was last updated
+#'
+#' @param dataset_name
+#'
+#' @return
+#' @export
+#'
 get_datasets_additional_info <- function(dataset_name){
   query <- paste0("id=", dataset_name)
   content <- phs_GET("package_show", query)
