@@ -10,9 +10,8 @@
 #'
 #' @examples
 #' head(list_datasets())
-#' head(list_datasets(include_additional_info = T))
-#'
-list_datasets <- function(include_additional_info = F) {
+#' head(list_datasets(include_additional_info = TRUE))
+list_datasets <- function(include_additional_info = FASLE) {
   data_sets <- phs_GET("package_list", "")$result
   if(!include_additional_info){
     data_sets%>%
