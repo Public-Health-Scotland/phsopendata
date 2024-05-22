@@ -4,7 +4,7 @@
 \alias{list_datasets}
 \title{Lists all available datasets}
 \usage{
-list_datasets(include_additional_info = FASLE)
+list_datasets(include_additional_info = FALSE)
 }
 \arguments{
 \item{include_additional_info}{(optional) set to true to return the number
