@@ -4,7 +4,7 @@
 \alias{list_datasets}
 \title{Lists all available datasets}
 \usage{
-list_datasets(include_additional_info = F)
+list_datasets(include_additional_info = FASLE)
 }
 \arguments{
 \item{include_additional_info}{(optional) set to true to return the number
@@ -18,6 +18,5 @@ A character vector.
 }
 \examples{
 head(list_datasets())
-head(list_datasets(include_additional_info = T))
-
+head(list_datasets(include_additional_info = TRUE))
 }
