@@ -4,8 +4,6 @@
 #' @param dataset_name
 #'
 #' @return
-#' @export
-#'
 get_datasets_additional_info <- function(dataset_name){
   query <- paste0("id=", dataset_name)
   content <- phs_GET("package_show", query)
