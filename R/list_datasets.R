@@ -14,8 +14,8 @@
 list_datasets <- function(include_additional_info = FALSE) {
   data_sets <- phs_GET("package_list", "")$result
   if(!include_additional_info){
-    data_sets%>%
-    unlist()
+    data_sets <- tibble::tibble("name" = unlist(data_sets))
+
 
   return(data_sets)}
   else{
