@@ -53,15 +53,19 @@ get_latest_resource_id <- function(dataset_name){
     created_date <- append(created_date, i$created)
     modified_date <- append(modified_date, i$last_modified)
   }
-  all_id_data <- list(id = id,
+  all_id_data <- tibble::tibble(id = id,
                       created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
-                      modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC"))
+                      modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")) %>%
+    dplyr::mutate(most_recent_date_created = max(created_date))
 
-  #filter for the id with the most recent created date
-  df <- data.frame(all_id_data) %>%
-    subset(created_date == max(created_date))
+  all_id_data_first_row <- all_id_data %>%
+    dplyr::slice(1)
 
-  return(df$id)
+  if(all_id_data_first_row$created_date == all_id_data_first_row$most_recent_date_created){
+    return(all_id_data_first_row$id)
+  }else(warning("most recent id could not be identified"))
+
+
 
 }
 
