@@ -32,7 +32,7 @@ get_latest_resource_id <- function(dataset_name){
     suggest_dataset_name(dataset_name)
   }
 
-  #sned the api request
+  #send the api request
   query <- list("id" = dataset_name)
   content <- try(
     phs_GET("package_show", query),
