@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("throws errors on invalid sql argument", {
   # wrong class
   expect_error(
