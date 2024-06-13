@@ -27,7 +27,6 @@
 #'
 #' @seealso [get_resource()] for downloading a resource without using a SQL query.
 #'
-#' @importFrom magrittr %>%
 #' @return a [tibble][tibble::tibble-package] with the query results.
 #' Only 32,000 rows can be returned from a single SQL query.
 #' @export
