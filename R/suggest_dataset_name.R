@@ -17,16 +17,16 @@ suggest_dataset_name <- function(dataset_name) {
       "Can't find the dataset name
       {.var {dataset_name}}, or a close match.",
       i = "Find a dataset's name in the URL
-      of it's page on {.url www.opendata.nhs.scot.}"
+      of its page on {.url www.opendata.nhs.scot.}"
     ))
   }
 
   # find closet match
-  closest_match <- dataset_names[which.min(string_distances)]
+  closest_match <- dataset_names[which(string_distances == min(string_distances))]
 
   # throw error with suggestion
   cli::cli_abort(c(
     "Can't find the dataset name {.var {dataset_name}}.",
-    "i" = "Did you mean '{closest_match}'?"
+    "i" = "Did you mean {?any of }{.val {closest_match}}?"
   ))
 }
