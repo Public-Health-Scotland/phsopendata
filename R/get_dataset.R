@@ -7,18 +7,21 @@
 #' it will return the n latest resources
 #' @param rows (optional) specify the max number of rows
 #' to return for each resource.
+#' @inheritParams get_resource
 #'
 #' @seealso [get_resource()] for downloading a single resource
 #' from a dataset.
 #'
-#' @importFrom magrittr %>%
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
 #' @examples get_dataset("gp-practice-populations",
 #'   max_resources = 2, rows = 10
 #' )
-get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
+get_dataset <- function(dataset_name,
+                        max_resources = NULL,
+                        rows = NULL,
+                        include_context = FALSE) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
@@ -37,13 +40,15 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
 
   # define list of resource IDs to get
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+
   n_res <- length(all_ids)
   res_index <- 1:min(n_res, max_resources)
-  ids_selection <- all_ids[res_index]
+
+  selection_ids <- all_ids[res_index]
 
   # get all resources
   all_data <- purrr::map(
-    ids_selection,
+    selection_ids,
     get_resource,
     rows = rows
   )
@@ -51,8 +56,9 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   # resolve class issues
   types <- purrr::map(
     all_data,
-    ~ unlist(lapply(.x, class))
+    ~ purrr::map_chr(.x, class)
   )
+
 
   # for each df, check if next df class matches
   inconsistencies <- vector(length = length(types) - 1, mode = "list")
@@ -73,8 +79,7 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
   }
 
   # define which columns to coerce and warn
-  conflicts <- unlist(inconsistencies)
-  to_coerce <- unique(names(conflicts))
+  to_coerce <- unique(names(unlist(inconsistencies)))
 
   if (length(to_coerce) > 0) {
     cli::cli_warn(c(
@@ -82,19 +87,35 @@ get_dataset <- function(dataset_name, max_resources = NULL, rows = NULL) {
       the following {cli::qty(to_coerce)} column{?s} ha{?s/ve} been coerced to type character:",
       "{.val {to_coerce}}"
     ))
-  }
 
-  # combine
-  combined <- purrr::map_df(
-    all_data,
-    ~ dplyr::mutate(
-      .x,
-      dplyr::across(
-        dplyr::any_of(to_coerce),
-        as.character
+    all_data <- purrr::map(
+      all_data,
+      ~ dplyr::mutate(
+        .x,
+        dplyr::across(
+          dplyr::any_of(to_coerce),
+          as.character
+        )
       )
     )
-  )
+  }
+
+  if (include_context) {
+    # Add the 'resource context' as columns to the data
+    all_data <- purrr::pmap(
+      list(
+        "data" = all_data,
+        "id" = selection_ids,
+        "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
+        "created_date" = purrr::map_chr(content$result$resources[res_index], ~ .x$created),
+        "modified_date" = purrr::map_chr(content$result$resources[res_index], ~ .x$last_modified)
+      ),
+      add_context
+    )
+  }
+
+  # Combine the list of resources into a single tibble
+  combined <- purrr::list_rbind(all_data)
 
   return(combined)
 }
