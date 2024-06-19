@@ -1,20 +1,26 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("returns httr::content", {
-  x <- phsopendata:::phs_GET("package_list", "")
-  expect_true(
-    !is.null(x$help) && !is.null(x$success)
+  content <- phs_GET("package_list", "")
+
+  expect_true(content$success)
+
+  expect_equal(
+    content$help,
+    "https://www.opendata.nhs.scot/api/3/action/help_show?name=package_list"
   )
 })
 
 test_that("error_check() works as expected", {
   # no error for valid endpoint
   expect_type(
-    phsopendata:::phs_GET("package_list", ""),
+    phs_GET("package_list", ""),
     "list"
   )
 
   # not found error
   expect_error(
-    phsopendata:::phs_GET("datastore_search", "id=doop"),
+    phs_GET("datastore_search", "id=doop"),
     regexp = 'Resource "doop" was not found.'
   )
 })
@@ -22,7 +28,7 @@ test_that("error_check() works as expected", {
 test_that("request_url() works as expected", {
   # invalid action argument
   expect_error(
-    phsopendata:::phs_GET("", ""),
+    phs_GET("", ""),
     regexp = "API call failed"
   )
 })
