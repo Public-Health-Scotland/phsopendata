@@ -15,7 +15,6 @@ BugReports: https://github.com/Public-Health-Scotland/phsopendata/issues
 Imports:
     cli,
     dplyr (>= 1.0.0),
-    glue (>= 1.0.0),
     httr (>= 1.0.0),
     jsonlite (>= 1.0.0),
     magrittr (>= 1.0.0),
