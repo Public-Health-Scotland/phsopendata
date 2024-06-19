@@ -1,6 +1,6 @@
 Package: phsopendata
 Title: Extract Open Data from opendata.nhs.scot
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person("Csilla", "Scharle", , "csilla.scharle2@phs.scot", role = c("aut", "cre")),
     person("James", "McMahon", , "james.mcmahon@phs.scot", role = "aut"),
@@ -27,6 +27,7 @@ Suggests:
     covr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
