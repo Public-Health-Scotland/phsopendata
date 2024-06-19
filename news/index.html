@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">phsopendata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,12 +45,21 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="phsopendata-development-version">phsopendata (development version)<a class="anchor" aria-label="anchor" href="#phsopendata-development-version"></a></h2>
+<ul><li>
+<code><a href="../reference/get_dataset.html">get_dataset()</a></code> and <code><a href="../reference/get_resource.html">get_resource()</a></code> gain a new parameter <code>include_context</code> which allows adding context such as the resource ID and modified / created dates to returned data (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/24" class="external-link">#24</a>).</li>
+<li>The magrittr pipe (<code>%&gt;%</code>) is now exported (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/29" class="external-link">#29</a>).</li>
+<li>
+<code><a href="../reference/get_dataset.html">get_dataset()</a></code> will now suggest multiple dataset names, when the dataset you’ve asked for doesn’t exist (i.e. there’s a typo) and there are multiple likely candidates (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/28" class="external-link">#28</a>).</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="phsopendata-010-2021-07-22">phsopendata 0.1.0 (2021-07-22)<a class="anchor" aria-label="anchor" href="#phsopendata-010-2021-07-22"></a></h2>
 <ul><li>Initial package release.</li>
 <li>
 <code><a href="../reference/get_dataset.html">get_dataset()</a></code>, <code><a href="../reference/get_resource.html">get_resource()</a></code> and <code><a href="../reference/get_resource_sql.html">get_resource_sql()</a></code> functions added.</li>
 </ul></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
