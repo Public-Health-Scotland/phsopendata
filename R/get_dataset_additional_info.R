@@ -5,7 +5,7 @@
 #'
 #' @return
 #' @export
-get_datasets_additional_info <- function(dataset_name){
+get_dataset_additional_info <- function(dataset_name){
   query <- list("id" = dataset_name)
   content <- phs_GET("package_show", query)
 
