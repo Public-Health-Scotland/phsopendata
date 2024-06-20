@@ -36,7 +36,7 @@
 #' data <- get_latest_resource(dataset_name)
 #'
 #' filters <- list("Postcode" = "DD11 1ES")
-#' wanted_cols <- c("Practice", "Postcode", "Dispensing")
+#' wanted_cols <- c("PracticeCode", "Postcode", "Dispensing")
 #'
 #' filtered_data <- get_latest_resource(
 #'   dataset_name = dataset_name,
