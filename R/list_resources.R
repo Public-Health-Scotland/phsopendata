@@ -27,7 +27,7 @@ list_resources <- function(dataset_name) {
     suggest_dataset_name(dataset_name)
   }
 
-  # define list of resource IDs and names within dataset
+  # define list of resource IDs names date created and date modified within dataset
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
   all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
   all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created) %>%
