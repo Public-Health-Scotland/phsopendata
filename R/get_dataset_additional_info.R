@@ -5,6 +5,9 @@
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
+#' @example
+#' get_dataset("gp-practice-populations")
+#'
 get_dataset_additional_info <- function(dataset_name){
   #define query
   query <- list("id" = dataset_name)
