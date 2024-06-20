@@ -30,8 +30,10 @@ list_resources <- function(dataset_name) {
   # define list of resource IDs and names within dataset
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
   all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
-  all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created)
-  all_date_modified <- purrr::map_chr(content$result$resources, ~ .x$last_modified)
+  all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created) %>%
+    as.POSIXct(format = "%FT%X", tz = "UTC")
+  all_date_modified <- purrr::map_chr(content$result$resources, ~ .x$last_modified) %>%
+    as.POSIXct(format = "%FT%X", tz = "UTC")
   return_value <- tibble::tibble(
     "res_id" = all_ids, "name" = all_names,
     "created" = all_date_created, "last_modified" = all_date_modified
