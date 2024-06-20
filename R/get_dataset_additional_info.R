@@ -1,13 +1,14 @@
-#' returns a list of dataset names alongwith additional information,
+#' get a datasets additional info
+#'
+#' `get_dataset_additional_info()`returns a list of dataset names alongwith additional information,
 #' such as the amount of resources and the date it was last updated
 #'
 #' @inheritParams get_dataset
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
-#' @example
+#' @examples
 #' get_dataset("gp-practice-populations")
-#'
 get_dataset_additional_info <- function(dataset_name){
   #define query
   query <- list("id" = dataset_name)

@@ -1,6 +1,6 @@
 #' Lists all available resources for a dataset
 #'
-#' list_resources() returns all of the resources associated
+#' `list_resources()` returns all of the resources associated
 #' with a dataset
 #'
 #' @inheritParams get_dataset

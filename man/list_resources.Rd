@@ -14,7 +14,7 @@ list_resources(dataset_name)
 a \link[tibble:tibble-package]{tibble} with the data
 }
 \description{
-list_resources() returns all of the resources associated
+\code{list_resources()} returns all of the resources associated
 with a dataset
 }
 \examples{

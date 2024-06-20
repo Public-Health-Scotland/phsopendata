@@ -4,19 +4,14 @@
 \alias{list_datasets}
 \title{Lists all available datasets}
 \usage{
-list_datasets(include_additional_info = FALSE)
-}
-\arguments{
-\item{include_additional_info}{(optional) set to true to return the number
-of resources per dataset and the date the dataset was last updated}
+list_datasets()
 }
 \value{
-A character vector.
+A tibble.
 }
 \description{
 \code{list_datasets()} shows all of the datasets hosted on the phs open data platform.
 }
 \examples{
 head(list_datasets())
-head(list_datasets(include_additional_info = TRUE))
 }
