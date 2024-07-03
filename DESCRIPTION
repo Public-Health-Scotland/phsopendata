@@ -1,10 +1,11 @@
 Package: phsopendata
 Title: Extract Open Data from opendata.nhs.scot
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person("Csilla", "Scharle", , "csilla.scharle2@phs.scot", role = c("aut", "cre")),
     person("James", "McMahon", , "james.mcmahon@phs.scot", role = "aut"),
-    person("David", "Aikman", , "david.aikman@phs.scot", role = "aut")
+    person("David", "Aikman", , "david.aikman@phs.scot", role = "aut"),
+    person("Ross", "Hull", , "ross.hull2@phs.scot", role = "aut")
   )
 Description: Functions to extract and interact with data from the Scottish
     Health and Social Care Open Data platform.

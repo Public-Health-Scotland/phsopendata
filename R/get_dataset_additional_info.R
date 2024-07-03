@@ -11,6 +11,7 @@
 #' get_dataset("gp-practice-populations")
 get_dataset_additional_info <- function(dataset_name){
   #define query
+
   query <- list("id" = dataset_name)
   #fetch the data
   content <- phs_GET("package_show", query)
@@ -18,6 +19,7 @@ get_dataset_additional_info <- function(dataset_name){
   #get the amount of resources
   amount_of_resources <- content$result$resources %>%
     length()
+
 
   #get the last recourse created and modified dates
   last_resource_created_date <- purrr::map_chr(content$result$resources, ~.$created)
@@ -27,13 +29,11 @@ get_dataset_additional_info <- function(dataset_name){
   most_recent_resource_date <- max(last_resource_modified_date, last_resource_created_date) %>%
     as.POSIXct(format = "%FT%X", tz = "UTC")
 
+
   #create tibble to return
   return_value <- tibble::tibble("name" = dataset_name,
                          "amount_of_resources" = amount_of_resources,
                          "most_recent_resource_update" = most_recent_resource_date)
 
   return(return_value)
-
 }
-
-
