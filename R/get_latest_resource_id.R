@@ -14,7 +14,7 @@
 #'
 #' @inheritParams get_dataset
 #'
-#' @return a [tibble][tibble::tibble-package] with the data
+#' @return a [string] with the resource id
 #'
 
 get_latest_resource_id <- function(dataset_name) {

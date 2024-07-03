@@ -11,7 +11,7 @@ get_latest_resource_id(dataset_name)
 \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 }
 \value{
-a \link[tibble:tibble-package]{tibble} with the data
+a \link{string} with the resource id
 }
 \description{
 to be confident that the resource returned is the one intended
