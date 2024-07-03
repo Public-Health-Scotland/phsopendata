@@ -48,19 +48,15 @@ get_latest_resource <- function(dataset_name,
                                 rows = NULL,
                                 row_filters = NULL,
                                 col_select = NULL,
-                                include_context = FALSE){
-  #get the latest resource id
+                                include_context = FALSE) {
+  # get the latest resource id
   id <- get_latest_resource_id(dataset_name)
 
-  return_value <- get_resource(id,
-                               rows,
-                               row_filters,
-                               col_select,
-                               include_context)
+  return_value <- get_resource(
+    id,
+    rows,
+    row_filters,
+    col_select,
+    include_context
+  )
 }
-
-
-
-
-
-
