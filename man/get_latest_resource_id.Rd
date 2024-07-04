@@ -18,12 +18,12 @@ to be confident that the resource returned is the one intended
 two conditions have to be met. It has to appear at the top of
 of the resource list as shown on the open data platform.
 The order they are returned via the api is the same
-as they appear on the open data platfrom. It also
+as they appear on the open data platform. It also
 has to have the most recent date created
 }
 \details{
 There are only some datasets that this functionality
-is relevent to, these are listed within applicable
+is relevant to, these are listed within applicable
 datasets and are the datasets that keep historic
-resources instead of over writting them
+resources instead of over writing them
 }

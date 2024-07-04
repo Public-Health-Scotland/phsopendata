@@ -5,14 +5,14 @@
 #' For these it is useful to be able to retrieve the latest
 #' resource. These data sets include:
 #'
-#' gp-practice-populations
-#' gp-practice-contact-details-and-list-size
-#' nhsscotland-payments-to-general-practice,
-#' dental-practices-and-patient-registrations,
-#' general-practitioner-contact-details,
-#' prescribed-dispensed,
-#' prescriptions-in-the-community,
-#' community-pharmacy-contractor-activity
+#' * gp-practice-populations
+#' * gp-practice-contact-details-and-list-size
+#' * nhsscotland-payments-to-general-practice,
+#' * dental-practices-and-patient-registrations,
+#' * general-practitioner-contact-details,
+#' * prescribed-dispensed,
+#' * prescriptions-in-the-community,
+#' * community-pharmacy-contractor-activity
 #'
 #' @param dataset_name name of the dataset as found on
 #' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}

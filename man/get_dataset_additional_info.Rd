@@ -14,8 +14,9 @@ get_dataset_additional_info(dataset_name)
 a \link[tibble:tibble-package]{tibble} with the data
 }
 \description{
-\code{get_dataset_additional_info()}returns a list of dataset names alongwith additional information,
-such as the amount of resources and the date it was last updated
+\code{get_dataset_additional_info()} returns a list of dataset names along with
+additional information, such as the amount of resources and the date it was
+last updated.
 }
 \examples{
 get_dataset("gp-practice-populations")

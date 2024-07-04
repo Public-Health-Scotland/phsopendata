@@ -40,14 +40,16 @@ For these it is useful to be able to retrieve the latest
 resource. These data sets include:
 }
 \details{
-gp-practice-populations
-gp-practice-contact-details-and-list-size
-nhsscotland-payments-to-general-practice,
-dental-practices-and-patient-registrations,
-general-practitioner-contact-details,
-prescribed-dispensed,
-prescriptions-in-the-community,
-community-pharmacy-contractor-activity
+\itemize{
+\item gp-practice-populations
+\item gp-practice-contact-details-and-list-size
+\item nhsscotland-payments-to-general-practice,
+\item dental-practices-and-patient-registrations,
+\item general-practitioner-contact-details,
+\item prescribed-dispensed,
+\item prescriptions-in-the-community,
+\item community-pharmacy-contractor-activity
+}
 }
 \examples{
 dataset_name <- "gp-practice-contact-details-and-list-sizes"
