@@ -1,8 +1,9 @@
 #' get a datasets additional info
 #'
-#' `get_dataset_additional_info()` returns a list of dataset names along with
-#' additional information, such as the amount of resources and the date it was
-#' last updated.
+#' `get_dataset_additional_info()` returns a tibble of dataset names along with
+#' the amount of resources it has and the date it was last updated.Last updated
+#' is taken to mean the most recent date a resource within the dataset was
+#' created or modified.
 #'
 #' @inheritParams get_dataset
 #'
