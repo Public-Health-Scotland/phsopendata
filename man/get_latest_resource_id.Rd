@@ -25,5 +25,6 @@ has to have the most recent date created
 There are only some datasets that this functionality
 is relevant to, these are listed within applicable
 datasets and are the datasets that keep historic
-resources instead of over writing them
+resources instead of over writing them. These data
+sets are listed within the error message.
 }

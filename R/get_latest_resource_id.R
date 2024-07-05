@@ -10,7 +10,7 @@
 #' There are only some datasets that this functionality
 #' is relevant to, these are listed within applicable
 #' datasets and are the datasets that keep historic
-#' resources instead of over writing them
+#' resources instead of over writing them.
 #'
 #' @inheritParams get_dataset
 #'
@@ -38,7 +38,9 @@ get_latest_resource_id <- function(dataset_name) {
   # throw error if not
   if (!dataset_name %in% applicable_datasets) {
     cli::cli_abort(c(
-      "The dataset name supplied {.var {dataset_name}} is not within the applicable datasets",
+      "The dataset name supplied {.var {dataset_name}} is not within the applicable datasets.
+      These are:\n
+      {.var {applicable_datasets}}",
       "x" = "Please see get_latest_reource documentation.",
       "i" = "You can find dataset names in the URL
       of a dataset's page on {.url www.opendata.nhs.scot}."

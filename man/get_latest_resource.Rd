@@ -44,7 +44,7 @@ For these it is useful to be able to retrieve the latest
 resource. As of 5.7.2024 these data sets include:
 \itemize{
 \item gp-practice-populations
-\item gp-practice-contact-details-and-list-size
+\item gp-practice-contact-details-and-list-sizes
 \item nhsscotland-payments-to-general-practice
 \item dental-practices-and-patient-registrations
 \item general-practitioner-contact-details

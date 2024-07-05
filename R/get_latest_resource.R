@@ -8,7 +8,7 @@
 #' For these it is useful to be able to retrieve the latest
 #' resource. As of 5.7.2024 these data sets include:
 #' * gp-practice-populations
-#' * gp-practice-contact-details-and-list-size
+#' * gp-practice-contact-details-and-list-sizes
 #' * nhsscotland-payments-to-general-practice
 #' * dental-practices-and-patient-registrations
 #' * general-practitioner-contact-details
