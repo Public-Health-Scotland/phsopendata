@@ -11,7 +11,7 @@ get_latest_resource_id(dataset_name)
 \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 }
 \value{
-a \link{string} with the resource id
+a string with the resource id
 }
 \description{
 to be confident that the resource returned is the one intended

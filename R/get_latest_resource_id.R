@@ -14,7 +14,7 @@
 #'
 #' @inheritParams get_dataset
 #'
-#' @return a [string] with the resource id
+#' @return a string with the resource id
 get_latest_resource_id <- function(dataset_name) {
   applicable_datasets <- c(
     "gp-practice-populations", "gp-practice-contact-details-and-list-sizes",
