@@ -34,20 +34,22 @@ resource name, the creation date and the last modified/updated date.}
 a \link[tibble:tibble-package]{tibble} with the data
 }
 \description{
+\code{get_dataset_additional_info()} returns the most
+recently uploaded resource to a dataset
+}
+\details{
 There are some datasets on the open data platform that
 keep historic resources instead of updating existing ones.
 For these it is useful to be able to retrieve the latest
-resource. These data sets include:
-}
-\details{
+resource. As of 5.7.2024 these data sets include:
 \itemize{
 \item gp-practice-populations
 \item gp-practice-contact-details-and-list-size
-\item nhsscotland-payments-to-general-practice,
-\item dental-practices-and-patient-registrations,
-\item general-practitioner-contact-details,
-\item prescribed-dispensed,
-\item prescriptions-in-the-community,
+\item nhsscotland-payments-to-general-practice
+\item dental-practices-and-patient-registrations
+\item general-practitioner-contact-details
+\item prescribed-dispensed
+\item prescriptions-in-the-community
 \item community-pharmacy-contractor-activity
 }
 }
