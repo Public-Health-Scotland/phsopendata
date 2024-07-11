@@ -9,9 +9,9 @@
 #' head(list_datasets())
 list_datasets <- function() {
   # fetch the data
-  data_sets <- phs_GET("package_list", "")$result
+  content <- phs_GET("package_list", "")
 
-  data_sets <- tibble::tibble("name" = unlist(data_sets))
+  data_sets <- tibble::tibble("name" = unlist(content$result))
 
 
   return(data_sets)
