@@ -10,7 +10,7 @@
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #' @examples
-#' get_dataset("gp-practice-populations")
+#' get_dataset_additional_info("gp-practice-populations")
 get_dataset_additional_info <- function(dataset_name) {
   # define query
 
