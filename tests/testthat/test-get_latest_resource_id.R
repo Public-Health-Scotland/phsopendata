@@ -3,5 +3,5 @@ test_that("returns data for a dataset that is listed", {
 })
 
 test_that("returns error for a dataset that is not listed", {
-  expect_error(get_latest_resource_id("hospital-codes"))
+  expect_error(get_latest_resource_id("hospital-codes"), "The dataset name supplied `hospital-codes` is not within the applicable datasets")
 })
