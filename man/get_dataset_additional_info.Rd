@@ -20,5 +20,5 @@ is taken to mean the most recent date a resource within the dataset was
 created or modified.
 }
 \examples{
-get_dataset("gp-practice-populations")
+get_dataset_additional_info("gp-practice-populations")
 }
