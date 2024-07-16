@@ -60,6 +60,6 @@ get_latest_resource <- function(dataset_name,
     col_select,
     include_context
   )
-  
+
   return(data)
 }
