@@ -16,43 +16,7 @@
 #'
 #' @return a string with the resource id
 get_latest_resource_id <- function(dataset_name) {
-  applicable_datasets <- c(
-    "gp-practice-populations", "gp-practice-contact-details-and-list-sizes",
-    "nhsscotland-payments-to-general-practice", "dental-practices-and-patient-registrations",
-    "general-practitioner-contact-details", "prescribed-dispensed",
-    "prescriptions-in-the-community", "community-pharmacy-contractor-activity"
-  )
 
-  # throw error if name type/format is invalid
-  check_dataset_name(dataset_name)
-
-  # define query and try API call
-  query <- list("id" = dataset_name)
-  content <- try(
-    phs_GET("package_show", query),
-    silent = TRUE
-  )
-
-
-  # check if data set is within applicable datasets
-  # throw error if not
-  if (!dataset_name %in% applicable_datasets) {
-    cli::cli_abort(c(
-      "The dataset name supplied {.var {dataset_name}} is not within the applicable datasets.
-      These are:\n
-      {.var {applicable_datasets}}",
-      "x" = "Please see get_latest_reource documentation.",
-      "i" = "You can find dataset names in the URL
-      of a dataset's page on {.url www.opendata.nhs.scot}."
-    ), 
-    call = rlang::caller_env())
-  }
-
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
-    suggest_dataset_name(dataset_name)
-  }
 
   # send the api request
   query <- list("id" = dataset_name)
@@ -88,6 +52,6 @@ get_latest_resource_id <- function(dataset_name) {
   # recent date created, return it. Otherwise, error
   if (all_id_data_first_row$created_date == all_id_data_first_row$most_recent_date_created) {
     return(all_id_data_first_row$id)
-  } 
-  cli::cli_abort("The most recent id could not be identified"))
+  }
+  cli::cli_abort("The most recent id could not be identified")
 }
