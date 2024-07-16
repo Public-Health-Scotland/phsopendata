@@ -67,10 +67,10 @@ get_latest_resource_id <- function(dataset_name) {
   created_date <- c()
   modified_date <- c()
 
-  for (i in content$result$resources) {
-    id <- append(id, i$id)
-    created_date <- append(created_date, i$created)
-    modified_date <- append(modified_date, i$last_modified)
+  for (res in content$result$resources) {
+    id <- append(id, res$id)
+    created_date <- append(created_date, res$created)
+    modified_date <- append(modified_date, res$last_modified)
   }
   all_id_data <- tibble::tibble(
     id = id,
