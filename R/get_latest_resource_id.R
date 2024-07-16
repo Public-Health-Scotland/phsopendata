@@ -44,7 +44,8 @@ get_latest_resource_id <- function(dataset_name) {
       "x" = "Please see get_latest_reource documentation.",
       "i" = "You can find dataset names in the URL
       of a dataset's page on {.url www.opendata.nhs.scot}."
-    ))
+    ), 
+    call = rlang::caller_env())
   }
 
   # if content contains a 'Not Found Error'
