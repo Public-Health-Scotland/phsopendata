@@ -84,11 +84,10 @@ get_latest_resource_id <- function(dataset_name) {
   all_id_data_first_row <- all_id_data %>%
     dplyr::slice(1)
 
-  # if the resource at the top as appearing on the open data platform also has the most
-  # recent date created, return it. Otherwise return warning
+  # If the resource at the top as appearing on the open data platform also has the most
+  # recent date created, return it. Otherwise, error
   if (all_id_data_first_row$created_date == all_id_data_first_row$most_recent_date_created) {
     return(all_id_data_first_row$id)
-  } else {
-    (warning("most recent id could not be identified"))
-  }
+  } 
+  cli::cli_abort("The most recent id could not be identified"))
 }
