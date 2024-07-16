@@ -1,7 +1,6 @@
 #' Get the latest resource from a data set
 #'
-#' `get_dataset_additional_info()` returns the most
-#' recently uploaded resource to a dataset
+#' Returns the latest resource available in a dataset.
 #'
 #' There are some datasets on the open data platform that
 #' keep historic resources instead of updating existing ones.
