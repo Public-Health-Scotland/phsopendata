@@ -16,8 +16,6 @@
 #'
 #' @return a string with the resource id
 get_latest_resource_id <- function(dataset_name) {
-
-
   # send the api request
   query <- list("id" = dataset_name)
   content <- phs_GET("package_show", query)
