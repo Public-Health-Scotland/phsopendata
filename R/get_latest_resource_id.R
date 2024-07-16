@@ -56,10 +56,7 @@ get_latest_resource_id <- function(dataset_name) {
 
   # send the api request
   query <- list("id" = dataset_name)
-  content <- try(
-    phs_GET("package_show", query),
-    silent = TRUE
-  )
+  content <- phs_GET("package_show", query)
 
   # retrieve the resource id's from returned contect
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
