@@ -68,7 +68,7 @@ get_latest_resource <- function(dataset_name,
         "The dataset name supplied {.var {dataset_name}} is not within the applicable datasets.
       These are:\n
       {.var {applicable_datasets}}",
-        "x" = "Please see get_latest_reource documentation.",
+        "x" = "Please see {.fun get_latest_resource} documentation.",
         "i" = "You can find dataset names in the URL
       of a dataset's page on {.url www.opendata.nhs.scot}."
       ),
