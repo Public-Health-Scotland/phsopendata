@@ -34,8 +34,7 @@ resource name, the creation date and the last modified/updated date.}
 a \link[tibble:tibble-package]{tibble} with the data
 }
 \description{
-\code{get_dataset_additional_info()} returns the most
-recently uploaded resource to a dataset
+Returns the latest resource available in a dataset.
 }
 \details{
 There are some datasets on the open data platform that
