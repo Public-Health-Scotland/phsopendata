@@ -81,11 +81,11 @@ get_latest_resource <- function(dataset_name,
   id <- get_latest_resource_id(dataset_name)
 
   data <- get_resource(
-    id,
-    rows,
-    row_filters,
-    col_select,
-    include_context
+    res_id = id,
+    rows = rows,
+    row_filters = row_filters,
+    col_select = col_select,
+    include_context = include_context
   )
 
   return(data)
