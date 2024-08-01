@@ -16,7 +16,8 @@ get_latest_resource(
 \item{dataset_name}{name of the dataset as found on
 \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 
-\item{rows}{(optional) specify the max number of rows to return.}
+\item{rows}{(optional) specify the max number of rows
+to return for each resource.}
 
 \item{row_filters}{(optional) a named list or vector that specifies values of
 columns/fields to keep.

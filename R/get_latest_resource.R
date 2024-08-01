@@ -15,18 +15,8 @@
 #' * prescriptions-in-the-community
 #' * community-pharmacy-contractor-activity
 #'
-#' @param dataset_name name of the dataset as found on
-#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
-#' @param rows (optional) specify the max number of rows to return.
-#' @param row_filters (optional) a named list or vector that specifies values of
-#'  columns/fields to keep.
-#' e.g. list(Date = 20220216, Sex = "Female").
-#' @param col_select (optional) a character vector containing the names of
-#' desired columns/fields.
-#' e.g. c("Date", "Sex").
-#' @param include_context (optional) If `TRUE` additional information about the
-#' resource will be added as columns to the data, including the resource ID, the
-#' resource name, the creation date and the last modified/updated date.
+#' @inheritParams get_dataset
+#' @inheritParams get_resource
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
