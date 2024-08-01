@@ -13,11 +13,11 @@ URL: https://github.com/Public-Health-Scotland/phsopendata,
     https://public-health-scotland.github.io/phsopendata/
 BugReports: https://github.com/Public-Health-Scotland/phsopendata/issues
 Imports:
-    cli,
+    cli (>= 3.2.0),
     dplyr (>= 1.0.0),
     httr (>= 1.0.0),
     magrittr (>= 1.0.0),
-    purrr,
+    purrr (>= 1.0.0),
     stringdist,
     tibble (>= 3.0.0)
 Suggests: 
