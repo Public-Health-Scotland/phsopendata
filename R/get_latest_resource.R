@@ -47,17 +47,13 @@ get_latest_resource <- function(dataset_name,
     "dispenser-location-contact-details", "community-pharmacy-contractor-activity"
   )
 
-
-
-
   # check if data set is within applicable datasets
   # throw error if not
   if (!dataset_name %in% applicable_datasets) {
     cli::cli_abort(
       c(
-        "The dataset name supplied {.var {dataset_name}} is not within the applicable datasets.
-      These are:\n
-      {.var {applicable_datasets}}",
+        "The dataset name supplied {.val {dataset_name}} is not within the applicable datasets.
+      These are: {.val {applicable_datasets}}",
         "x" = "Please see {.fun get_latest_resource} documentation.",
         "i" = "You can find dataset names in the URL
       of a dataset's page on {.url www.opendata.nhs.scot}."
