@@ -9,7 +9,7 @@ get_latest_resource(
   rows = NULL,
   row_filters = NULL,
   col_select = NULL,
-  include_context = FALSE
+  include_context = TRUE
 )
 }
 \arguments{
