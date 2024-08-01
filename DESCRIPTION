@@ -20,6 +20,7 @@ Imports:
     magrittr (>= 1.0.0),
     purrr,
     readr (>= 1.0.0),
+    rlang (>= 1.0.0),
     stringdist,
     tibble (>= 3.0.0),
     xml2
@@ -31,4 +32,4 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
