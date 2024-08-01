@@ -16,13 +16,13 @@ Imports:
     cli,
     dplyr (>= 1.0.0),
     httr (>= 1.0.0),
-    jsonlite (>= 1.0.0),
     magrittr (>= 1.0.0),
     purrr,
     stringdist,
     tibble (>= 3.0.0)
 Suggests: 
     covr,
+    jsonlite (>= 1.1),
     readr (>= 1.0.0),
     testthat (>= 3.0.0),
     xml2
