@@ -41,7 +41,7 @@ Returns the latest resource available in a dataset.
 There are some datasets on the open data platform that
 keep historic resources instead of updating existing ones.
 For these it is useful to be able to retrieve the latest
-resource. As of 5.7.2024 these data sets include:
+resource. As of 1.8.2024 these data sets include:
 \itemize{
 \item gp-practice-populations
 \item gp-practice-contact-details-and-list-sizes
@@ -49,7 +49,7 @@ resource. As of 5.7.2024 these data sets include:
 \item dental-practices-and-patient-registrations
 \item general-practitioner-contact-details
 \item prescribed-dispensed
-\item prescriptions-in-the-community
+\item dispenser-location-contact-details
 \item community-pharmacy-contractor-activity
 }
 }
