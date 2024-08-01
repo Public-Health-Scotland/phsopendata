@@ -41,7 +41,7 @@ get_latest_resource_id <- function(dataset_name) {
   ) %>%
     dplyr::mutate(most_recent_date_created = max(created_date))
 
-  # get the first row of the rources, this will be the same that appears on the top
+  # get the first row of the resources, this will be the same that appears on the top
   # on the open data platform
   all_id_data_first_row <- all_id_data %>%
     dplyr::slice(1)
