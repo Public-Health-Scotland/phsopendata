@@ -9,14 +9,15 @@ get_latest_resource(
   rows = NULL,
   row_filters = NULL,
   col_select = NULL,
-  include_context = FALSE
+  include_context = TRUE
 )
 }
 \arguments{
 \item{dataset_name}{name of the dataset as found on
 \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
 
-\item{rows}{(optional) specify the max number of rows to return.}
+\item{rows}{(optional) specify the max number of rows
+to return for each resource.}
 
 \item{row_filters}{(optional) a named list or vector that specifies values of
 columns/fields to keep.
@@ -34,14 +35,13 @@ resource name, the creation date and the last modified/updated date.}
 a \link[tibble:tibble-package]{tibble} with the data
 }
 \description{
-\code{get_dataset_additional_info()} returns the most
-recently uploaded resource to a dataset
+Returns the latest resource available in a dataset.
 }
 \details{
 There are some datasets on the open data platform that
 keep historic resources instead of updating existing ones.
 For these it is useful to be able to retrieve the latest
-resource. As of 5.7.2024 these data sets include:
+resource. As of 1.8.2024 these data sets include:
 \itemize{
 \item gp-practice-populations
 \item gp-practice-contact-details-and-list-sizes
@@ -49,7 +49,7 @@ resource. As of 5.7.2024 these data sets include:
 \item dental-practices-and-patient-registrations
 \item general-practitioner-contact-details
 \item prescribed-dispensed
-\item prescriptions-in-the-community
+\item dispenser-location-contact-details
 \item community-pharmacy-contractor-activity
 }
 }

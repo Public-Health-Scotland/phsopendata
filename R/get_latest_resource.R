@@ -1,33 +1,22 @@
 #' Get the latest resource from a data set
 #'
-#' `get_dataset_additional_info()` returns the most
-#' recently uploaded resource to a dataset
+#' Returns the latest resource available in a dataset.
 #'
 #' There are some datasets on the open data platform that
 #' keep historic resources instead of updating existing ones.
 #' For these it is useful to be able to retrieve the latest
-#' resource. As of 5.7.2024 these data sets include:
+#' resource. As of 1.8.2024 these data sets include:
 #' * gp-practice-populations
 #' * gp-practice-contact-details-and-list-sizes
 #' * nhsscotland-payments-to-general-practice
 #' * dental-practices-and-patient-registrations
 #' * general-practitioner-contact-details
 #' * prescribed-dispensed
-#' * prescriptions-in-the-community
+#' * dispenser-location-contact-details
 #' * community-pharmacy-contractor-activity
 #'
-#' @param dataset_name name of the dataset as found on
-#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
-#' @param rows (optional) specify the max number of rows to return.
-#' @param row_filters (optional) a named list or vector that specifies values of
-#'  columns/fields to keep.
-#' e.g. list(Date = 20220216, Sex = "Female").
-#' @param col_select (optional) a character vector containing the names of
-#' desired columns/fields.
-#' e.g. c("Date", "Sex").
-#' @param include_context (optional) If `TRUE` additional information about the
-#' resource will be added as columns to the data, including the resource ID, the
-#' resource name, the creation date and the last modified/updated date.
+#' @inheritParams get_dataset
+#' @inheritParams get_resource
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
@@ -50,15 +39,44 @@ get_latest_resource <- function(dataset_name,
                                 rows = NULL,
                                 row_filters = NULL,
                                 col_select = NULL,
-                                include_context = FALSE) {
+                                include_context = TRUE) {
+  applicable_datasets <- c(
+    "community-pharmacy-contractor-activity",
+    "dental-practices-and-patient-registrations",
+    "dispenser-location-contact-details",
+    "general-practitioner-contact-details",
+    "gp-practice-contact-details-and-list-sizes",
+    "gp-practice-populations",
+    "nhsscotland-payments-to-general-practice",
+    "prescribed-dispensed"
+  )
+
+  # check if data set is within applicable datasets
+  # throw error if not
+  if (!dataset_name %in% applicable_datasets) {
+    cli::cli_abort(
+      c(
+        "The dataset name supplied {.val {dataset_name}} is not within the applicable datasets.
+      These are: {.val {applicable_datasets}}",
+        "x" = "Please see {.fun get_latest_resource} documentation.",
+        "i" = "You can find dataset names in the URL
+      of a dataset's page on {.url www.opendata.nhs.scot}."
+      ),
+      call = rlang::caller_env()
+    )
+  }
+
+
   # get the latest resource id
   id <- get_latest_resource_id(dataset_name)
 
-  return_value <- get_resource(
-    id,
-    rows,
-    row_filters,
-    col_select,
-    include_context
+  data <- get_resource(
+    res_id = id,
+    rows = rows,
+    row_filters = row_filters,
+    col_select = col_select,
+    include_context = include_context
   )
+
+  return(data)
 }
