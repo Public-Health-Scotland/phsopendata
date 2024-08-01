@@ -5,14 +5,14 @@
 #' There are some datasets on the open data platform that
 #' keep historic resources instead of updating existing ones.
 #' For these it is useful to be able to retrieve the latest
-#' resource. As of 5.7.2024 these data sets include:
+#' resource. As of 1.8.2024 these data sets include:
 #' * gp-practice-populations
 #' * gp-practice-contact-details-and-list-sizes
 #' * nhsscotland-payments-to-general-practice
 #' * dental-practices-and-patient-registrations
 #' * general-practitioner-contact-details
 #' * prescribed-dispensed
-#' * prescriptions-in-the-community
+#' * dispenser-location-contact-details
 #' * community-pharmacy-contractor-activity
 #'
 #' @inheritParams get_dataset
@@ -44,7 +44,7 @@ get_latest_resource <- function(dataset_name,
     "gp-practice-populations", "gp-practice-contact-details-and-list-sizes",
     "nhsscotland-payments-to-general-practice", "dental-practices-and-patient-registrations",
     "general-practitioner-contact-details", "prescribed-dispensed",
-    "prescriptions-in-the-community", "community-pharmacy-contractor-activity"
+    "dispenser-location-contact-details", "community-pharmacy-contractor-activity"
   )
 
 
