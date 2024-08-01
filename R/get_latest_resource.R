@@ -41,10 +41,14 @@ get_latest_resource <- function(dataset_name,
                                 col_select = NULL,
                                 include_context = FALSE) {
   applicable_datasets <- c(
-    "gp-practice-populations", "gp-practice-contact-details-and-list-sizes",
-    "nhsscotland-payments-to-general-practice", "dental-practices-and-patient-registrations",
-    "general-practitioner-contact-details", "prescribed-dispensed",
-    "dispenser-location-contact-details", "community-pharmacy-contractor-activity"
+    "community-pharmacy-contractor-activity",
+    "dental-practices-and-patient-registrations",
+    "dispenser-location-contact-details",
+    "general-practitioner-contact-details",
+    "gp-practice-contact-details-and-list-sizes",
+    "gp-practice-populations",
+    "nhsscotland-payments-to-general-practice",
+    "prescribed-dispensed"
   )
 
   # check if data set is within applicable datasets
