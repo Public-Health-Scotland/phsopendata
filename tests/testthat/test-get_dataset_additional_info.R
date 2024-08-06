@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("returns data in the expected format", {
   expect_s3_class(get_dataset_additional_info("weekly-accident-and-emergency-activity-and-waiting-times"), "tbl_df")
 })

@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("returns more than 0 datasets", {
   # select the first row of the tibble and get the
   # number of rows. If no datasets were returned
