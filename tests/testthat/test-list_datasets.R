@@ -5,5 +5,9 @@ test_that("returns more than 0 datasets", {
 })
 
 test_that("returns data in the expected format", {
-  expect_s3_class(list_datasets(), "tbl_df")
+  data <- list_datasets()
+
+  expect_s3_class(data,"tbl_df")
+  expect_named(data, "name")
+  expect_equal(dplyr::n_distinct(data[["name"]]), nrow(data))
 })
