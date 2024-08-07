@@ -7,6 +7,3 @@ test_that("returns data in the expected format", {
   expect_equal(nrow(dataset), 1)
   expect_named(dataset, c("name", "n_resources", "last_updated"))
 })
-
-
-
