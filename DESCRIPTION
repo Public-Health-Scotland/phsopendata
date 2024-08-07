@@ -18,6 +18,7 @@ Imports:
     httr (>= 1.0.0),
     magrittr (>= 1.0.0),
     purrr (>= 1.0.0),
+    rlang (>= 1.0.0),
     stringdist,
     tibble (>= 3.0.0)
 Suggests: 
