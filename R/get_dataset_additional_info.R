@@ -35,8 +35,8 @@ get_dataset_additional_info <- function(dataset_name) {
   # create tibble to return
   return_value <- tibble::tibble(
     "name" = dataset_name,
-    "amount_of_resources" = amount_of_resources,
-    "most_recent_resource_update" = most_recent_resource_date
+    "n_resources" = amount_of_resources,
+    "last_updated" = most_recent_resource_date
   )
 
   return(return_value)
