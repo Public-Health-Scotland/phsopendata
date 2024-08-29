@@ -8,11 +8,14 @@
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/dump_download.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/error_check.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html</loc></url>
+<url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_dataset_additional_info.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_latest_resource.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_latest_resource_id.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_resource.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_resource_sql.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/index.html</loc></url>
+<url><loc>https://public-health-scotland.github.io/phsopendata/reference/list_datasets.html</loc></url>
+<url><loc>https://public-health-scotland.github.io/phsopendata/reference/list_resources.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/parse_col_select.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/parse_error.html</loc></url>
 <url><loc>https://public-health-scotland.github.io/phsopendata/reference/parse_row_filters.html</loc></url>
