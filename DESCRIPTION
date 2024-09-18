@@ -1,6 +1,6 @@
 Package: phsopendata
 Title: Extract Open Data from opendata.nhs.scot
-Version: 0.1.0.9000
+Version: 0.2.0
 Authors@R: c(
     person("Csilla", "Scharle", , "csilla.scharle2@phs.scot", role = c("aut", "cre")),
     person("James", "McMahon", , "james.mcmahon@phs.scot", role = "aut"),

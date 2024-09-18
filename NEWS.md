@@ -1,4 +1,4 @@
-# phsopendata (development version)
+# phsopendata 0.2.0 (2024-09-18)
 
 - `get_dataset()` and `get_resource()` gain a new parameter `include_context` 
 which allows adding context such as the resource ID and modified / created 
