@@ -23,9 +23,6 @@ platform](https://www.opendata.nhs.scot/) via the CKAN API.
 -   `list_resources()` returns information on all resources within an
     open dataset by dataset name
 
-For extracting metadata and search functionality, we recommend using the
-[ckanr package](https://docs.ropensci.org/ckanr/).
-
 `phsopendata` can be used on both Posit Workbench and desktop versions
 of RStudio. However, depending on firewall settings, proxy use may need
 to be configured with `use_proxy()`.
