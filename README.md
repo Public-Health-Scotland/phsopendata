@@ -45,7 +45,7 @@ Using `remotes` you run this to install the package:
 
 ### Downloading a data table with `get_resource()`
 
-To extract a specific resource, you will need it’s unique identifier -
+To extract a specific resource, you will need its unique identifier -
 resource id. This can be found in the dataset metadata, the URL of a
 resource’s page on <https://www.opendata.nhs.scot/>, or extracted using
 `list_resources()`.
