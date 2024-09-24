@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 - `list_resources()` returns information on all resources within an open dataset by dataset name
 
 
-`phsopendata` can be used on both Posit Workbench and desktop versions of RStudio. However, depending on firewall settings, proxy use may need to be configured with `use_proxy()`.
+`phsopendata` can be used on both Posit Workbench and desktop versions of RStudio.
 
 ## Installation
 
