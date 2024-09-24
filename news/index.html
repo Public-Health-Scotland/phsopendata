@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">phsopendata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,13 +33,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="phsopendata-development-version">phsopendata (development version)<a class="anchor" aria-label="anchor" href="#phsopendata-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="phsopendata-020-2024-09-18">phsopendata 0.2.0 (2024-09-18)<a class="anchor" aria-label="anchor" href="#phsopendata-020-2024-09-18"></a></h2>
 <ul><li>
 <code><a href="../reference/get_dataset.html">get_dataset()</a></code> and <code><a href="../reference/get_resource.html">get_resource()</a></code> gain a new parameter <code>include_context</code> which allows adding context such as the resource ID and modified / created dates to returned data (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/24" class="external-link">#24</a>).</li>
 <li>The magrittr pipe (<code>%&gt;%</code>) is now exported (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/29" class="external-link">#29</a>).</li>
 <li>
 <code><a href="../reference/get_dataset.html">get_dataset()</a></code> will now suggest multiple dataset names, when the dataset you’ve asked for doesn’t exist (i.e. there’s a typo) and there are multiple likely candidates (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/28" class="external-link">#28</a>).</li>
 <li>Two new functions <code><a href="../reference/list_datasets.html">list_datasets()</a></code> and <code><a href="../reference/list_resources.html">list_resources()</a></code> allow browsing available datasets and resources (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/10" class="external-link">#10</a>).</li>
+<li>The new function <code><a href="../reference/get_latest_resource.html">get_latest_resource()</a></code> retrieves the most recent resource from a dataset with additional context such as the resource ID and modified / created dates (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/36" class="external-link">#36</a>).</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="phsopendata-010-2021-07-22">phsopendata 0.1.0 (2021-07-22)<a class="anchor" aria-label="anchor" href="#phsopendata-010-2021-07-22"></a></h2>
@@ -56,7 +57,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">phsopendata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,9 +57,12 @@
 <code><a href="reference/get_resource.html">get_resource()</a></code> extracts a single resource from an open dataset by resource id</li>
 <li>
 <code><a href="reference/get_dataset.html">get_dataset()</a></code> extracts multiple resources from an open dataset by dataset name</li>
+<li>
+<code><a href="reference/list_datasets.html">list_datasets()</a></code> returns the names of all available datasets</li>
+<li>
+<code><a href="reference/list_resources.html">list_resources()</a></code> returns information on all resources within an open dataset by dataset name</li>
 </ul>
-<p>For extracting metadata and search functionality, we recommend using the <a href="https://docs.ropensci.org/ckanr/" class="external-link">ckanr package</a>.</p>
-<p><code>phsopendata</code> can be used on both the <a href="https://rstudio.nhsnss.scot.nhs.uk/" class="external-link">server</a> and desktop versions of RStudio. However, depending on firewall settings, proxy use may need to be configured with <code>use_proxy()</code>.</p>
+<p><code>phsopendata</code> can be used on both Posit Workbench and desktop versions of RStudio.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -76,7 +79,7 @@
 <h3 id="downloading-a-data-table-with-get_resource">Downloading a data table with <code>get_resource()</code>
 <a class="anchor" aria-label="anchor" href="#downloading-a-data-table-with-get_resource"></a>
 </h3>
-<p>To extract a specific resource, you will need it’s unique identifier - resource id. This can be found in the dataset metadata, the URL of a resource’s page on <a href="https://www.opendata.nhs.scot/" class="external-link uri">https://www.opendata.nhs.scot/</a>, or extracted using <code>ckanr::package_show</code>.</p>
+<p>To extract a specific resource, you will need its unique identifier - resource id. This can be found in the dataset metadata, the URL of a resource’s page on <a href="https://www.opendata.nhs.scot/" class="external-link uri">https://www.opendata.nhs.scot/</a>, or extracted using <code><a href="reference/list_resources.html">list_resources()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(phsopendata)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># define a resource ID</span></span>
@@ -110,7 +113,7 @@
 <h3 id="downloading-multiple-tables-with-get_dataset">Downloading multiple tables with <code>get_dataset()</code>
 <a class="anchor" aria-label="anchor" href="#downloading-multiple-tables-with-get_dataset"></a>
 </h3>
-<p>To extract all resources from a dataset, you will need to use the <em>dataset name</em>. Note that this will differ from the <em>dataset title</em> that displays on the website. This can be found in the dataset metadata extracted using <code>ckanr::package_show</code>, or taken from the dataset URL.</p>
+<p>To extract all resources from a dataset, you will need to use the <em>dataset name</em>. Note that this will differ from the <em>dataset title</em> that displays on the website. This can be found using <code><a href="reference/list_datasets.html">list_datasets()</a></code>, or taken from the dataset URL.</p>
 <p>In this example, we are downloading GP Practice Population Demographics from: <a href="https://www.opendata.nhs.scot/dataset/gp-practice-populations" class="external-link">opendata.nhs.scot/dataset/<em>gp-practice-populations</em></a>, so the dataset name will be gp-practice-populations.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># if max_resources is not set, all resources will be returned by default.</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># Here we pull 10 rows from the first 2 resources only</span></span>
@@ -176,7 +179,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
