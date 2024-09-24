@@ -24,8 +24,7 @@ platform](https://www.opendata.nhs.scot/) via the CKAN API.
     open dataset by dataset name
 
 `phsopendata` can be used on both Posit Workbench and desktop versions
-of RStudio. However, depending on firewall settings, proxy use may need
-to be configured with `use_proxy()`.
+of RStudio.
 
 ## Installation
 
