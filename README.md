@@ -19,14 +19,12 @@ platform](https://www.opendata.nhs.scot/) via the CKAN API.
     resource id
 -   `get_dataset()` extracts multiple resources from an open dataset by
     dataset name
+-   `list_datasets()` returns the names of all available datasets
+-   `list_resources()` returns information on all resources within an
+    open dataset by dataset name
 
-For extracting metadata and search functionality, we recommend using the
-[ckanr package](https://docs.ropensci.org/ckanr/).
-
-`phsopendata` can be used on both the
-[server](https://rstudio.nhsnss.scot.nhs.uk/) and desktop versions of
-RStudio. However, depending on firewall settings, proxy use may need to
-be configured with `use_proxy()`.
+`phsopendata` can be used on both Posit Workbench and desktop versions
+of RStudio.
 
 ## Installation
 
@@ -43,10 +41,10 @@ Using `remotes` you run this to install the package:
 
 ### Downloading a data table with `get_resource()`
 
-To extract a specific resource, you will need it’s unique identifier -
+To extract a specific resource, you will need its unique identifier -
 resource id. This can be found in the dataset metadata, the URL of a
 resource’s page on <https://www.opendata.nhs.scot/>, or extracted using
-`ckanr::package_show`.
+`list_resources()`.
 
     library(phsopendata)
 
@@ -84,8 +82,8 @@ You can use `col_select` and `row_filters` to query the data server-side
 
 To extract all resources from a dataset, you will need to use the
 *dataset name*. Note that this will differ from the *dataset title* that
-displays on the website. This can be found in the dataset metadata
-extracted using `ckanr::package_show`, or taken from the dataset URL.
+displays on the website. This can be found using `list_datasets()`, or
+taken from the dataset URL.
 
 In this example, we are downloading GP Practice Population Demographics
 from:
