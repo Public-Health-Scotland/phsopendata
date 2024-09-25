@@ -17,8 +17,8 @@ platform](https://www.opendata.nhs.scot/) via the CKAN API.
 
 -   `get_resource()` extracts a single resource from an open dataset by
     resource id
--   `get_latest_resource()` extracts the most recent resource from an
-    open dataset by dataset name
+-   `get_latest_resource()` extracts the most recent resource from
+    applicable datasets, by dataset name
 -   `get_dataset()` extracts multiple resources from an open dataset by
     dataset name
 -   `list_datasets()` returns the names of all available datasets
