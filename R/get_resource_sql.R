@@ -78,7 +78,7 @@ get_resource_sql <- function(sql) {
     ))
   }
 
-  # add query field prefix
+  # Add the SQL statement to the query
   query <- list("sql" = sql)
 
   # attempt get request
