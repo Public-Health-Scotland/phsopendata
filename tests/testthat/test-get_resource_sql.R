@@ -20,8 +20,9 @@ test_that("throws errors on invalid sql argument", {
   )
 })
 
-test_that("gets expected data", {
-  sql <- "
+test_that("gets expected data for a simple SQL query", {
+  data <- get_resource_sql(
+    sql = "
      SELECT
        \"TotalCancelled\",\"TotalOperations\",\"Hospital\",\"Month\"
      FROM
@@ -29,12 +30,27 @@ test_that("gets expected data", {
      WHERE
        \"Hospital\" = 'D102H'
   "
-  df <- get_resource_sql(sql)
+  )
 
-  expect_equal(unique(df$Hospital), "D102H")
-  expect_equal(
-    c("TotalCancelled", "TotalOperations", "Hospital", "Month"),
-    names(df)
+  expect_s3_class(data, "tbl")
+  expect_equal(unique(data$Hospital), "D102H")
+  expect_named(data, c("TotalCancelled", "TotalOperations", "Hospital", "Month"))
+})
+
+test_that("gets expected data for a joined SQL query", {
+  data <- get_resource_sql(
+    sql = paste(
+      "SELECT pops.\"Year\", pops.\"HB\", lookup.\"HBName\", pops.\"AllAges\"",
+      "FROM \"27a72cc8-d6d8-430c-8b4f-3109a9ceadb1\" AS pops",
+      "JOIN \"652ff726-e676-4a20-abda-435b98dd7bdc\" AS lookup",
+      "ON pops.\"HB\" = lookup.\"HB\"",
+      "WHERE pops.\"Sex\" = 'All' AND pops.\"Year\" > 2006"
+    )
+  )
+
+  expect_s3_class(data, "tbl")
+  expect_gt(min(as.integer(data$Year)), 2006L)
+  expect_named(data,c("Year", "HB", "HBName", "AllAges")
   )
 })
 
