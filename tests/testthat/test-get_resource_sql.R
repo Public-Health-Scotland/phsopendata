@@ -50,8 +50,7 @@ test_that("gets expected data for a joined SQL query", {
 
   expect_s3_class(data, "tbl")
   expect_gt(min(as.integer(data$Year)), 2006L)
-  expect_named(data,c("Year", "HB", "HBName", "AllAges")
-  )
+  expect_named(data, c("Year", "HB", "HBName", "AllAges"))
 })
 
 test_that("SQL errors", {
