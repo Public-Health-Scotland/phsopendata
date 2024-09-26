@@ -84,6 +84,13 @@ get_resource_sql <- function(sql) {
   # attempt get request
   content <- phs_GET("datastore_search_sql", query)
 
+  if (!is.null(content[["result"]][["records_truncated"]])) {
+    cli::cli_warn(
+      "The data was truncated because your query matched more than the
+      maximum number of rows."
+    )
+  }
+
   # get correct order of columns
   order <- purrr::map_chr(
     content$result$fields,
