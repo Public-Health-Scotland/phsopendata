@@ -70,10 +70,6 @@ get_resource_sql <- function(sql) {
     ))
   }
 
-  # remove spaces
-  sql <- gsub(" ", "", sql)
-  sql <- gsub("\n", "", sql)
-
   # check query is a SELECT statement
   if (!grepl("^\\s*?SELECT", sql)) {
     cli::cli_abort(c(
