@@ -25,7 +25,8 @@
 #'
 #' ```sql = "SELECT * FROM \"<res_id>\" WHERE \"Age\" = '34'"```.
 #'
-#' @seealso [get_resource()] for downloading a resource without using a SQL query.
+#' @seealso [get_resource()] for downloading a resource without using a
+#' SQL query.
 #'
 #' @return a [tibble][tibble::tibble-package] with the query results.
 #' Only 32,000 rows can be returned from a single SQL query.
