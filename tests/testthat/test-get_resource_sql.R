@@ -4,19 +4,19 @@ test_that("throws errors on invalid sql argument", {
   # wrong class
   expect_error(
     get_resource_sql(9000),
-    regexp = "You entered an object of class <numeric>"
+    regexp = "must be of class"
   )
 
   # wrong length
   expect_error(
     get_resource_sql(letters),
-    regexp = "You entered an object of length 26."
+    regexp = "must be length 1 not 26\\."
   )
 
   # wrong start
   expect_error(
     get_resource_sql("this is wrong"),
-    regexp = "`sql` must start with SELECT"
+    regexp = "`sql` must start with"
   )
 })
 
