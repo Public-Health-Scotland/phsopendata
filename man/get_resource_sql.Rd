@@ -59,5 +59,6 @@ df2 <- get_resource(
 )
 }
 \seealso{
-\code{\link[=get_resource]{get_resource()}} for downloading a resource without using a SQL query.
+\code{\link[=get_resource]{get_resource()}} for downloading a resource without using a
+SQL query.
 }

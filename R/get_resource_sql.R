@@ -25,7 +25,8 @@
 #'
 #' ```sql = "SELECT * FROM \"<res_id>\" WHERE \"Age\" = '34'"```.
 #'
-#' @seealso [get_resource()] for downloading a resource without using a SQL query.
+#' @seealso [get_resource()] for downloading a resource without using a
+#' SQL query.
 #'
 #' @return a [tibble][tibble::tibble-package] with the query results.
 #' Only 32,000 rows can be returned from a single SQL query.
@@ -55,39 +56,40 @@
 #'   row_filters = row_filter
 #' )
 get_resource_sql <- function(sql) {
-  if (length(sql) > 1) {
+  if (length(sql) != 1) {
     cli::cli_abort(c(
-      "SQL validation error.",
-      i = "{.var sql} must be of length 1",
-      x = "You entered an object of length {length(sql)}."
+      x = "SQL validation error.",
+      i = "{.var sql} must be length 1 not {length(sql)}."
     ))
   }
 
-  if (!("character" %in% class(sql))) {
+  if (!inherits(sql, "character")) {
     cli::cli_abort(c(
-      "SQL validation error.",
-      i = "{.var sql} must be of class {.cls character}",
-      x = "You entered an object of class {.cls {class(sql)[1]}}."
+      x = "SQL validation error.",
+      i = "{.var sql} must be of class {.cls character} not {.cls {class(sql)}}."
     ))
   }
-
-  # remove spaces
-  sql <- gsub(" ", "", sql)
-  sql <- gsub("\n", "", sql)
 
   # check query is a SELECT statement
-  if (substr(sql, 1, 6) != "SELECT") {
+  if (!grepl("^\\s*?SELECT", sql)) {
     cli::cli_abort(c(
-      "SQL validation error.",
-      i = "{.var sql} must start with SELECT"
+      x = "SQL validation error.",
+      i = "{.var sql} must start with {.val SELECT}"
     ))
   }
 
-  # add query field prefix
+  # Add the SQL statement to the query
   query <- list("sql" = sql)
 
   # attempt get request
   content <- phs_GET("datastore_search_sql", query)
+
+  if (!is.null(content[["result"]][["records_truncated"]])) {
+    cli::cli_warn(
+      "The data was truncated because your query matched more than the
+      maximum number of rows."
+    )
+  }
 
   # get correct order of columns
   order <- purrr::map_chr(
