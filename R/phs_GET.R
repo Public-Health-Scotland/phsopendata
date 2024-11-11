@@ -3,20 +3,20 @@
 #' @inheritParams request_url
 #' @param verbose TRUE or FALSE. If TRUE, a success message will be printed to the console.
 #' @return content of a httr::GET request
-#'
 phs_GET <- function(action, query, verbose = FALSE) {
   # define URL
   url <- request_url(action, query)
 
-  # attempt GET request
-  response <- httr::GET(
+  # Attempt GET request, gently retrying up to 3 times
+  response <- httr::RETRY(
+    verb = "GET",
     url = url,
     user_agent = httr::user_agent(
       "https://github.com/Public-Health-Scotland/phsmethods"
     )
   )
 
-  # Check for response from server
+  # Check for a response from the server
   if (!inherits(response, "response")) {
     cli::cli_abort(c(
       "Can't connect to the CKAN server.",
@@ -24,7 +24,7 @@ phs_GET <- function(action, query, verbose = FALSE) {
     ))
   }
 
-  # extract content from HTTP response
+  # Extract the content from the HTTP response
   content <- httr::content(
     response
   )
