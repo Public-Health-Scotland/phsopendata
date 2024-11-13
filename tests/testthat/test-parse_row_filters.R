@@ -14,7 +14,7 @@ test_that("throws error for length > 1", {
 test_that("throws error for non-unique names", {
   expect_error(
     parse_row_filters(list(x = 1, x = 2)),
-    regexp = "Only one filter per field is currently supported by `get_resource`"
+    regexp = "Only one filter per field is currently supported"
   )
 })
 
