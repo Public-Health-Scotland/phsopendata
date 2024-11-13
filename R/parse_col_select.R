@@ -8,7 +8,9 @@ parse_col_select <- function(col_select) {
     return(NULL)
   }
 
-  return(
-    paste0(col_select, collapse = ",")
-  )
+  if (!inherits(col_select, "character")) {
+    cli::cli_abort("{.arg col_select} must be a {.cls character} vector, not a {.cls {class(col_select)}} vector.")
+  }
+
+  return(paste0(col_select, collapse = ","))
 }
