@@ -1,6 +1,6 @@
 skip_if_offline(host = "www.opendata.nhs.scot")
 
-test_that("returns data in the expected format", {
+test_that("get_dataset returns data in the expected format", {
   n_resources <- 2
   n_rows <- 2
   data <- get_dataset(
@@ -15,7 +15,25 @@ test_that("returns data in the expected format", {
   expect_named(data)
 })
 
-test_that("errors properly", {
+test_that("get_dataset works properly with filters", {
+  n_resources <- 3
+  n_rows <- 10
+  columns <- c("Date", "PracticeCode", "HSCP", "AllAges")
+
+  data <- get_dataset("gp-practice-populations",
+    max_resources = n_resources,
+    rows = n_rows,
+    row_filters = list(HSCP = "S37000026"),
+    col_select = columns
+  )
+
+  expect_s3_class(data, "tbl_df")
+  expect_equal(nrow(data), n_resources * n_rows)
+  expect_named(data, columns)
+  expect_true(all(data[["HSCP"]] == "S37000026"))
+})
+
+test_that("get_dataset errors properly", {
   expect_error(get_dataset("Mal-formed-name"),
     regexp = "The dataset name supplied `Mal-formed-name` is invalid"
   )
