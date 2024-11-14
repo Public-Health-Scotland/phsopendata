@@ -43,6 +43,8 @@
 <span>  <span class="va">dataset_name</span>,</span>
 <span>  max_resources <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rows <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  row_filters <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_context <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -65,6 +67,18 @@ it will return the n latest resources</p></dd>
 <dt id="arg-rows">rows<a class="anchor" aria-label="anchor" href="#arg-rows"></a></dt>
 <dd><p>(optional) specify the max number of rows
 to return for each resource.</p></dd>
+
+
+<dt id="arg-row-filters">row_filters<a class="anchor" aria-label="anchor" href="#arg-row-filters"></a></dt>
+<dd><p>(optional) a named list or vector that specifies values of
+columns/fields to keep.
+e.g. list(Date = 20220216, Sex = "Female").</p></dd>
+
+
+<dt id="arg-col-select">col_select<a class="anchor" aria-label="anchor" href="#arg-col-select"></a></dt>
+<dd><p>(optional) a character vector containing the names of
+desired columns/fields.
+e.g. c("Date", "Sex").</p></dd>
 
 
 <dt id="arg-include-context">include_context<a class="anchor" aria-label="anchor" href="#arg-include-context"></a></dt>
