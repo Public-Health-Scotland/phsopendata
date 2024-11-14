@@ -14,7 +14,11 @@ test_that("throws error for bad types", {
     regexp = " must be a named .+? not a "
   )
   expect_error(
-    parse_row_filters(c(x = factor(1))),
+    parse_row_filters(c(x = NA)),
+    regexp = " must be a named .+? not a "
+  )
+  expect_error(
+    parse_row_filters(c(x = as.Date("2000-01-01"))),
     regexp = " must be a named .+? not a "
   )
 })
