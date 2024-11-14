@@ -8,25 +8,21 @@ parse_row_filters <- function(row_filters) {
     return(NULL)
   }
 
-  # Check if `row_filters` is a list or a character vector
-  if (!is.list(row_filters) && !is.character(row_filters)) {
-    cli::cli_abort("{.arg row_filters} must be a named {.cls list} or a named {.cls character} vector, not a {.cls {class(row_filters)}}.")
+  # Check if `row_filters` is a list or a character or numeric vector
+  if (class(row_filters) != "list" && !is.character(row_filters) && !is.numeric(row_filters)) {
+    cli::cli_abort(
+      "{.arg row_filters} must be a named {.cls list} or a named
+      {.cls character} or {.cls numeric} vector, not a {.cls {class(row_filters)}}."
+    )
   }
 
-  # If it's a list, ensure it's depth 1 and elements are named
-  if (is.list(row_filters)) {
-    if (any(lengths(row_filters) > 1) || any(names(row_filters) == "")) {
-      cli::cli_abort("{.arg row_filters} must be a list of depth 1 with named elements.")
-    }
-  }
-
-  # If it's a character vector, ensure it's named
-  if (is.character(row_filters) && any(names(row_filters) == "")) {
-    cli::cli_abort("{.arg row_filters} must be a named character vector.")
+  # Ensure it's elements are named
+  if (is.null(names(row_filters)) || any(names(row_filters) == "")) {
+    cli::cli_abort("{.arg row_filters} should be a named {.cls list}.")
   }
 
   # check if any filters in list have length > 1
-  too_many <- sapply(row_filters, length) > 1
+  too_many <- purrr::map_lgl(row_filters, ~ length(.x) > 1)
 
   if (any(too_many)) {
     cli::cli_abort(c(
