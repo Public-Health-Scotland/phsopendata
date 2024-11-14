@@ -13,7 +13,7 @@ phs_GET <- function(action, query, verbose = FALSE) {
     url = url,
     terminate_on = c(409),
     user_agent = httr::user_agent(
-      "https://github.com/Public-Health-Scotland/phsmethods"
+      "phsopendata (https://github.com/Public-Health-Scotland/phsopendata)"
     )
   )
 
