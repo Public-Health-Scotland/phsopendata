@@ -44,3 +44,9 @@ test_that("get_dataset errors properly", {
     regexp = "Did you mean .+?gp-practice-populations.+?\\?"
   )
 })
+
+test_that("get_dataset filters error properly", {
+  expect_error(get_dataset("gp-practice-populations", col_select = "Non-existent column"),
+               regexp = "API error"
+  )
+})
