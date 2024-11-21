@@ -2,7 +2,8 @@
 #'
 #' @param error "error" element of an object produced by `httr::content`
 #' @return character string
-#'
+#' @keywords internal
+#' @noRd
 parse_error <- function(error) {
   error_message <- error$message
   error_type <- error$`__type`
