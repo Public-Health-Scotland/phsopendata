@@ -1,8 +1,8 @@
 # phsopendata 0.3.0 (2024-11-21)
 
-- [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) now takes the `col_select` and `row_filter` arguments allowing filtering of data.
-- Failed calls will be retried up to 3 times using [`httr::RETRY()`](https://httr.r-lib.org/reference/RETRY.html).
-- Improvements to [`get_resource_sql()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource_sql.html) error checks and messages and better handling of spaces and new lines.
+- [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) now takes the `col_select` and `row_filter` arguments allowing filtering of data. (#46)
+- Failed calls will be retried up to 3 times using [`httr::RETRY()`](https://httr.r-lib.org/reference/RETRY.html). (#45 and #47)
+- Improvements to [`get_resource_sql()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource_sql.html) error checks and messages and better handling of spaces and new lines. (#41)
 
 # phsopendata 0.2.0 (2024-09-18)
 
