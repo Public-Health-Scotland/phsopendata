@@ -1,3 +1,9 @@
+# phsopendata 0.3.0 (2024-11-21)
+
+- `get_dataset()` now takes the `col_select` and `row_filter` arguments allowing filtering of data.
+- Failed calls will be retried up to 3 times using httr::RETRY.
+- Improvements to `get_resource_sql` error checks and messages and better handling of spaces and new lines.
+
 # phsopendata 0.2.0 (2024-09-18)
 
 - `get_dataset()` and `get_resource()` gain a new parameter `include_context` 
