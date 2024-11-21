@@ -3,7 +3,8 @@
 #' @param query a list of items to query
 #' @param rows the number of rows user is requesting
 #' @return a logical value. TRUE indicates that the dump should be used
-#'
+#' @keywords internal
+#' @noRd
 use_dump_check <- function(query, rows) {
   # if row input is > 99999 or NULL
   # or all queries (inc. rows) are null

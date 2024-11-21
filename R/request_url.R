@@ -3,7 +3,8 @@
 #' @param action The API endpoint you want to use, e.g., "package_show" / "datastore_search".
 #' @param query The query to pass to the endpoint defined by the action argument.
 #' @return a URL as a character string
-#'
+#' @keywords internal
+#' @noRd
 request_url <- function(action, query) {
   # check action is valid
   valid_actions <- c(

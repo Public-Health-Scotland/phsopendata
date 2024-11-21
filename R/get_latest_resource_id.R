@@ -15,6 +15,8 @@
 #' @inheritParams get_dataset
 #'
 #' @return a string with the resource id
+#' @keywords internal
+#' @noRd
 get_latest_resource_id <- function(dataset_name) {
   # send the api request
   query <- list("id" = dataset_name)

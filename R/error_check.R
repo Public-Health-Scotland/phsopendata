@@ -1,7 +1,8 @@
 #' Throws errors found in the content of an `httr::GET` request
 #'
 #' @param content object produced by `httr::content`
-#'
+#' @keywords internal
+#' @noRd
 error_check <- function(content) {
   # if content is not a list,
   # stop for content (a string describing an error)

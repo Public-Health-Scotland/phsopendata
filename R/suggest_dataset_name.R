@@ -2,7 +2,8 @@
 #'
 #'
 #' @param dataset_name a string to be matched against valid dataset names
-#'
+#' @keywords internal
+#' @noRd
 suggest_dataset_name <- function(dataset_name) {
   content <- phs_GET("package_list", "")
 
