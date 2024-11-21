@@ -6,6 +6,8 @@
 #' @param res_id a resource ID
 #'
 #' @return TRUE / FALSE indicating the validity of the res_id
+#' @keywords internal
+#' @noRd
 check_res_id <- function(res_id) {
   # check res_id is single value
   if (length(res_id) > 1) {

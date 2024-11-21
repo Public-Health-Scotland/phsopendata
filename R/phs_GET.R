@@ -3,6 +3,8 @@
 #' @inheritParams request_url
 #' @param verbose TRUE or FALSE. If TRUE, a success message will be printed to the console.
 #' @return content of a httr::GET request
+#' @keywords internal
+#' @noRd
 phs_GET <- function(action, query, verbose = FALSE) {
   # define URL
   url <- request_url(action, query)

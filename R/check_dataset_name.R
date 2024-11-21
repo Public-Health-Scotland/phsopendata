@@ -4,7 +4,8 @@
 #' Used to attempt to validate a dataset name before submitting it to the API
 #'
 #' @param dataset_name a resource ID
-#'
+#' @keywords internal
+#' @noRd
 check_dataset_name <- function(dataset_name) {
   # Starts and ends in a lowercase letter or number
   # Has only lowercase alphanum or hyphens inbetween

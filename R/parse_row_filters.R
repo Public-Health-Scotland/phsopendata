@@ -2,6 +2,8 @@
 #' @description Formats a list or named vector into a valid query
 #' @param row_filters list or named vectors matching fields to values
 #' @return a json as a character string
+#' @keywords internal
+#' @noRd
 parse_row_filters <- function(row_filters) {
   # exit function if no filters
   if (is.null(row_filters)) {

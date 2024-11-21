@@ -2,7 +2,8 @@
 #'
 #' @param res_id a resource ID
 #' @return dataframe containing resource records
-#'
+#' @keywords internal
+#' @noRd
 dump_download <- function(res_id) {
   # fetch the data
   content <- suppressMessages(

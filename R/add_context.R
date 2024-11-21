@@ -1,3 +1,5 @@
+#' @keywords internal
+#' @noRd
 add_context <- function(data, id, name, created_date, modified_date) {
   # Catch if the resource has never been modified
   if (is.null(modified_date)) {
