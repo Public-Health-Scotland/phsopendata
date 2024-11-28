@@ -5,7 +5,7 @@
 #' @return a URL as a character string
 #' @keywords internal
 #' @noRd
-request_url <- function(action, query) {
+request_url <- function(action, query, call = rlang::caller_env()) {
   # check action is valid
   valid_actions <- c(
     "datastore_search",
@@ -16,10 +16,13 @@ request_url <- function(action, query) {
     "resource_show"
   )
   if (!(action %in% valid_actions)) {
-    cli::cli_abort(c(
-      "API call failed.",
-      x = "{.val {action}} is an invalid {.arg action} argument."
-    ))
+    cli::cli_abort(
+      c(
+        "API call failed.",
+        x = "{.val {action}} is an invalid {.arg action} argument."
+      ),
+      call = call
+    )
   }
 
   base_url <- "https://www.opendata.nhs.scot"
