@@ -23,11 +23,13 @@ test_that("throws error for bad types", {
   )
 })
 
-test_that("throws error for length > 1", {
-  expect_error(
+test_that("returns FALSE for length > 1", {
+  expect_false(
     parse_row_filters(list(x = letters)),
-    regexp = " has too many values\\."
-  )
+  ) %>%
+    expect_message(
+      "Multiple filters were supplied, defaulting to SQL"
+    )
 })
 
 test_that("throws error when un-named", {

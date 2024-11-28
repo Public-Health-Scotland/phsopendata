@@ -30,3 +30,35 @@ test_that("returns data with row specifications", {
   expect_equal(nrow(get_resource(res_id = gp_list_apr_2021, rows = 999)), 926) %>%
     expect_warning()
 })
+
+test_that("returns data for multiple filters", {
+  expect_message(
+    data_row_limit <- get_resource(
+      res_id = "e4985a62-9d59-4e71-8800-3f7ca29ffe0c",
+      col_select = c("GPPractice", "DMDCode"),
+      row_filters = list("GPPractice" = c("80005", "80202")),
+      rows = 100
+    )
+  )
+
+  expect_s3_class(data_row_limit, "tbl_df")
+  expect_equal(nrow(data_row_limit), 100)
+  expect_named(data_row_limit, c("GPPractice", "DMDCode"))
+
+  expect_message(
+    data_full <- get_resource(
+      res_id = "e4985a62-9d59-4e71-8800-3f7ca29ffe0c",
+      col_select = c("GPPractice", "DMDCode", "PrescribedType"),
+      row_filters = list(
+        "GPPractice" = c("80005", "80202"),
+        "PrescribedType" = "AMP"
+      )
+    )
+  )
+
+  expect_s3_class(data_full, "tbl_df")
+  expect_equal(nrow(data_full), 1108)
+  expect_named(data_full, c("GPPractice", "DMDCode", "PrescribedType"))
+  expect_length(unique(data_full$GPPractice), 2)
+  expect_length(unique(data_full$PrescribedType), 1)
+})
