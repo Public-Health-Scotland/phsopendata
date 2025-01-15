@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">phsopendata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Get Open Data resource</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Public-Health-Scotland/phsopendata/blob/0.2.0/R/get_resource.R" class="external-link"><code>R/get_resource.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Public-Health-Scotland/phsopendata/blob/0.3.0/R/get_resource.R" class="external-link"><code>R/get_resource.R</code></a></small>
       <div class="d-none name"><code>get_resource.Rd</code></div>
     </div>
 
@@ -103,6 +103,8 @@ from a given dataset.</p></div>
 <span class="r-in"><span>  row_filters <span class="op">=</span> <span class="va">filters</span>,</span></span>
 <span class="r-in"><span>  col_select <span class="op">=</span> <span class="va">wanted_cols</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Error in curl::curl_fetch_memory(url, handle = handle): Timeout was reached [www.opendata.nhs.scot]: Operation too slow. Less than 1 bytes/sec transferred the last 600 seconds</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Request failed [ERROR]. Retrying in 1 seconds...</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
