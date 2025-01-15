@@ -50,3 +50,22 @@ test_that("get_dataset filters error properly", {
     regexp = "API error"
   )
 })
+
+test_that("get_dataset works with multiple filters", {
+  n_resources <- 3
+  columns <- c("Date", "PracticeCode", "HSCP", "AllAges")
+
+  expect_message(
+    data <- get_dataset("gp-practice-populations",
+                      max_resources = n_resources,
+                      row_filters = list(PracticeCode = c("10002", "10017")),
+                      col_select = columns
+  )
+  )
+
+  expect_s3_class(data, "tbl_df")
+  expect_equal(nrow(data), n_resources * 6)
+  expect_named(data, columns)
+  expect_true(all(data[["PracticeCode"]] %in% c("10002", "10017")))
+})
+
