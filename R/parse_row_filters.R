@@ -45,7 +45,7 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
   multiple <- purrr::map_lgl(row_filters, ~ length(.x) > 1)
 
   if (any(multiple)) {
-    cli::cli_alert_info("Multiple filters were supplied, defaulting to SQL.")
+    # Default to using SQL
     return(FALSE)
   }
 

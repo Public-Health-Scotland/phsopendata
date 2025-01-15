@@ -32,27 +32,23 @@ test_that("returns data with row specifications", {
 })
 
 test_that("returns data for multiple filters", {
-  expect_message(
-    data_row_limit <- get_resource(
-      res_id = "e4985a62-9d59-4e71-8800-3f7ca29ffe0c",
-      col_select = c("GPPractice", "DMDCode"),
-      row_filters = list("GPPractice" = c("80005", "80202")),
-      rows = 100
-    )
+  data_row_limit <- get_resource(
+    res_id = "e4985a62-9d59-4e71-8800-3f7ca29ffe0c",
+    col_select = c("GPPractice", "DMDCode"),
+    row_filters = list("GPPractice" = c("80005", "80202")),
+    rows = 100
   )
 
   expect_s3_class(data_row_limit, "tbl_df")
   expect_equal(nrow(data_row_limit), 100)
   expect_named(data_row_limit, c("GPPractice", "DMDCode"))
 
-  expect_message(
-    data_full <- get_resource(
-      res_id = "e4985a62-9d59-4e71-8800-3f7ca29ffe0c",
-      col_select = c("GPPractice", "DMDCode", "PrescribedType"),
-      row_filters = list(
-        "GPPractice" = c("80005", "80202"),
-        "PrescribedType" = "AMP"
-      )
+  data_full <- get_resource(
+    res_id = "e4985a62-9d59-4e71-8800-3f7ca29ffe0c",
+    col_select = c("GPPractice", "DMDCode", "PrescribedType"),
+    row_filters = list(
+      "GPPractice" = c("80005", "80202"),
+      "PrescribedType" = "AMP"
     )
   )
 
@@ -64,12 +60,10 @@ test_that("returns data for multiple filters", {
 })
 
 test_that("returns data for multiple filters in mixed format", {
-  expect_message(
-    delays <- get_resource(
-      res_id = "fd354e4b-6211-48ba-8e4f-8356a5ed4215",
-      col_select = c("MonthOfDelay", "ReasonForDelay", "NumberOfDelayedBedDays"),
-      row_filters = list("HBT" = "S08000031", MonthOfDelay = c(201607:201707))
-    )
+  delays <- get_resource(
+    res_id = "fd354e4b-6211-48ba-8e4f-8356a5ed4215",
+    col_select = c("MonthOfDelay", "ReasonForDelay", "NumberOfDelayedBedDays"),
+    row_filters = list("HBT" = "S08000031", MonthOfDelay = c(201607:201707))
   )
 
   expect_s3_class(delays, "tbl_df")
