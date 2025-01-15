@@ -72,6 +72,35 @@ test_that("returns data for multiple filters in mixed format", {
   expect_length(unique(delays$MonthOfDelay), 13)
 })
 
+test_that("returns data for multiple filters for all columns", {
+  prescriptions <- get_resource(
+    res_id = "d1fbede3-98c4-436e-9e75-2ed807a36075",
+    row_filters = list("HBT" = "S08000015",
+                       "DMDCode" = c("940711000001101", "1004511000001101", "1014311000001109"))
+  )
+
+  expect_s3_class(prescriptions, "tbl_df")
+  expect_equal(nrow(prescriptions), 114)
+  expect_named(prescriptions, c(
+    "HBT",
+    "GPPractice",
+    "DMDCode",
+    "BNFItemCode",
+    "BNFItemDescription",
+    "PrescribedType",
+    "NumberOfPaidItems",
+    "PaidQuantity",
+    "GrossIngredientCost",
+    "PaidDateMonth"
+  ))
+  expect_length(unique(prescriptions$GPPractice), 55)
+  expect_setequal(
+    prescriptions$DMDCode,
+    c("940711000001101", "1004511000001101", "1014311000001109")
+  )
+  expect_setequal(prescriptions$HBT, "S08000015")
+})
+
 test_that("errors on invalid filters", {
   # non-existent column in row_filters
   expect_error(
