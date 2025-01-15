@@ -5,7 +5,7 @@
 #' @return content of a httr::GET request
 #' @keywords internal
 #' @noRd
-phs_GET <- function(action, query, verbose = FALSE) {
+phs_GET <- function(action, query, verbose = FALSE, call = rlang::caller_env()) {
   # define URL
   url <- request_url(action, query)
 
@@ -21,10 +21,13 @@ phs_GET <- function(action, query, verbose = FALSE) {
 
   # Check for a response from the server
   if (!inherits(response, "response")) {
-    cli::cli_abort(c(
-      "Can't connect to the CKAN server.",
-      i = "Check your network/proxy settings."
-    ))
+    cli::cli_abort(
+      c(
+        "Can't connect to the CKAN server.",
+        i = "Check your network/proxy settings."
+      ),
+      call = call
+    )
   }
 
   # Extract the content from the HTTP response
@@ -33,7 +36,7 @@ phs_GET <- function(action, query, verbose = FALSE) {
   )
 
   # detect/handle errors
-  error_check(content)
+  error_check(content, call = call)
 
   if (verbose) cat("GET request successful.\n")
   return(content)

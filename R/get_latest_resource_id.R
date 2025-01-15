@@ -17,7 +17,7 @@
 #' @return a string with the resource id
 #' @keywords internal
 #' @noRd
-get_latest_resource_id <- function(dataset_name) {
+get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   # send the api request
   query <- list("id" = dataset_name)
   content <- phs_GET("package_show", query)
@@ -53,5 +53,7 @@ get_latest_resource_id <- function(dataset_name) {
   if (all_id_data_first_row$created_date == all_id_data_first_row$most_recent_date_created) {
     return(all_id_data_first_row$id)
   }
-  cli::cli_abort("The most recent id could not be identified")
+  cli::cli_abort("The most recent id could not be identified",
+    call = call
+  )
 }
