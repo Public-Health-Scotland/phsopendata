@@ -45,7 +45,11 @@ get_resource <- function(res_id,
 
   if (is.logical(parsed_row_filters) && !parsed_row_filters) {
     if (!is.null(row_filters)) {
-      col_select_sql <- paste0("\"", paste(col_select, collapse = "\",\""), "\"")
+      col_select_sql <- dplyr::if_else(
+        is.null(col_select),
+        "*",
+        paste0("\"", paste(col_select, collapse = "\",\""), "\"")
+      )
 
       row_filters_sql <- paste(
         purrr::imap_chr(
