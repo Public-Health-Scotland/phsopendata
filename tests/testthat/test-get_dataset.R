@@ -57,10 +57,10 @@ test_that("get_dataset works with multiple filters", {
 
   expect_message(
     data <- get_dataset("gp-practice-populations",
-                      max_resources = n_resources,
-                      row_filters = list(PracticeCode = c("10002", "10017")),
-                      col_select = columns
-  )
+      max_resources = n_resources,
+      row_filters = list(PracticeCode = c("10002", "10017")),
+      col_select = columns
+    )
   )
 
   expect_s3_class(data, "tbl_df")
@@ -68,4 +68,3 @@ test_that("get_dataset works with multiple filters", {
   expect_named(data, columns)
   expect_true(all(data[["PracticeCode"]] %in% c("10002", "10017")))
 })
-

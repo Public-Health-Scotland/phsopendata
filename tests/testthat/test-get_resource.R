@@ -85,7 +85,7 @@ test_that("errors on invalid filters", {
       res_id = "fd354e4b-6211-48ba-8e4f-8356a5ed4215",
       col_select = c("MonthOfDelay", "ReasonForDelay", "NumberOfDelayedBedDays"),
       row_filters = c("HBT" = "S08000031", "Month" = 201607)
-      ),
+    ),
     regexp = "row_filters: invalid value"
   )
 
@@ -98,5 +98,4 @@ test_that("errors on invalid filters", {
     ),
     regexp = "col_select: invalid value"
   )
-
 })
