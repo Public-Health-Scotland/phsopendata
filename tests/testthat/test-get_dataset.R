@@ -55,11 +55,11 @@ test_that("get_dataset works with multiple filters", {
   n_resources <- 3
   columns <- c("Date", "PracticeCode", "HSCP", "AllAges")
 
-    data <- get_dataset("gp-practice-populations",
-      max_resources = n_resources,
-      row_filters = list(PracticeCode = c("10002", "10017")),
-      col_select = columns
-    )
+  data <- get_dataset("gp-practice-populations",
+    max_resources = n_resources,
+    row_filters = list(PracticeCode = c("10002", "10017")),
+    col_select = columns
+  )
 
   expect_s3_class(data, "tbl_df")
   expect_equal(nrow(data), n_resources * 6)

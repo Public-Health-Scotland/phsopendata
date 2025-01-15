@@ -75,8 +75,10 @@ test_that("returns data for multiple filters in mixed format", {
 test_that("returns data for multiple filters for all columns", {
   prescriptions <- get_resource(
     res_id = "d1fbede3-98c4-436e-9e75-2ed807a36075",
-    row_filters = list("HBT" = "S08000015",
-                       "DMDCode" = c("940711000001101", "1004511000001101", "1014311000001109"))
+    row_filters = list(
+      "HBT" = "S08000015",
+      "DMDCode" = c("940711000001101", "1004511000001101", "1014311000001109")
+    )
   )
 
   expect_s3_class(prescriptions, "tbl_df")
