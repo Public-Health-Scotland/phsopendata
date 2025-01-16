@@ -41,6 +41,12 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
     )
   }
 
+  # Check if Sex = All was specified
+  # There is a bug on CKAN which makes this not work, unless we use the SQL endpoint
+  if ("Sex" %in% names(row_filters) && "All" %in% row_filters[["Sex"]]) {
+    return(FALSE)
+  }
+
   # check if any filters in list have length > 1
   multiple <- purrr::map_lgl(row_filters, ~ length(.x) > 1)
 
