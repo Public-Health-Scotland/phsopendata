@@ -124,3 +124,22 @@ test_that("errors on invalid filters", {
     regexp = "col_select: invalid value"
   )
 })
+
+test_that("We can filter data with `Sex = 'All'`", {
+  pops <- get_resource(
+    res_id = "27a72cc8-d6d8-430c-8b4f-3109a9ceadb1",
+    row_filters = list("Sex" = "All"),
+    col_select = c("Year", "HB", "AllAges", "Sex")
+  )
+
+  expect_s3_class(pops, "tbl_df")
+  expect_equal(nrow(pops), 645)
+  expect_named(pops, c(
+    "Year",
+    "HB",
+    "AllAges",
+    "Sex"
+  ))
+  expect_length(unique(pops$HB), 15)
+  expect_setequal(pops$Sex, "All")
+})
