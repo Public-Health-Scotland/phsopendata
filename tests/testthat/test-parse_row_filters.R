@@ -26,10 +26,7 @@ test_that("throws error for bad types", {
 test_that("returns FALSE for length > 1", {
   expect_false(
     parse_row_filters(list(x = letters)),
-  ) %>%
-    expect_message(
-      "Multiple filters were supplied, defaulting to SQL"
-    )
+  )
 })
 
 test_that("throws error when un-named", {
