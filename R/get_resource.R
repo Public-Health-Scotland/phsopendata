@@ -40,12 +40,43 @@ get_resource <- function(res_id,
   # check res_id
   check_res_id(res_id)
 
+  parsed_col_select <- parse_col_select(col_select)
+  parsed_row_filters <- parse_row_filters(row_filters)
+
+  if (is.logical(parsed_row_filters) && !parsed_row_filters) {
+    if (!is.null(row_filters)) {
+      col_select_sql <- dplyr::if_else(
+        is.null(col_select),
+        "*",
+        paste0("\"", paste(col_select, collapse = "\",\""), "\"")
+      )
+
+      row_filters_sql <- paste(
+        purrr::imap_chr(
+          row_filters,
+          function(value, col) paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
+        ),
+        collapse = ") AND ("
+      )
+
+      sql <- sprintf(
+        "SELECT %s FROM \"%s\" WHERE (%s) %s",
+        col_select_sql,
+        res_id,
+        row_filters_sql,
+        dplyr::if_else(is.null(rows), "", paste("LIMIT", rows))
+      )
+
+      return(get_resource_sql(sql))
+    }
+  }
+
   # define query
   query <- list(
     id = res_id,
     limit = rows,
-    q = parse_row_filters(row_filters),
-    fields = parse_col_select(col_select)
+    q = parsed_row_filters,
+    fields = parsed_col_select
   )
 
   # if dump should be used, use it
