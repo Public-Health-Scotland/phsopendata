@@ -29,6 +29,23 @@ test_that("returns FALSE for length > 1", {
   )
 })
 
+test_that("returns FALSE if `Sex = 'All'` is given", {
+  expect_false(
+    parse_row_filters(list("Sex" = "All"))
+  )
+
+  expect_false(
+    parse_row_filters(list("Sex" = c("Male", "All")))
+  )
+
+  expect_false(
+    parse_row_filters(list(
+      "Sex" = "All",
+      "HBT" = "S1234"
+    ))
+  )
+})
+
 test_that("throws error when un-named", {
   expect_error(
     parse_row_filters(list(1, 2)),
