@@ -91,11 +91,6 @@ get_resource_sql <- function(sql) {
     )
   }
 
-  # get correct order of columns
-  order <- purrr::map_chr(
-    content$result$fields,
-    ~ .x$id
-  )
 
   # extract the records (rows) from content
   data <- purrr::map_dfr(
@@ -109,19 +104,27 @@ get_resource_sql <- function(sql) {
     }
   )
 
+  # If the query returned no rows, exit now.
+  if (nrow(data) == 0L) {
+    return(data)
+  }
+
+  # get correct order of columns
+  order <- purrr::map_chr(
+    content$result$fields,
+    ~ .x$id
+  )
+  order <- order[!order %in% c("_id", "_full_text")]
+
   # select and reorder columns to reflect
-  cleaner <- data %>%
-    dplyr::select(
-      dplyr::all_of(order),
-      -dplyr::matches("_id"), -dplyr::matches("_full_text")
-    )
+  cleaner <- dplyr::select(data, dplyr::all_of(order))
 
   # warn if limit may have been surpassed
-  if (nrow(cleaner) == 32000) {
+  if (nrow(cleaner) == 32000L) {
     cli::cli_warn(c(
       "Row number limit",
       i = "SQL queries are limitted to returning 32,000 results.
-      This may have effected the results of your query."
+      This may have affected the results of your query."
     ))
   }
 
