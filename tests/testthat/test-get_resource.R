@@ -21,7 +21,7 @@ test_that("returns data in the expected format", {
   expect_named(data_q, c("PracticeCode", "AddressLine1"))
   expect_equal(data_q[["PracticeCode"]], 10002)
 
-  expect_no_warning(get_resource("3e86b6fb-2062-4f05-8f4d-0bb001155d64"), "One or more parsing issues,"
+  expect_no_warning(get_resource("3e86b6fb-2062-4f05-8f4d-0bb001155d64"))
 })
 
 test_that("returns data with row specifications", {
