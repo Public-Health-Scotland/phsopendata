@@ -31,9 +31,7 @@ phs_GET <- function(action, query, verbose = FALSE, call = rlang::caller_env()) 
   }
 
   # Extract the content from the HTTP response
-  content <- httr::content(
-    response
-  )
+  content <- httr::content(response, guess_max = Inf)
 
   # detect/handle errors
   error_check(content, call = call)
