@@ -1,8 +1,7 @@
-# phsopendata 0.4.0 (2025-02-12)
+# phsopendata 0.4.0 (2025-02-13)
 
 - Multiple filters can now be passed to the `row_filter` arguments of  [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) and [`get_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource.html). (#54)
 - Improved error reporting. (#53)
-- Bug fixes: defaulting to SQL when filtering on Sex = "All" (#57) and no longer guessing column types resolving parsing issues. (#60)
 
 # phsopendata 0.3.0 (2024-11-21)
 
