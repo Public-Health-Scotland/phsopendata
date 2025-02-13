@@ -1,3 +1,8 @@
+# phsopendata 0.4.0 (2025-02-13)
+
+- Multiple filters can now be passed to the `row_filter` arguments of  [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) and [`get_resource()`](https://public-health-scotland.github.io/phsopendata/reference/get_resource.html). (#54)
+- Improved error reporting. (#53)
+
 # phsopendata 0.3.0 (2024-11-21)
 
 - [`get_dataset()`](https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html) now takes the `col_select` and `row_filter` arguments allowing filtering of data. (#46)
