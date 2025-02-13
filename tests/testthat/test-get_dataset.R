@@ -66,3 +66,18 @@ test_that("get_dataset works with multiple filters", {
   expect_named(data, columns)
   expect_true(all(data[["PracticeCode"]] %in% c("10002", "10017")))
 })
+
+test_that("Warns when having to coerce types", {
+  expect_warning(
+    coerced_data <- get_dataset(
+      dataset_name = "nhsscotland-payments-to-general-practice",
+      rows = 1,
+      col_select = "PracticeListSize"
+    ),
+    "Due to conflicts between column types across resources"
+  )
+
+  expect_s3_class(coerced_data, "tbl_df")
+  expect_named(coerced_data, "PracticeListSize")
+  expect_type(coerced_data[["PracticeListSize"]], "character")
+})
