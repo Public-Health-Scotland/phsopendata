@@ -31,7 +31,18 @@ phs_GET <- function(action, query, verbose = FALSE, call = rlang::caller_env()) 
   }
 
   # Extract the content from the HTTP response
-  content <- httr::content(response, guess_max = Inf)
+  if (httr::http_type(response) %in% c("text/html", "application/json")) {
+    content <- httr::content(response)
+  } else if (httr::http_type(response) == "text/csv") {
+    content <- readr::read_csv(
+      file = httr::content(response, as = "text"),
+      guess_max = Inf
+    )
+  } else {
+    cli::cli_abort(
+      "The response contained an unhandled content type: {httr::http_type(response)}"
+    )
+  }
 
   # detect/handle errors
   error_check(content, call = call)
