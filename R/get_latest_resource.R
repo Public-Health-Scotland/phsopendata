@@ -35,11 +35,13 @@
 #'   col_select = wanted_cols
 #' )
 #'
-get_latest_resource <- function(dataset_name,
-                                rows = NULL,
-                                row_filters = NULL,
-                                col_select = NULL,
-                                include_context = TRUE) {
+get_latest_resource <- function(
+  dataset_name,
+  rows = NULL,
+  row_filters = NULL,
+  col_select = NULL,
+  include_context = TRUE
+) {
   applicable_datasets <- c(
     "community-pharmacy-contractor-activity",
     "dental-practices-and-patient-registrations",
@@ -65,7 +67,6 @@ get_latest_resource <- function(dataset_name,
       call = rlang::caller_env()
     )
   }
-
 
   # get the latest resource id
   id <- get_latest_resource_id(dataset_name)
