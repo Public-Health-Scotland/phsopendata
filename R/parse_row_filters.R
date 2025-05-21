@@ -1,7 +1,12 @@
 #' Create JSON 'dict' from named list or vector
+#'
 #' @description Formats a list or named vector into a valid query
-#' @param row_filters list or named vectors matching fileds to values
+#'
+#' @param row_filters A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
+#'
 #' @return a json as a character string
+#' @noRd
+#' @keywords internal
 parse_row_filters <- function(row_filters) {
   # exit function if no filters
   if (is.null(row_filters)) {

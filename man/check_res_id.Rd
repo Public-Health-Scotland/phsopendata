@@ -7,7 +7,7 @@
 check_res_id(res_id)
 }
 \arguments{
-\item{res_id}{a resource ID}
+\item{res_id}{The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
 }
 \value{
 TRUE / FALSE indicating the validity of the res_id

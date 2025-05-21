@@ -7,7 +7,7 @@
 suggest_dataset_name(dataset_name)
 }
 \arguments{
-\item{dataset_name}{a string to be matched against valid dataset names}
+\item{dataset_name}{Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
 }
 \description{
 Throw an error with suggested dataset name, if possible.

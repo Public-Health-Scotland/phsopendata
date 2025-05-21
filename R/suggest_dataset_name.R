@@ -1,8 +1,6 @@
 #' Throw an error with suggested dataset name, if possible.
 #'
-#'
-#' @param dataset_name a string to be matched against valid dataset names
-#'
+#' @inheritParams get_dataset
 suggest_dataset_name <- function(dataset_name) {
   content <- phs_GET("package_list", "")
 
