@@ -8,6 +8,8 @@ get_dataset(
   dataset_name,
   max_resources = NULL,
   rows = NULL,
+  row_filters = NULL,
+  col_select = NULL,
   include_context = FALSE
 )
 }
@@ -17,6 +19,10 @@ get_dataset(
 \item{max_resources}{(optional) The maximum number of resources to return (integer). If not set, all resources are returned.}
 
 \item{rows}{(optional) Maximum number of rows to return (integer).}
+
+\item{row_filters}{(optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
+
+\item{col_select}{(optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).}
 
 \item{include_context}{(optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.}
 }

@@ -12,7 +12,19 @@ parse_col_select <- function(col_select) {
     return(NULL)
   }
 
-  return(
-    paste0(col_select, collapse = ",")
-  )
+  if (inherits(col_select, "list")) {
+    col_select <- unlist(col_select)
+  }
+
+  # Remove any duplicates
+  col_select <- unique(col_select)
+
+  if (!inherits(col_select, "character")) {
+    cli::cli_abort(
+      "{.arg col_select} must be a {.cls character} vector, not a {.cls {class(col_select)}} vector.",
+      call = call
+    )
+  }
+
+  return(paste0(col_select, collapse = ","))
 }

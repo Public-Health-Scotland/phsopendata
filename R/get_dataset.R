@@ -17,6 +17,8 @@ get_dataset <- function(
   dataset_name,
                         max_resources = NULL,
                         rows = NULL,
+                        row_filters = NULL,
+                        col_select = NULL,
                         include_context = FALSE) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
@@ -46,7 +48,9 @@ get_dataset <- function(
   all_data <- purrr::map(
     selection_ids,
     get_resource,
-    rows = rows
+    rows = rows,
+    row_filters = row_filters,
+    col_select = col_select,
   )
 
   # resolve class issues

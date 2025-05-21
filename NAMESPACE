@@ -2,6 +2,10 @@
 
 export("%>%")
 export(get_dataset)
+export(get_dataset_additional_info)
+export(get_latest_resource)
 export(get_resource)
 export(get_resource_sql)
+export(list_datasets)
+export(list_resources)
 importFrom(magrittr,"%>%")

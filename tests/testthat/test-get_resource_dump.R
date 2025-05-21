@@ -15,7 +15,7 @@ test_that("returns full data if rows is set to over 99999", {
     data <- get_resource(
       res_id = gp_list_apr_2021,
       rows = 9999999,
-      row_filters = c("GPPracticeName" = "The Blue Practice")
+      row_filters = list("GPPracticeName" = "The Blue Practice")
     ),
     regexp = "Can't request over 99,999 rows"
   )

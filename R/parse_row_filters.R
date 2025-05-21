@@ -4,48 +4,72 @@
 #'
 #' @param row_filters A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
 #'
+#' @param row_filters list or named vectors matching fields to values
 #' @return a json as a character string
-#' @noRd
 #' @keywords internal
-parse_row_filters <- function(row_filters) {
+#' @noRd
+parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
   # exit function if no filters
   if (is.null(row_filters)) {
     return(NULL)
   }
 
-  # check if any filters in list have length > 1
-  too_many <- sapply(row_filters, length) > 1
-
-  if (any(too_many)) {
-    cli::cli_abort(c(
-      "Invalid input for {.var row_filters}",
-      i = "{names(row_filters)[which(too_many)]} in {.var row_filters} has too many values. ",
-      x = "The {.var row_filters} list must only contain vectors of length 1."
-    ))
+  # Check if `row_filters` is a list or a character or numeric vector
+  if (
+    !inherits(row_filters, "list") &&
+      !is.character(row_filters) &&
+      !is.numeric(row_filters)
+  ) {
+    cli::cli_abort(
+      "{.arg row_filters} must be a named {.cls list} or a named
+      {.cls character} or {.cls numeric} vector, not a {.cls {class(row_filters)}}.",
+      call = call
+    )
   }
 
-  # check if any items in the list/vector have the same name
-  # find number of unique names
-  n_u_row_filters <- length(unique(names(row_filters)))
-  # find total number of names
-  n_row_filters <- length(names(row_filters))
-  # if same, all names are unique
-  unique_names <- n_u_row_filters == n_row_filters
+  # Ensure it's elements are named
+  if (is.null(names(row_filters)) || any(names(row_filters) == "")) {
+    cli::cli_abort(
+      "{.arg row_filters} should be a named {.cls list}.",
+      call = call
+    )
+  }
 
-  if (!unique_names) {
-    cli::cli_abort(c(
-      "Invalid input for {.var row_filters}",
-      x = "One or more elements in {.var row_filters} have the same name.",
-      i = "Only one filter per field is currently supported by `get_resource`."
-    ))
+  # check if any items in the list/vector are duplicates
+  duplicates <- duplicated(names(row_filters))
+  if (any(duplicates)) {
+    cli::cli_abort(
+      c(
+        "Invalid input for {.arg row_filters}",
+        x = "The {.val {names(row_filters)[which(duplicates)]}} filter{?s} {?is/are} duplicated.",
+        i = "Only one filter per field is currently supported by {.fun get_resource}."
+      ),
+      call = call
+    )
+  }
+
+  # Check if Sex = All was specified
+  # There is a bug on CKAN which makes this not work, unless we use the SQL endpoint
+  if ("Sex" %in% names(row_filters) && "All" %in% row_filters[["Sex"]]) {
+    return(FALSE)
+  }
+
+  # check if any filters in list have length > 1
+  multiple <- purrr::map_lgl(row_filters, ~ length(.x) > 1)
+
+  if (any(multiple)) {
+    # Default to using SQL
+    return(FALSE)
   }
 
   filter_body <- paste0(
-    '"', names(row_filters), '":"', row_filters, '"',
+    '"',
+    names(row_filters),
+    '":"',
+    row_filters,
+    '"',
     collapse = ","
   )
 
-  return(
-    paste0("{", filter_body, "}")
-  )
+  return(paste0("{", filter_body, "}"))
 }

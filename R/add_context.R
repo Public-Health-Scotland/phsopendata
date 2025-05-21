@@ -1,4 +1,4 @@
-##' Add resource context columns to a data frame
+#' Add resource context columns to a data frame
 #'
 #' @description Adds resource context columns (ID, name, created date, modified date) to a data frame returned from a resource query.
 #'
@@ -24,7 +24,7 @@ add_context <- function(data, id, name, created_date, modified_date) {
   # The platform can record the modified date as being before the created date
   # by a few microseconds, this will catch any rounding which ensure
   # created_date is always <= modified_date
-  if (modified_date < created_date) {
+  if (!is.na(modified_date) && modified_date < created_date) {
     modified_date <- created_date
   }
 

@@ -4,7 +4,8 @@
 #'
 #' @param sql A single PostgreSQL SELECT query (character). Must include a resource ID, which must be double-quoted (e.g., `SELECT * from "58527343-a930-4058-bf9e-3c6e5cb04010"`).
 #'
-#' @seealso [get_resource()] for downloading a resource without using a SQL query.
+#' @seealso [get_resource()] for downloading a resource without using a
+#' SQL query.
 #'
 #' @return A [tibble][tibble::tibble-package] with the query results. Only 32,000 rows can be returned from a single SQL query.
 #' @export
@@ -30,45 +31,41 @@
 #'   row_filters = row_filter
 #' )
 get_resource_sql <- function(sql) {
-  if (length(sql) > 1) {
+  if (length(sql) != 1) {
     cli::cli_abort(c(
-      "SQL validation error.",
-      i = "{.var sql} must be of length 1",
-      x = "You entered an object of length {length(sql)}."
+      x = "SQL validation error.",
+      i = "{.var sql} must be length 1 not {length(sql)}."
     ))
   }
 
-  if (!("character" %in% class(sql))) {
+  if (!inherits(sql, "character")) {
     cli::cli_abort(c(
-      "SQL validation error.",
-      i = "{.var sql} must be of class {.cls character}",
-      x = "You entered an object of class {.cls {class(sql)[1]}}."
+      x = "SQL validation error.",
+      i = "{.var sql} must be of class {.cls character} not {.cls {class(sql)}}."
     ))
   }
-
-  # remove spaces
-  sql <- gsub(" ", "", sql)
-  sql <- gsub("\n", "", sql)
 
   # check query is a SELECT statement
-  if (substr(sql, 1, 6) != "SELECT") {
+  if (!grepl("^\\s*?SELECT", sql)) {
     cli::cli_abort(c(
-      "SQL validation error.",
-      i = "{.var sql} must start with SELECT"
+      x = "SQL validation error.",
+      i = "{.var sql} must start with {.val SELECT}"
     ))
   }
 
-  # add query field prefix
+  # Add the SQL statement to the query
   query <- list("sql" = sql)
 
   # attempt get request
   content <- phs_GET("datastore_search_sql", query)
 
-  # get correct order of columns
-  order <- purrr::map_chr(
-    content$result$fields,
-    ~ .x$id
-  )
+  if (!is.null(content[["result"]][["records_truncated"]])) {
+    cli::cli_warn(
+      "The data was truncated because your query matched more than the
+      maximum number of rows."
+    )
+  }
+
 
   # extract the records (rows) from content
   data <- purrr::map_dfr(
@@ -82,19 +79,27 @@ get_resource_sql <- function(sql) {
     }
   )
 
+  # If the query returned no rows, exit now.
+  if (nrow(data) == 0L) {
+    return(data)
+  }
+
+  # get correct order of columns
+  order <- purrr::map_chr(
+    content$result$fields,
+    ~ .x$id
+  )
+  order <- order[!order %in% c("_id", "_full_text")]
+
   # select and reorder columns to reflect
-  cleaner <- data %>%
-    dplyr::select(
-      dplyr::all_of(order),
-      -dplyr::matches("_id"), -dplyr::matches("_full_text")
-    )
+  cleaner <- dplyr::select(data, dplyr::all_of(order))
 
   # warn if limit may have been surpassed
-  if (nrow(cleaner) == 32000) {
+  if (nrow(cleaner) == 32000L) {
     cli::cli_warn(c(
       "Row number limit",
       i = "SQL queries are limitted to returning 32,000 results.
-      This may have effected the results of your query."
+      This may have affected the results of your query."
     ))
   }
 

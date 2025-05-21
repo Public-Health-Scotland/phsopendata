@@ -3,8 +3,9 @@
 #' @param action The API endpoint you want to use, e.g., "package_show" / "datastore_search".
 #' @param query The query to pass to the endpoint defined by the action argument.
 #' @return a URL as a character string
-#'
-request_url <- function(action, query) {
+#' @keywords internal
+#' @noRd
+request_url <- function(action, query, call = rlang::caller_env()) {
   # check action is valid
   valid_actions <- c(
     "datastore_search",
@@ -15,10 +16,13 @@ request_url <- function(action, query) {
     "resource_show"
   )
   if (!(action %in% valid_actions)) {
-    cli::cli_abort(c(
-      "API call failed.",
-      x = "{.val {action}} is an invalid {.arg action} argument."
-    ))
+    cli::cli_abort(
+      c(
+        "API call failed.",
+        x = "{.val {action}} is an invalid {.arg action} argument."
+      ),
+      call = call
+    )
   }
 
   base_url <- "https://www.opendata.nhs.scot"

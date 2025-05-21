@@ -10,7 +10,9 @@ parse_error <- function(error) {
 
   # define error for most common cases
   error_output <- paste0(
-    error_type, ": ", error_message
+    error_type,
+    ": ",
+    error_message
   )
 
   # special case for validation errors
