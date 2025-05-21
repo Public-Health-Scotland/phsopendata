@@ -13,28 +13,21 @@ get_resource(
 )
 }
 \arguments{
-\item{res_id}{The resource ID as found on
-\href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
+\item{res_id}{The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
 
-\item{rows}{(optional) specify the max number of rows to return.}
+\item{rows}{(optional) Maximum number of rows to return (integer).}
 
-\item{row_filters}{(optional) a named list or vector that specifies values of
-columns/fields to keep.
-e.g. list(Date = 20220216, Sex = "Female").}
+\item{row_filters}{(optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
 
-\item{col_select}{(optional) a character vector containing the names of
-desired columns/fields.
-e.g. c("Date", "Sex").}
+\item{col_select}{(optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).}
 
-\item{include_context}{(optional) If \code{TRUE} additional information about the
-resource will be added as columns to the data, including the resource ID, the
-resource name, the creation date and the last modified/updated date.}
+\item{include_context}{(optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.}
 }
 \value{
-a \link[tibble:tibble-package]{tibble} with the data
+A \link[tibble:tibble-package]{tibble} with the data.
 }
 \description{
-Get Open Data resource
+Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
 }
 \examples{
 res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
@@ -51,6 +44,5 @@ filtered_data <- get_resource(
 )
 }
 \seealso{
-\code{\link[=get_dataset]{get_dataset()}} for downloading all resources
-from a given dataset.
+\code{\link[=get_dataset]{get_dataset()}} for downloading all resources from a given dataset.
 }

@@ -1,29 +1,25 @@
 #' Get Open Data resources from a dataset
 #'
-#' @param dataset_name name of the dataset as found on
-#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
-#' @param max_resources (optional) the maximum number of resources
-#' to return, use for testing code,
-#' it will return the n latest resources
-#' @param rows (optional) specify the max number of rows
-#' to return for each resource.
+#' @description Downloads multiple resources from a dataset on the NHS Open Data platform by dataset name, with optional row limits and context columns.
+#'
+#' @param dataset_name Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).
+#' @param max_resources (optional) The maximum number of resources to return (integer). If not set, all resources are returned.
 #' @inheritParams get_resource
 #'
-#' @seealso [get_resource()] for downloading a single resource
-#' from a dataset.
+#' @seealso [get_resource()] for downloading a single resource from a dataset.
 #'
-#' @return a [tibble][tibble::tibble-package] with the data
+#' @return A [tibble][tibble::tibble-package] with the data.
 #' @export
 #'
-#' @examples get_dataset("gp-practice-populations",
-#'   max_resources = 2, rows = 10
-#' )
-get_dataset <- function(dataset_name,
-                        max_resources = NULL,
-                        rows = NULL,
-                        row_filters = NULL,
-                        col_select = NULL,
-                        include_context = FALSE) {
+#' @examples
+#' get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+get_dataset <- function(
+    dataset_name,
+    max_resources = NULL,
+    rows = NULL,
+    row_filters = NULL,
+    col_select = NULL,
+    include_context = FALSE) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
@@ -63,7 +59,6 @@ get_dataset <- function(dataset_name,
     ~ purrr::map_chr(.x, class)
   )
 
-
   # for each df, check if next df class matches
   inconsistencies <- vector(length = length(types) - 1, mode = "list")
   for (i in seq_along(types)) {
@@ -78,7 +73,8 @@ get_dataset <- function(dataset_name,
     )
 
     # of matching name cols, find if types match too
-    inconsistent_index <- this_types[matching_names] != next_types[matching_names]
+    inconsistent_index <- this_types[matching_names] !=
+      next_types[matching_names]
     inconsistencies[[i]] <- this_types[matching_names][inconsistent_index]
   }
 
@@ -111,8 +107,14 @@ get_dataset <- function(dataset_name,
         "data" = all_data,
         "id" = selection_ids,
         "name" = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        "created_date" = purrr::map_chr(content$result$resources[res_index], ~ .x$created),
-        "modified_date" = purrr::map_chr(content$result$resources[res_index], ~ .x$last_modified)
+        "created_date" = purrr::map_chr(
+          content$result$resources[res_index],
+          ~ .x$created
+        ),
+        "modified_date" = purrr::map_chr(
+          content$result$resources[res_index],
+          ~ .x$last_modified
+        )
       ),
       add_context
     )

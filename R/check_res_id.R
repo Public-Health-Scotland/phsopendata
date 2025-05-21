@@ -3,7 +3,7 @@
 #' @description
 #' Used to attempt to validate a res_id before submitting it to the API
 #'
-#' @param res_id a resource ID
+#' @inheritParams get_resource
 #'
 #' @return TRUE / FALSE indicating the validity of the res_id
 #' @keywords internal

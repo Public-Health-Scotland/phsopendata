@@ -22,7 +22,6 @@ check_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
     )
   }
 
-
   if (!grepl(dataset_name_regex, dataset_name)) {
     cli::cli_abort(
       c(

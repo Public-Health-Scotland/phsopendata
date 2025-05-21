@@ -1,35 +1,13 @@
 #' Get PHS Open Data using SQL
 #'
-#' @description Similar to [get_resource()]
-#' but with more options for server-side querying of data.
-#' However, this function has a lower maximum row number
-#' (32,000 vs 99,999) for returned results.
+#' @description Downloads data from the NHS Open Data platform using a SQL query. Similar to [get_resource()], but allows more flexible server-side querying. This function has a lower maximum row number (32,000 vs 99,999) for returned results.
 #'
-#' @param sql (character) a single PostgreSQL SELECT query.
-#'
-#' Must include a resource ID, which must be double-quoted
-#' e.g.,
-#'
-#' ```SELECT * from "58527343-a930-4058-bf9e-3c6e5cb04010"```
-#'
-#'
-#' Column names must be double-quoted,
-#' while character values in filters must be single-quoted.
-#' e.g.,
-#'
-#' ```"Age" = '34'```
-#'
-#'
-#' You may need to escape quote marks with `\` to implement this. e.g.,
-#'
-#'
-#' ```sql = "SELECT * FROM \"<res_id>\" WHERE \"Age\" = '34'"```.
+#' @param sql A single PostgreSQL SELECT query (character). Must include a resource ID, which must be double-quoted (e.g., `SELECT * from "58527343-a930-4058-bf9e-3c6e5cb04010"`).
 #'
 #' @seealso [get_resource()] for downloading a resource without using a
 #' SQL query.
 #'
-#' @return a [tibble][tibble::tibble-package] with the query results.
-#' Only 32,000 rows can be returned from a single SQL query.
+#' @return A [tibble][tibble::tibble-package] with the query results. Only 32,000 rows can be returned from a single SQL query.
 #' @export
 #'
 #' @examples
@@ -44,10 +22,7 @@
 #' df <- get_resource_sql(sql)
 #'
 #' # This is equivalent to:
-#' cols <- c(
-#'   "TotalCancelled", "TotalOperations",
-#'   "Hospital", "Month"
-#' )
+#' cols <- c("TotalCancelled", "TotalOperations", "Hospital", "Month")
 #' row_filter <- c(Hospital = "D102H")
 #'
 #' df2 <- get_resource(

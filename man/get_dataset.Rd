@@ -14,40 +14,27 @@ get_dataset(
 )
 }
 \arguments{
-\item{dataset_name}{name of the dataset as found on
-\href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
+\item{dataset_name}{Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
 
-\item{max_resources}{(optional) the maximum number of resources
-to return, use for testing code,
-it will return the n latest resources}
+\item{max_resources}{(optional) The maximum number of resources to return (integer). If not set, all resources are returned.}
 
-\item{rows}{(optional) specify the max number of rows
-to return for each resource.}
+\item{rows}{(optional) Maximum number of rows to return (integer).}
 
-\item{row_filters}{(optional) a named list or vector that specifies values of
-columns/fields to keep.
-e.g. list(Date = 20220216, Sex = "Female").}
+\item{row_filters}{(optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
 
-\item{col_select}{(optional) a character vector containing the names of
-desired columns/fields.
-e.g. c("Date", "Sex").}
+\item{col_select}{(optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).}
 
-\item{include_context}{(optional) If \code{TRUE} additional information about the
-resource will be added as columns to the data, including the resource ID, the
-resource name, the creation date and the last modified/updated date.}
+\item{include_context}{(optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.}
 }
 \value{
-a \link[tibble:tibble-package]{tibble} with the data
+A \link[tibble:tibble-package]{tibble} with the data.
 }
 \description{
-Get Open Data resources from a dataset
+Downloads multiple resources from a dataset on the NHS Open Data platform by dataset name, with optional row limits and context columns.
 }
 \examples{
-get_dataset("gp-practice-populations",
-  max_resources = 2, rows = 10
-)
+get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 }
 \seealso{
-\code{\link[=get_resource]{get_resource()}} for downloading a single resource
-from a dataset.
+\code{\link[=get_resource]{get_resource()}} for downloading a single resource from a dataset.
 }
