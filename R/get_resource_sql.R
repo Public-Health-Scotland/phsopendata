@@ -91,7 +91,6 @@ get_resource_sql <- function(sql) {
     )
   }
 
-
   # extract the records (rows) from content
   data <- purrr::map_dfr(
     content$result$records,

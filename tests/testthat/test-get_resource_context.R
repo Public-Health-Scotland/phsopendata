@@ -19,13 +19,16 @@ test_that("returns expected context with the data", {
 
   expect_length(data, 19)
   expect_equal(nrow(data), 10)
-  expect_named(data, c(
-    "ResID",
-    "ResName",
-    "ResCreatedDate",
-    "ResModifiedDate",
-    data_col_names
-  ))
+  expect_named(
+    data,
+    c(
+      "ResID",
+      "ResName",
+      "ResCreatedDate",
+      "ResModifiedDate",
+      data_col_names
+    )
+  )
 
   # with query
   data_q <- get_resource(
@@ -35,13 +38,16 @@ test_that("returns expected context with the data", {
     include_context = TRUE
   )
 
-  expect_named(data_q, c(
-    "ResID",
-    "ResName",
-    "ResCreatedDate",
-    "ResModifiedDate",
-    "PracticeCode",
-    "AddressLine1"
-  ))
+  expect_named(
+    data_q,
+    c(
+      "ResID",
+      "ResName",
+      "ResCreatedDate",
+      "ResModifiedDate",
+      "PracticeCode",
+      "AddressLine1"
+    )
+  )
   expect_equal(data_q[["PracticeCode"]], 10002)
 })

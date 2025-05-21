@@ -5,7 +5,12 @@
 #' @return content of a httr::GET request
 #' @keywords internal
 #' @noRd
-phs_GET <- function(action, query, verbose = FALSE, call = rlang::caller_env()) {
+phs_GET <- function(
+  action,
+  query,
+  verbose = FALSE,
+  call = rlang::caller_env()
+) {
   # define URL
   url <- request_url(action, query)
 

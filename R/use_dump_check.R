@@ -19,7 +19,9 @@ use_dump_check <- function(query, rows) {
 
   # warn users that dump will be used,
   # if user queried the data
-  queried <- !is.null(query$q) || !is.null(query$filter) || !is.null(query$fields)
+  queried <- !is.null(query$q) ||
+    !is.null(query$filter) ||
+    !is.null(query$fields)
 
   if (queried && use_dump) {
     cli::cli_warn(c(
@@ -44,7 +46,6 @@ use_dump_check <- function(query, rows) {
       {format(rows, big.mark = ',', scientific = FALSE)}"
     ))
   }
-
 
   return(use_dump)
 }
