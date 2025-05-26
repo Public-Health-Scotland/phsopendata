@@ -1,16 +1,16 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>https://public-health-scotland.github.io/phsopendata/404.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/authors.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/index.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/news/index.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_dataset_additional_info.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_latest_resource.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_resource.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/get_resource_sql.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/index.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/list_datasets.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/list_resources.html</loc></url>
-<url><loc>https://public-health-scotland.github.io/phsopendata/reference/pipe.html</loc></url>
+<url><loc>/404.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/get_dataset.html</loc></url>
+<url><loc>/reference/get_dataset_additional_info.html</loc></url>
+<url><loc>/reference/get_latest_resource.html</loc></url>
+<url><loc>/reference/get_resource.html</loc></url>
+<url><loc>/reference/get_resource_sql.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/list_datasets.html</loc></url>
+<url><loc>/reference/list_resources.html</loc></url>
+<url><loc>/reference/pipe.html</loc></url>
 </urlset>
 
