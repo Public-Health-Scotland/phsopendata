@@ -20,7 +20,8 @@ test_that("get_dataset works properly with filters", {
   n_rows <- 10
   columns <- c("Date", "PracticeCode", "HSCP", "AllAges")
 
-  data <- get_dataset("gp-practice-populations",
+  data <- get_dataset(
+    "gp-practice-populations",
     max_resources = n_resources,
     rows = n_rows,
     row_filters = list(HSCP = "S37000026"),
@@ -34,19 +35,23 @@ test_that("get_dataset works properly with filters", {
 })
 
 test_that("get_dataset errors properly", {
-  expect_error(get_dataset("Mal-formed-name"),
+  expect_error(
+    get_dataset("Mal-formed-name"),
     regexp = "The dataset name supplied `Mal-formed-name` is invalid"
   )
-  expect_error(get_dataset("dataset-name-with-no-close-match"),
+  expect_error(
+    get_dataset("dataset-name-with-no-close-match"),
     regexp = "Can't find the dataset name `dataset-name-with-no-close-match`"
   )
-  expect_error(get_dataset("gp-practice-population"),
+  expect_error(
+    get_dataset("gp-practice-population"),
     regexp = "Did you mean .+?gp-practice-populations.+?\\?"
   )
 })
 
 test_that("get_dataset filters error properly", {
-  expect_error(get_dataset("gp-practice-populations", col_select = "Non-existent column"),
+  expect_error(
+    get_dataset("gp-practice-populations", col_select = "Non-existent column"),
     regexp = "API error"
   )
 })
@@ -55,7 +60,8 @@ test_that("get_dataset works with multiple filters", {
   n_resources <- 3
   columns <- c("Date", "PracticeCode", "HSCP", "AllAges")
 
-  data <- get_dataset("gp-practice-populations",
+  data <- get_dataset(
+    "gp-practice-populations",
     max_resources = n_resources,
     row_filters = list(PracticeCode = c("10002", "10017")),
     col_select = columns

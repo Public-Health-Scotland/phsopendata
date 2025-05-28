@@ -13,6 +13,5 @@ list_datasets <- function() {
 
   data_sets <- tibble::tibble("name" = unlist(content$result))
 
-
   return(data_sets)
 }
