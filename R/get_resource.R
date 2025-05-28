@@ -1,22 +1,16 @@
 #' Get Open Data resource
 #'
-#' @param res_id The resource ID as found on
-#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
-#' @param rows (optional) specify the max number of rows to return.
-#' @param row_filters (optional) a named list or vector that specifies values of
-#'  columns/fields to keep.
-#' e.g. list(Date = 20220216, Sex = "Female").
-#' @param col_select (optional) a character vector containing the names of
-#' desired columns/fields.
-#' e.g. c("Date", "Sex").
-#' @param include_context (optional) If `TRUE` additional information about the
-#' resource will be added as columns to the data, including the resource ID, the
-#' resource name, the creation date and the last modified/updated date.
+#' @description Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
 #'
-#' @seealso [get_dataset()] for downloading all resources
-#' from a given dataset.
+#' @param res_id The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).
+#' @param rows (optional) Maximum number of rows to return (integer).
+#' @param row_filters (optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
+#' @param col_select (optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).
+#' @param include_context (optional) If `TRUE`, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.
 #'
-#' @return a [tibble][tibble::tibble-package] with the data
+#' @seealso [get_dataset()] for downloading all resources from a given dataset.
+#'
+#' @return A [tibble][tibble::tibble-package] with the data.
 #' @export
 #'
 #' @examples

@@ -1,5 +1,9 @@
 #' Create JSON 'dict' from named list or vector
+#'
 #' @description Formats a list or named vector into a valid query
+#'
+#' @param row_filters A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
+#'
 #' @param row_filters list or named vectors matching fields to values
 #' @return a json as a character string
 #' @keywords internal
@@ -11,7 +15,11 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
   }
 
   # Check if `row_filters` is a list or a character or numeric vector
-  if (!inherits(row_filters, "list") && !is.character(row_filters) && !is.numeric(row_filters)) {
+  if (
+    !inherits(row_filters, "list") &&
+      !is.character(row_filters) &&
+      !is.numeric(row_filters)
+  ) {
     cli::cli_abort(
       "{.arg row_filters} must be a named {.cls list} or a named
       {.cls character} or {.cls numeric} vector, not a {.cls {class(row_filters)}}.",
@@ -26,7 +34,6 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
       call = call
     )
   }
-
 
   # check if any items in the list/vector are duplicates
   duplicates <- duplicated(names(row_filters))
@@ -56,7 +63,11 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
   }
 
   filter_body <- paste0(
-    '"', names(row_filters), '":"', row_filters, '"',
+    '"',
+    names(row_filters),
+    '":"',
+    row_filters,
+    '"',
     collapse = ","
   )
 

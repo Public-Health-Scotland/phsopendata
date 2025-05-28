@@ -1,7 +1,6 @@
 #' Throw an error with suggested dataset name, if possible.
 #'
-#'
-#' @param dataset_name a string to be matched against valid dataset names
+#' @inheritParams get_dataset
 #' @keywords internal
 #' @noRd
 suggest_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
@@ -26,7 +25,9 @@ suggest_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
   }
 
   # find closet match
-  closest_match <- dataset_names[which(string_distances == min(string_distances))]
+  closest_match <- dataset_names[which(
+    string_distances == min(string_distances)
+  )]
 
   # throw error with suggestion
   cli::cli_abort(
