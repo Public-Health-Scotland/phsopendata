@@ -1,9 +1,9 @@
 #' Generates error message from an "error" element of an `httr::content` object
 #'
-#' @param error "error" element of an object produced by `httr::content`
+#' @param error The "error" element of an object produced by `httr::content`.
 #' @return character string
-#' @keywords internal
 #' @noRd
+#' @keywords internal
 parse_error <- function(error) {
   error_message <- error$message
   error_type <- error$`__type`

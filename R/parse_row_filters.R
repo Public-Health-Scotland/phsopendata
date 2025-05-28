@@ -1,5 +1,9 @@
 #' Create JSON 'dict' from named list or vector
+#'
 #' @description Formats a list or named vector into a valid query
+#'
+#' @param row_filters A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
+#'
 #' @param row_filters list or named vectors matching fields to values
 #' @return a json as a character string
 #' @keywords internal

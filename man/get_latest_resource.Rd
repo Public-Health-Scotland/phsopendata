@@ -13,23 +13,15 @@ get_latest_resource(
 )
 }
 \arguments{
-\item{dataset_name}{name of the dataset as found on
-\href{https://www.opendata.nhs.scot/}{NHS Open Data platform}}
+\item{dataset_name}{Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
 
-\item{rows}{(optional) specify the max number of rows
-to return for each resource.}
+\item{rows}{(optional) Maximum number of rows to return (integer).}
 
-\item{row_filters}{(optional) a named list or vector that specifies values of
-columns/fields to keep.
-e.g. list(Date = 20220216, Sex = "Female").}
+\item{row_filters}{(optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).}
 
-\item{col_select}{(optional) a character vector containing the names of
-desired columns/fields.
-e.g. c("Date", "Sex").}
+\item{col_select}{(optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).}
 
-\item{include_context}{(optional) If \code{TRUE} additional information about the
-resource will be added as columns to the data, including the resource ID, the
-resource name, the creation date and the last modified/updated date.}
+\item{include_context}{(optional) If \code{TRUE}, additional information about the resource will be added as columns to the data, including the resource ID, the resource name, the creation date, and the last modified/updated date.}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data

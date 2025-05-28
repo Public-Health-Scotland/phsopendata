@@ -1,18 +1,14 @@
 #' Get Open Data resources from a dataset
 #'
-#' @param dataset_name name of the dataset as found on
-#' \href{https://www.opendata.nhs.scot/}{NHS Open Data platform}
-#' @param max_resources (optional) the maximum number of resources
-#' to return, use for testing code,
-#' it will return the n latest resources
-#' @param rows (optional) specify the max number of rows
-#' to return for each resource.
+#' @description Downloads multiple resources from a dataset on the NHS Open Data platform by dataset name, with optional row limits and context columns.
+#'
+#' @param dataset_name Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).
+#' @param max_resources (optional) The maximum number of resources to return (integer). If not set, all resources are returned.
 #' @inheritParams get_resource
 #'
-#' @seealso [get_resource()] for downloading a single resource
-#' from a dataset.
+#' @seealso [get_resource()] for downloading a single resource from a dataset.
 #'
-#' @return a [tibble][tibble::tibble-package] with the data
+#' @return A [tibble][tibble::tibble-package] with the data.
 #' @export
 #'
 #' @examples get_dataset("gp-practice-populations",
