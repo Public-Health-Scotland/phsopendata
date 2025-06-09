@@ -7,7 +7,7 @@
 #' @return a character string
 #' @noRd
 #' @keywords internal
-parse_col_select <- function(col_select) {
+parse_col_select <- function(col_select, call = rlang::caller_env()) {
   if (is.null(col_select)) {
     return(NULL)
   }
