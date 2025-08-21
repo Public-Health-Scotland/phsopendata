@@ -1,5 +1,5 @@
 Package: phsopendata
-Title: Extract Open Data from opendata.nhs.scot
+Title: Extract from the Scottish Health and Social Care Open Data Platform
 Version: 0.4.0
 Authors@R: c(
     person("Public Health Scotland", , , "phs.datascience@phs.scot", role = "cph"),
@@ -8,9 +8,9 @@ Authors@R: c(
     person("David", "Aikman", , "david.aikman@phs.scot", role = "aut"),
     person("Ross", "Hull", , "ross.hull2@phs.scot", role = "aut")
   )
-Description: Functions to extract and interact with data from the Scottish
-    Health and Social Care Open Data platform.
-License: GPL (>= 2)
+Description: Extract and interact with data from the Scottish Health and
+    Social Care Open Data platform <https://www.opendata.nhs.scot>.
+License: MIT + file LICENSE
 URL: https://github.com/Public-Health-Scotland/phsopendata,
     https://public-health-scotland.github.io/phsopendata/
 BugReports: https://github.com/Public-Health-Scotland/phsopendata/issues

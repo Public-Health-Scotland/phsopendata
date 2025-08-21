@@ -34,14 +34,19 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-You need to install `phsopendata` from GitHub, which requires a package like `remotes` or `devtools`.
+```{r, eval = FALSE}
+# The easiest way to get phsopendata is to install from CRAN:
+install.packages("phsopendata")
+```
 
-Using `remotes` you run this to install the package:
+### Development version
 
-```{r gh-installation, eval = FALSE}
-remotes::install_github("Public-Health-Scotland/phsopendata",
-  upgrade = "never"
-)
+To get a bug fix or to use a feature from the development version, you can install 
+the development version of phsopendata from GitHub.
+
+```{r, eval = FALSE}
+# install.packages("remotes")
+remotes::install_github("Public-Health-Scotland/phsopendata")
 ```
 
 ## Examples
