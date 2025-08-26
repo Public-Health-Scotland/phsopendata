@@ -118,7 +118,7 @@ Scharle](https://github.com/csillasch).
 
 If you have requests or suggestions for additional functionality, please
 contact the package maintainer and/or the [PHS Open Data
-team](phs.opendata@phs.scot).
+team](mailto:phs.opendata@phs.scot).
 
 If you would like to share examples of how you work with open data, you
 can also do so in the [Open Data

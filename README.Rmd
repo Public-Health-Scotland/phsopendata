@@ -105,6 +105,6 @@ get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 
 At present, this package is maintained by [Csilla Scharle](https://github.com/csillasch).
 
-If you have requests or suggestions for additional functionality, please contact the package maintainer and/or the [PHS Open Data team](phs.opendata@phs.scot).
+If you have requests or suggestions for additional functionality, please contact the package maintainer and/or the [PHS Open Data team](mailto:phs.opendata@phs.scot).
 
 If you would like to share examples of how you work with open data, you can also do so in the [Open Data repository](https://github.com/Public-Health-Scotland/Open-Data), where example scripts and resources are collated.
