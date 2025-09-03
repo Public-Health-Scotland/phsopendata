@@ -2,6 +2,12 @@ on:
   push:
     paths:
       - 'README.Rmd'
+  workflow_dispatch:
+
+name: render-README.yml
+
+permissions:
+  contents: write
 
 jobs:
   render:
