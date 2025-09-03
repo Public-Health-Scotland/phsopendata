@@ -4,6 +4,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/phsopendata)](https://CRAN.R-project.org/package=phsopendata)
 [![GitHub release (latest by
 date)](https://img.shields.io/github/v/release/Public-Health-Scotland/phsopendata)](https://github.com/Public-Health-Scotland/phsopendata/releases/latest)
 [![R-CMD-check](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml)
