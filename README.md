@@ -4,6 +4,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/phsopendata)](https://CRAN.R-project.org/package=phsopendata)
 [![GitHub release (latest by
 date)](https://img.shields.io/github/v/release/Public-Health-Scotland/phsopendata)](https://github.com/Public-Health-Scotland/phsopendata/releases/latest)
 [![R-CMD-check](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml)
@@ -30,14 +32,16 @@ of RStudio.
 
 ## Installation
 
-You need to install `phsopendata` from GitHub, which requires a package
-like `remotes` or `devtools`.
+    # The easiest way to get phsopendata is to install from CRAN:
+    install.packages("phsopendata")
 
-Using `remotes` you run this to install the package:
+### Development version
 
-    remotes::install_github("Public-Health-Scotland/phsopendata",
-      upgrade = "never"
-    )
+To get a bug fix or to use a feature from the development version, you
+can install the development version of phsopendata from GitHub.
+
+    # install.packages("remotes")
+    remotes::install_github("Public-Health-Scotland/phsopendata")
 
 ## Examples
 
@@ -103,7 +107,7 @@ Scharle](https://github.com/csillasch).
 
 If you have requests or suggestions for additional functionality, please
 contact the package maintainer and/or the [PHS Open Data
-team](phs.opendata@phs.scot).
+team](mailto:phs.opendata@phs.scot).
 
 If you would like to share examples of how you work with open data, you
 can also do so in the [Open Data
