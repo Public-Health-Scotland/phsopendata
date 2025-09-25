@@ -25,7 +25,6 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   # retrieve the resource id's from returned contect
   all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
 
-
   # add the id, created date and last_modified to a dataframe
   id <- c()
   created_date <- c()
@@ -50,10 +49,11 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
 
   # If the resource at the top as appearing on the open data platform also has the most
   # recent date created, return it. Otherwise, error
-  if (all_id_data_first_row$created_date == all_id_data_first_row$most_recent_date_created) {
+  if (
+    all_id_data_first_row$created_date ==
+      all_id_data_first_row$most_recent_date_created
+  ) {
     return(all_id_data_first_row$id)
   }
-  cli::cli_abort("The most recent id could not be identified",
-    call = call
-  )
+  cli::cli_abort("The most recent id could not be identified", call = call)
 }
