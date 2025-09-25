@@ -36,12 +36,11 @@
 #' )
 #'
 get_latest_resource <- function(
-  dataset_name,
-  rows = NULL,
-  row_filters = NULL,
-  col_select = NULL,
-  include_context = TRUE
-) {
+    dataset_name,
+    rows = NULL,
+    row_filters = NULL,
+    col_select = NULL,
+    include_context = TRUE) {
   applicable_datasets <- c(
     "community-pharmacy-contractor-activity",
     "dental-practices-and-patient-registrations",

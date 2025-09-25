@@ -27,12 +27,11 @@
 #'   col_select = wanted_cols
 #' )
 get_resource <- function(
-  res_id,
-  rows = NULL,
-  row_filters = NULL,
-  col_select = NULL,
-  include_context = FALSE
-) {
+    res_id,
+    rows = NULL,
+    row_filters = NULL,
+    col_select = NULL,
+    include_context = FALSE) {
   # check res_id
   check_res_id(res_id)
 
@@ -50,8 +49,9 @@ get_resource <- function(
       row_filters_sql <- paste(
         purrr::imap_chr(
           row_filters,
-          function(value, col)
+          function(value, col) {
             paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
+          }
         ),
         collapse = ") AND ("
       )

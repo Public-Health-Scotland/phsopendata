@@ -6,11 +6,10 @@
 #' @keywords internal
 #' @noRd
 phs_GET <- function(
-  action,
-  query,
-  verbose = FALSE,
-  call = rlang::caller_env()
-) {
+    action,
+    query,
+    verbose = FALSE,
+    call = rlang::caller_env()) {
   # define URL
   url <- request_url(action, query)
 
