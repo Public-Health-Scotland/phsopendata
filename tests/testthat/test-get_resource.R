@@ -29,7 +29,10 @@ test_that("returns data with row specifications", {
 
   expect_equal(nrow(get_resource(res_id = gp_list_apr_2021, rows = 926)), 926)
 
-  expect_equal(nrow(get_resource(res_id = gp_list_apr_2021, rows = 999)), 926) %>%
+  expect_equal(
+    nrow(get_resource(res_id = gp_list_apr_2021, rows = 999)),
+    926
+  ) %>%
     expect_warning()
 })
 
@@ -70,7 +73,10 @@ test_that("returns data for multiple filters in mixed format", {
 
   expect_s3_class(delays, "tbl_df")
   expect_equal(nrow(delays), 195)
-  expect_named(delays, c("MonthOfDelay", "ReasonForDelay", "NumberOfDelayedBedDays"))
+  expect_named(
+    delays,
+    c("MonthOfDelay", "ReasonForDelay", "NumberOfDelayedBedDays")
+  )
   expect_length(unique(delays$MonthOfDelay), 13)
 })
 
@@ -85,18 +91,21 @@ test_that("returns data for multiple filters for all columns", {
 
   expect_s3_class(prescriptions, "tbl_df")
   expect_equal(nrow(prescriptions), 114)
-  expect_named(prescriptions, c(
-    "HBT",
-    "GPPractice",
-    "DMDCode",
-    "BNFItemCode",
-    "BNFItemDescription",
-    "PrescribedType",
-    "NumberOfPaidItems",
-    "PaidQuantity",
-    "GrossIngredientCost",
-    "PaidDateMonth"
-  ))
+  expect_named(
+    prescriptions,
+    c(
+      "HBT",
+      "GPPractice",
+      "DMDCode",
+      "BNFItemCode",
+      "BNFItemDescription",
+      "PrescribedType",
+      "NumberOfPaidItems",
+      "PaidQuantity",
+      "GrossIngredientCost",
+      "PaidDateMonth"
+    )
+  )
   expect_length(unique(prescriptions$GPPractice), 55)
   expect_setequal(
     prescriptions$DMDCode,
@@ -110,7 +119,11 @@ test_that("errors on invalid filters", {
   expect_error(
     delays <- get_resource(
       res_id = "fd354e4b-6211-48ba-8e4f-8356a5ed4215",
-      col_select = c("MonthOfDelay", "ReasonForDelay", "NumberOfDelayedBedDays"),
+      col_select = c(
+        "MonthOfDelay",
+        "ReasonForDelay",
+        "NumberOfDelayedBedDays"
+      ),
       row_filters = c("HBT" = "S08000031", "Month" = 201607)
     ),
     regexp = "row_filters: invalid value"
@@ -136,12 +149,15 @@ test_that("We can filter data with `Sex = 'All'`", {
 
   expect_s3_class(pops, "tbl_df")
   expect_equal(nrow(pops), 645)
-  expect_named(pops, c(
-    "Year",
-    "HB",
-    "AllAges",
-    "Sex"
-  ))
+  expect_named(
+    pops,
+    c(
+      "Year",
+      "HB",
+      "AllAges",
+      "Sex"
+    )
+  )
   expect_length(unique(pops$HB), 15)
   expect_setequal(pops$Sex, "All")
 })

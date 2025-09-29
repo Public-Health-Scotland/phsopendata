@@ -26,11 +26,12 @@
 #'   row_filters = filters,
 #'   col_select = wanted_cols
 #' )
-get_resource <- function(res_id,
-                         rows = NULL,
-                         row_filters = NULL,
-                         col_select = NULL,
-                         include_context = FALSE) {
+get_resource <- function(
+    res_id,
+    rows = NULL,
+    row_filters = NULL,
+    col_select = NULL,
+    include_context = FALSE) {
   # check res_id
   check_res_id(res_id)
 
@@ -48,7 +49,9 @@ get_resource <- function(res_id,
       row_filters_sql <- paste(
         purrr::imap_chr(
           row_filters,
-          function(value, col) paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
+          function(value, col) {
+            paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
+          }
         ),
         collapse = ") AND ("
       )
@@ -113,11 +116,13 @@ get_resource <- function(res_id,
 
     # extract data from response content
     data <- purrr::map_dfr(
-      res_content$result$records, ~.x
-    ) %>% dplyr::select(
-      -dplyr::starts_with("rank "),
-      -dplyr::matches("_id")
-    )
+      res_content$result$records,
+      ~.x
+    ) %>%
+      dplyr::select(
+        -dplyr::starts_with("rank "),
+        -dplyr::matches("_id")
+      )
   }
 
   if (include_context) {

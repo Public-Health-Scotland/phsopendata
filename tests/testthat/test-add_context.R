@@ -51,28 +51,31 @@ test_that("add_context works with odd data", {
     )
 
   expect_s3_class(data, "tbl_df")
-  expect_named(data, c(
-    "ResID",
-    "ResName",
-    "ResCreatedDate",
-    "ResModifiedDate",
-    "GeneralMedicalCouncilNumber",
-    "GPDesignation",
-    "Forename",
-    "MiddleInitial",
-    "Surname",
-    "Sex",
-    "SexQF",
-    "PracticeCode",
-    "GPPracticeName",
-    "AddressLine1",
-    "AddressLine2",
-    "AddressLine3",
-    "AddressLine4",
-    "Postcode",
-    "Telephone",
-    "HB",
-    "HSCP"
-  ))
+  expect_named(
+    data,
+    c(
+      "ResID",
+      "ResName",
+      "ResCreatedDate",
+      "ResModifiedDate",
+      "GeneralMedicalCouncilNumber",
+      "GPDesignation",
+      "Forename",
+      "MiddleInitial",
+      "Surname",
+      "Sex",
+      "SexQF",
+      "PracticeCode",
+      "GPPracticeName",
+      "AddressLine1",
+      "AddressLine2",
+      "AddressLine3",
+      "AddressLine4",
+      "Postcode",
+      "Telephone",
+      "HB",
+      "HSCP"
+    )
+  )
   expect_true(all(is.na(data$ResModifiedDate)))
 })

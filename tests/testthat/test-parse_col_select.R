@@ -19,7 +19,10 @@ test_that("Can deal with a list in some cases", {
     "col1,col2"
   )
   expect_equal(
-    parse_col_select(list(columns = c("col1", "col2"), columns2 = c("col1", "col2"))),
+    parse_col_select(list(
+      columns = c("col1", "col2"),
+      columns2 = c("col1", "col2")
+    )),
     "col1,col2"
   )
 
