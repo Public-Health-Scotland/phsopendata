@@ -14,12 +14,13 @@
 #' @examples
 #' get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 get_dataset <- function(
-    dataset_name,
-    max_resources = NULL,
-    rows = NULL,
-    row_filters = NULL,
-    col_select = NULL,
-    include_context = FALSE) {
+  dataset_name,
+  max_resources = NULL,
+  rows = NULL,
+  row_filters = NULL,
+  col_select = NULL,
+  include_context = FALSE
+) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 

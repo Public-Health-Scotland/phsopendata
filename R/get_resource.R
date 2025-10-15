@@ -27,11 +27,12 @@
 #'   col_select = wanted_cols
 #' )
 get_resource <- function(
-    res_id,
-    rows = NULL,
-    row_filters = NULL,
-    col_select = NULL,
-    include_context = FALSE) {
+  res_id,
+  rows = NULL,
+  row_filters = NULL,
+  col_select = NULL,
+  include_context = FALSE
+) {
   # check res_id
   check_res_id(res_id)
 

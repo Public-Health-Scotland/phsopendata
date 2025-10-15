@@ -151,7 +151,7 @@ test_that("We can filter data with `Sex = 'All'`", {
   expect_equal(
     nrow(pops),
     length(unique(pops$Year)) * 15
-    )
+  )
   expect_named(
     pops,
     c(
