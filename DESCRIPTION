@@ -21,13 +21,13 @@ Imports:
     httr (>= 1.0.0),
     magrittr (>= 1.0.0),
     purrr (>= 1.0.0),
+    readr (>= 1.0.0),
     rlang (>= 1.0.0),
     stringdist,
     tibble (>= 3.0.0)
 Suggests: 
     covr,
     jsonlite (>= 1.1),
-    readr (>= 1.0.0),
     testthat (>= 3.0.0),
     xml2
 Config/testthat/edition: 3
