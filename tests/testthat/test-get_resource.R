@@ -148,7 +148,10 @@ test_that("We can filter data with `Sex = 'All'`", {
   )
 
   expect_s3_class(pops, "tbl_df")
-  expect_equal(nrow(pops), 645)
+  expect_equal(
+    nrow(pops),
+    length(unique(pops$Year)) * 15
+  )
   expect_named(
     pops,
     c(
