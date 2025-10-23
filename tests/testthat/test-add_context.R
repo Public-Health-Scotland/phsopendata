@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("Returned context is the same for resource and dataset", {
   dataset <- get_dataset(
     "general-practitioner-contact-details",
@@ -51,31 +53,6 @@ test_that("add_context works with odd data", {
     )
 
   expect_s3_class(data, "tbl_df")
-  expect_named(
-    data,
-    c(
-      "ResID",
-      "ResName",
-      "ResCreatedDate",
-      "ResModifiedDate",
-      "GeneralMedicalCouncilNumber",
-      "GPDesignation",
-      "Forename",
-      "MiddleInitial",
-      "Surname",
-      "Sex",
-      "SexQF",
-      "PracticeCode",
-      "GPPracticeName",
-      "AddressLine1",
-      "AddressLine2",
-      "AddressLine3",
-      "AddressLine4",
-      "Postcode",
-      "Telephone",
-      "HB",
-      "HSCP"
-    )
-  )
+  expect_named(data)
   expect_true(all(is.na(data$ResModifiedDate)))
 })

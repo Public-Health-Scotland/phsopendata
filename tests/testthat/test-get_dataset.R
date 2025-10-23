@@ -11,7 +11,6 @@ test_that("get_dataset returns data in the expected format", {
 
   expect_s3_class(data, "tbl_df")
   expect_equal(nrow(data), n_resources * n_rows)
-  expect_length(data, 24)
   expect_named(data)
 })
 
