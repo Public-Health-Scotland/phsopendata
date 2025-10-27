@@ -49,4 +49,3 @@ test_that("returns expected context and length of data", {
   expect_equal(nrow(data), n_resources * n_rows)
   expect_length(unique(data[["ResID"]]), n_resources)
 })
-
