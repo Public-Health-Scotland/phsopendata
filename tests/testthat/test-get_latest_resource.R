@@ -4,8 +4,9 @@ test_that("returns data for a dataset that is listed", {
   expect_no_error(data <- get_latest_resource("gp-practice-populations"))
   expect_s3_class(data, "tbl_df")
   expect_match(data[["ResName"]], "^GP Practice Populations \\w+ [0-9]{4}$")
-
   expect_named(data)
+  expect_contains(names(data), c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate",
+                                 "Date","HB", "HSCP", "Sex"))
 })
 
 test_that("returns error for a dataset that is not listed", {
