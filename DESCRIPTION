@@ -1,6 +1,6 @@
 Package: phsopendata
 Title: Extract from the Scottish Health and Social Care Open Data Platform
-Version: 1.0.1
+Version: 1.0.1.9000
 Authors@R: c(
     person("Public Health Scotland", , , "phs.datascience@phs.scot", role = "cph"),
     person("Csilla", "Scharle", , "csilla.scharle2@phs.scot", role = c("aut", "cre")),
