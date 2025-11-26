@@ -23,35 +23,33 @@
 #'   package_contains = "standard-populations", resource_contains = "European"
 #' )
 #'
-#'
 #' @export
 
 get_all_resources <- function(package_contains = NULL, resource_contains = NULL) {
+  stopifnot(is.null(package_contains) || length(package_contains) == 1)
+  stopifnot(is.null(resource_contains) || length(resource_contains) == 1)
 
-  stopifnot(is.null(package_contains) || length(package_contains)== 1)
-  stopifnot(is.null(resource_contains) || length(resource_contains)== 1)
-
-  #query for the API call
+  # query for the API call
   query <- if (is.null(package_contains)) {
     "q=*:*&rows=32000"
   } else {
     glue::glue("q=title:{package_contains}&rows=32000")
   }
-  #API call
+  # API call
   content <- phs_GET(action = "package_search", query = query)
-  #extract the data
+  # extract the data
   extracted_content <- jsonlite::fromJSON(jsonlite::toJSON(content$result))$results
 
-  #Create a named vector of package names keyed by package IDs
+  # Create a named vector of package names keyed by package IDs
   pkgs <- unlist(extracted_content$name)
   names(pkgs) <- unlist(extracted_content$id)
 
-  #extract resources
+  # extract resources
   resources <- jsonlite::fromJSON(jsonlite::toJSON(extracted_content$resources), flatten = TRUE)
-  #Combine all resources into one
+  # Combine all resources into one
   resources_df <- purrr::list_rbind(resources)
 
-  #tidying up
+  # tidying up
   data_tibble <- tibble::tibble(
     resource_name = resources_df$name,
     resource_id = resources_df$id,
@@ -63,8 +61,8 @@ get_all_resources <- function(package_contains = NULL, resource_contains = NULL)
 
 
   if (!is.null(resource_contains)) {
-    data_tibble <- data_tibble[grepl(as.character(resource_contains), data_tibble$resource_name, ignore.case = TRUE),]
-    if (nrow(out) == 0)  {
+    data_tibble <- data_tibble[grepl(as.character(resource_contains), data_tibble$resource_name, ignore.case = TRUE), ]
+    if (nrow(out) == 0) {
       cli::cli_warn(
         "No resources found for arguments provided. Returning empty data.frame."
       )
@@ -73,4 +71,3 @@ get_all_resources <- function(package_contains = NULL, resource_contains = NULL)
 
   return(data_tibble)
 }
-
