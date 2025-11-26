@@ -15,7 +15,7 @@ to be matched against available resource names. If a character vector >
 length 1 is supplied, the first element is used.}
 }
 \value{
-a data.frame containing details of all available packages and
+A \link[tibble:tibble-package]{tibble} containing details of all available packages and
 resources, or those containing the string specified in the
 \code{package_contains} and \code{resource_contains} arguments.
 }
@@ -26,12 +26,11 @@ and resource names. The returned data.frame can be used to look-up package
 and resource ids and is useful for exploring the available data sets.
 }
 \examples{
-\dontrun{
-all_resources()
-all_resources(package_contains = "standard-populations")
-all_resources(
+
+get_all_resources()
+get_all_resources(package_contains = "standard-populations")
+get_all_resources(
   package_contains = "standard-populations", resource_contains = "European"
 )
-}
 
 }
