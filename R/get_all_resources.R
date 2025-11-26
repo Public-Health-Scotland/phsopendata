@@ -27,9 +27,8 @@
 #' @export
 
 get_all_resources <- function(package_contains = NULL, resource_contains = NULL) {
-
-  stopifnot(is.null(package_contains) || length(package_contains)== 1)
-  stopifnot(is.null(resource_contains) || length(resource_contains)== 1)
+  stopifnot(is.null(package_contains) || length(package_contains) == 1)
+  stopifnot(is.null(resource_contains) || length(resource_contains) == 1)
 
 
   query <- if (is.null(package_contains)) {
@@ -62,12 +61,13 @@ get_all_resources <- function(package_contains = NULL, resource_contains = NULL)
   )
 
   if (!is.null(resource_contains)) {
-    out <- out[grepl(as.character(resource_contains), out$resource_name, ignore.case = TRUE),]
-    if (nrow(out) == 0)  warning(
-      "No resources found for arguments provided. Returning empty data.frame."
-    )
+    out <- out[grepl(as.character(resource_contains), out$resource_name, ignore.case = TRUE), ]
+    if (nrow(out) == 0) {
+      warning(
+        "No resources found for arguments provided. Returning empty data.frame."
+      )
+    }
   }
 
   return(out)
 }
-
