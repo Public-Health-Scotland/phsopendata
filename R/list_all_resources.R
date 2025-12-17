@@ -25,16 +25,30 @@
 #'
 #' @export
 
-get_all_resources <- function(package_contains = NULL, resource_contains = NULL) {
-  stopifnot(is.null(package_contains) || length(package_contains) == 1)
-  stopifnot(is.null(resource_contains) || length(resource_contains) == 1)
+list_all_resources <- function(package_contains = NULL, resource_contains = NULL) {
+
+  # Validate that `package_contains` is NULL or a length-1 value
+  if (!is.null(package_contains) && length(package_contains) != 1) {
+    cli::cli_abort(c(
+      "!" = "`.package_contains` must be {.emph NULL} or a {.emph length-1} value.",
+      "x" = "Current length: {length(package_contains)}",
+      "i" = "Provide a single string (or leave it NULL) for this filter."
+    ))
+  }
+
+  # Validate that `resource_contains` is NULL or a length-1 value
+  if (!is.null(resource_contains) && length(resource_contains) != 1) {
+    cli::cli_abort(c(
+      "!" = "`.resource_contains` must be {.emph NULL} or a {.emph length-1} value.",
+      "x" = "Current length: {length(resource_contains)}",
+      "i" = "Provide a single string (or leave it NULL) for this filter."
+    ))
+  }
+
 
   # query for the API call
-  query <- if (is.null(package_contains)) {
-    "q=*:*&rows=32000"
-  } else {
-    glue::glue("q=title:{package_contains}&rows=32000")
-  }
+  query <- "q=*:*&rows=32000"
+
   # API call
   content <- phs_GET(action = "package_search", query = query)
   # extract the data
@@ -62,9 +76,18 @@ get_all_resources <- function(package_contains = NULL, resource_contains = NULL)
 
   if (!is.null(resource_contains)) {
     data_tibble <- data_tibble[grepl(as.character(resource_contains), data_tibble$resource_name, ignore.case = TRUE), ]
-    if (nrow(out) == 0) {
+    if (nrow(data_tibble) == 0) {
       cli::cli_warn(
         "No resources found for arguments provided. Returning empty data.frame."
+      )
+    }
+  }
+
+  if(!is.null(package_contains)){
+    data_tibble <-  data_tibble[grepl(as.character(package_contains), data_tibble$package_name, ignore.case = TRUE), ]
+    if (nrow(data_tibble) == 0) {
+      cli::cli_warn(
+        "No packages found for arguments provided. Returning empty data.frame."
       )
     }
   }
