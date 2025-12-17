@@ -26,7 +26,6 @@
 #' @export
 
 list_all_resources <- function(package_contains = NULL, resource_contains = NULL) {
-
   # Validate that `package_contains` is NULL or a length-1 value
   if (!is.null(package_contains) && length(package_contains) != 1) {
     cli::cli_abort(c(
@@ -83,8 +82,8 @@ list_all_resources <- function(package_contains = NULL, resource_contains = NULL
     }
   }
 
-  if(!is.null(package_contains)){
-    data_tibble <-  data_tibble[grepl(as.character(package_contains), data_tibble$package_name, ignore.case = TRUE), ]
+  if (!is.null(package_contains)) {
+    data_tibble <- data_tibble[grepl(as.character(package_contains), data_tibble$package_name, ignore.case = TRUE), ]
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
         "No packages found for arguments provided. Returning empty data.frame."
