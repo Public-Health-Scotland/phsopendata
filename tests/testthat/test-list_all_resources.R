@@ -23,7 +23,7 @@ test_that("filters by resource_contains (case-insensitive) and warns when empty"
     expect_true(all(grepl("european", data_eu$resource_name, ignore.case = TRUE)))
   } else {
     expect_warning(list_all_resources(resource_contains = "___no_such_resource___"),
-                   regexp = "No resources found"
+      regexp = "No resources found"
     )
   }
 
@@ -44,7 +44,7 @@ test_that("filters by dataset_contains (case-insensitive) and warns when empty",
     expect_true(all(grepl("hospital", data_pkg$dataset_name, ignore.case = TRUE)))
   } else {
     expect_warning(list_all_resources(dataset_contains = "___no_such_package___"),
-                   regexp = "No packages found"
+      regexp = "No packages found"
     )
   }
 
