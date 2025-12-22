@@ -5,32 +5,32 @@
 #'  and resource names. The returned data.frame can be used to look-up package
 #'  and resource ids and is useful for exploring the available data sets.
 #'
-#' @param package_contains  a character string containing an expression to be
-#'  used as search criteria against the packages 'title' field.
+#' @param dataset_contains  a character string containing an expression to be
+#'  used as search criteria against the dataset 'title' field.
 #' @param resource_contains a character string containing a regular expression
 #'  to be matched against available resource names. If a character vector >
 #'  length 1 is supplied, the first element is used.
 #'
-#' @return A [tibble][tibble::tibble-package] containing details of all available packages and
+#' @return A [tibble][tibble::tibble-package] containing details of all available datasets and
 #'  resources, or those containing the string specified in the
-#'  \code{package_contains} and \code{resource_contains} arguments.
+#'  \code{dataset_contains} and \code{resource_contains} arguments.
 #'
 #' @examples
 #'
-#' get_all_resources()
-#' get_all_resources(package_contains = "standard-populations")
-#' get_all_resources(
-#'   package_contains = "standard-populations", resource_contains = "European"
+#' list_all_resources()
+#' list_all_resources(dataset_contains = "standard-populations")
+#' list_all_resources(
+#'   dataset_contains = "standard-populations", resource_contains = "European"
 #' )
 #'
 #' @export
 
-list_all_resources <- function(package_contains = NULL, resource_contains = NULL) {
-  # Validate that `package_contains` is NULL or a length-1 value
-  if (!is.null(package_contains) && length(package_contains) != 1) {
+list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL) {
+  # Validate that `dataset_contains` is NULL or a length-1 value
+  if (!is.null(dataset_contains) && length(dataset_contains) != 1) {
     cli::cli_abort(c(
-      "!" = "`.package_contains` must be {.emph NULL} or a {.emph length-1} value.",
-      "x" = "Current length: {length(package_contains)}",
+      "!" = "`.dataset_contains` must be {.emph NULL} or a {.emph length-1} value.",
+      "x" = "Current length: {length(dataset_contains)}",
       "i" = "Provide a single string (or leave it NULL) for this filter."
     ))
   }
@@ -66,8 +66,8 @@ list_all_resources <- function(package_contains = NULL, resource_contains = NULL
   data_tibble <- tibble::tibble(
     resource_name = resources_df$name,
     resource_id = resources_df$id,
-    package_name = pkgs[unlist(resources_df$package_id)],
-    package_id = resources_df$package_id,
+    dataset_name = pkgs[unlist(resources_df$package_id)],
+    dataset_id = resources_df$package_id,
     url = resources_df$url,
     last_modified = resources_df$last_modified
   )
@@ -82,8 +82,8 @@ list_all_resources <- function(package_contains = NULL, resource_contains = NULL
     }
   }
 
-  if (!is.null(package_contains)) {
-    data_tibble <- data_tibble[grepl(as.character(package_contains), data_tibble$package_name, ignore.case = TRUE), ]
+  if (!is.null(dataset_contains)) {
+    data_tibble <- data_tibble[grepl(as.character(dataset_contains), data_tibble$dataset_name, ignore.case = TRUE), ]
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
         "No packages found for arguments provided. Returning empty data.frame."
