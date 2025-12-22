@@ -4,20 +4,20 @@
 \alias{list_all_resources}
 \title{Provides an overview of all resources available from <opendata.nhs.scot>.}
 \usage{
-list_all_resources(package_contains = NULL, resource_contains = NULL)
+list_all_resources(dataset_contains = NULL, resource_contains = NULL)
 }
 \arguments{
-\item{package_contains}{a character string containing an expression to be
-used as search criteria against the packages 'title' field.}
+\item{dataset_contains}{a character string containing an expression to be
+used as search criteria against the dataset 'title' field.}
 
 \item{resource_contains}{a character string containing a regular expression
 to be matched against available resource names. If a character vector >
 length 1 is supplied, the first element is used.}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} containing details of all available packages and
+A \link[tibble:tibble-package]{tibble} containing details of all available datasets and
 resources, or those containing the string specified in the
-\code{package_contains} and \code{resource_contains} arguments.
+\code{dataset_contains} and \code{resource_contains} arguments.
 }
 \description{
 Provides an overview of all resources available from
@@ -27,10 +27,10 @@ and resource ids and is useful for exploring the available data sets.
 }
 \examples{
 
-get_all_resources()
-get_all_resources(package_contains = "standard-populations")
-get_all_resources(
-  package_contains = "standard-populations", resource_contains = "European"
+list_all_resources()
+list_all_resources(dataset_contains = "standard-populations")
+list_all_resources(
+  dataset_contains = "standard-populations", resource_contains = "European"
 )
 
 }
