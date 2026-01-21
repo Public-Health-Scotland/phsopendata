@@ -7,7 +7,7 @@
 #'
 #' @param dataset_contains  a character string containing an expression to be
 #'  used as search criteria against the dataset 'title' field.
-#' @param resource_contains a character string containing a regular expression
+#' @param resource_contains a character string containing a [regular expression](https://www.geeksforgeeks.org/dsa/write-regular-expressions/)
 #'  to be matched against available resource names.
 #'
 #' @return A [tibble][tibble::tibble-package] containing details of all available datasets and
@@ -40,32 +40,7 @@ list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL
     ))
   }
 
-  # query for the API call
-  query <- list(q = "*:*", rows = 3200)
-
-  # API call
-  content <- phs_GET(action = "package_search", query = query)
-  # extract the data
-  extracted_content <- jsonlite::fromJSON(jsonlite::toJSON(content$result))$results
-
-  # Create a named vector of package names keyed by package IDs
-  pkgs <- unlist(extracted_content$name)
-  names(pkgs) <- unlist(extracted_content$id)
-
-  # extract resources
-  resources <- jsonlite::fromJSON(jsonlite::toJSON(extracted_content$resources), flatten = TRUE)
-  # Combine all resources into one
-  resources_df <- purrr::list_rbind(resources)
-
-  # tidying up
-  data_tibble <- tibble::tibble(
-    resource_name = resources_df$name,
-    resource_id = resources_df$id,
-    dataset_name = pkgs[unlist(resources_df$package_id)],
-    dataset_id = resources_df$package_id,
-    url = resources_df$url,
-    last_modified = resources_df$last_modified
-  )
+ data_tibble = list_all_resources_query()
 
 
   if (!is.null(resource_contains)) {
