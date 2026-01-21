@@ -41,7 +41,7 @@ list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL
   }
 
   # query for the API call
-  query <- "q=*:*&rows=32000"
+  query <- list(q = "*:*", rows = 3200)
 
   # API call
   content <- phs_GET(action = "package_search", query = query)
