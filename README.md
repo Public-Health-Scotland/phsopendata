@@ -12,6 +12,7 @@ date)](https://img.shields.io/github/v/release/Public-Health-Scotland/phsopendat
 [![R-CMD-check](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/Public-Health-Scotland/phsopendata/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Public-Health-Scotland/phsopendata?branch=master)
+
 <!-- badges: end -->
 
 `phsopendata` contains functions to interact with open data from the
@@ -115,8 +116,8 @@ get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
 
 ## Contributing to phsopendata
 
-At present, this package is maintained by [Csilla
-Scharle](https://github.com/csillasch).
+At present, this package is maintained by [James
+Hayes](https://github.com/Moohan).
 
 If you have requests or suggestions for additional functionality, please
 contact the package maintainer and/or the [PHS Open Data
