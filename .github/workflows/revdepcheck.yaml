@@ -1,0 +1,63 @@
+
+name: Reverse dependency check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  revdepcheck:
+    runs-on: ubuntu-latest
+
+    container:
+      image: rocker/verse
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Install git
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git
+      
+      - name: Mark workspace as safe for Git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          
+      - name: Install dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            github::r-lib/revdepcheck
+            any::parallely
+          needs: |
+            website
+            coverage
+
+      - name: Run revdepcheck
+        run: |
+          R -q -e '
+            n_workers <- tryCatch(parallely::availableCores(), error = function(e) 1L)
+            message("Using ", n_workers, " workers")
+            revdepcheck::revdep_check(
+              pkg = ".",
+              num_workers = n_workers,
+              timeout = as.difftime(60, units = "mins")
+              # , check_args = c("--no-manual", "--no-build-vignettes")  # <- uncomment if you choose Option B above
+            )
+          '
+
+      - name: Summarise & generate reports
+        run: |
+          R -q -e 'revdepcheck::revdep_summary(); revdepcheck::revdep_report(cran = TRUE)'
+          echo "Report written to revdep/"
+
+      - name: Upload revdep results
+        uses: actions/upload-artifact@v4
+        with:
+          name: revdep-results
+          path: revdep
