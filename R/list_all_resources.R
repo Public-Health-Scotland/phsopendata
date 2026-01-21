@@ -27,8 +27,7 @@ list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL
   # Validate that `dataset_contains` is NULL or a length-1 value
   if (!is.null(dataset_contains) && length(dataset_contains) != 1) {
     cli::cli_abort(c(
-      "!" = "`.dataset_contains` must be {.emph NULL} or a {.emph length-1} value.",
-      "x" = "Current length: {length(dataset_contains)}",
+      "x" = "{.arg dataset_contains} must be {.val NULL} or length 1 not length {length(dataset_contains)}.",
       "i" = "Provide a single string (or leave it NULL) for this filter."
     ))
   }
@@ -36,12 +35,10 @@ list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL
   # Validate that `resource_contains` is NULL or a length-1 value
   if (!is.null(resource_contains) && length(resource_contains) != 1) {
     cli::cli_abort(c(
-      "!" = "`.resource_contains` must be {.emph NULL} or a {.emph length-1} value.",
-      "x" = "Current length: {length(resource_contains)}",
+      "!" = "{.arg resource_contains} must be {.val NULL} or length 1 not length {length(resource_contains)}.",
       "i" = "Provide a single string (or leave it NULL) for this filter."
     ))
   }
-
 
   # query for the API call
   query <- "q=*:*&rows=32000"
