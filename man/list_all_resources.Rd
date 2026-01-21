@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_all_resources.R
 \name{list_all_resources}
 \alias{list_all_resources}
-\title{Provides an overview of all resources available from <opendata.nhs.scot>.}
+\title{Provides an overview of all resources available on the Open Data platform.}
 \usage{
 list_all_resources(dataset_contains = NULL, resource_contains = NULL)
 }
@@ -11,8 +11,7 @@ list_all_resources(dataset_contains = NULL, resource_contains = NULL)
 used as search criteria against the dataset 'title' field.}
 
 \item{resource_contains}{a character string containing a regular expression
-to be matched against available resource names. If a character vector >
-length 1 is supplied, the first element is used.}
+to be matched against available resource names.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble} containing details of all available datasets and
@@ -21,7 +20,7 @@ resources, or those containing the string specified in the
 }
 \description{
 Provides an overview of all resources available from
-<opendata.nhs.scot>, with the option to limit results based on both package
+\href{https://www.opendata.nhs.scot/}{opendata.nhs.scot}, with the option to limit results based on both package
 and resource names. The returned data.frame can be used to look-up package
 and resource ids and is useful for exploring the available data sets.
 }

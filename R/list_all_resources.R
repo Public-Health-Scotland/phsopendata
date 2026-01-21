@@ -1,19 +1,18 @@
-#' Provides an overview of all resources available from <opendata.nhs.scot>.
+#' Provides an overview of all resources available on the Open Data platform.
 #'
 #' @description Provides an overview of all resources available from
-#'  <opendata.nhs.scot>, with the option to limit results based on both package
+#'  [opendata.nhs.scot](https://www.opendata.nhs.scot/), with the option to limit results based on both package
 #'  and resource names. The returned data.frame can be used to look-up package
 #'  and resource ids and is useful for exploring the available data sets.
 #'
 #' @param dataset_contains  a character string containing an expression to be
 #'  used as search criteria against the dataset 'title' field.
 #' @param resource_contains a character string containing a regular expression
-#'  to be matched against available resource names. If a character vector >
-#'  length 1 is supplied, the first element is used.
+#'  to be matched against available resource names.
 #'
 #' @return A [tibble][tibble::tibble-package] containing details of all available datasets and
 #'  resources, or those containing the string specified in the
-#'  \code{dataset_contains} and \code{resource_contains} arguments.
+#'  `dataset_contains` and `resource_contains` arguments.
 #'
 #' @examples
 #'
@@ -24,7 +23,6 @@
 #' )
 #'
 #' @export
-
 list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL) {
   # Validate that `dataset_contains` is NULL or a length-1 value
   if (!is.null(dataset_contains) && length(dataset_contains) != 1) {
