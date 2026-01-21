@@ -10,7 +10,7 @@ list_all_resources(dataset_contains = NULL, resource_contains = NULL)
 \item{dataset_contains}{a character string containing an expression to be
 used as search criteria against the dataset 'title' field.}
 
-\item{resource_contains}{a character string containing a regular expression
+\item{resource_contains}{a character string containing a \href{https://www.geeksforgeeks.org/dsa/write-regular-expressions/}{regular expression}
 to be matched against available resource names.}
 }
 \value{
