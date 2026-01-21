@@ -3,8 +3,8 @@ Title: Extract from the Scottish Health and Social Care Open Data Platform
 Version: 1.0.1.9000
 Authors@R: c(
     person("Public Health Scotland", , , "phs.datascience@phs.scot", role = "cph"),
-    person("Csilla", "Scharle", , "csilla.scharle2@phs.scot", role = c("aut", "cre")),
-    person("James", "Hayes", , "James.Hayes2@phs.scot", role = "aut",
+    person("Csilla", "Scharle", , "csilla.scharle2@phs.scot", role = "aut"),
+    person("James", "Hayes", , "James.Hayes2@phs.scot", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-5380-2029")),
     person("David", "Aikman", , "david.aikman@phs.scot", role = "aut"),
     person("Ross", "Hull", , "ross.hull2@phs.scot", role = "aut")
