@@ -40,7 +40,7 @@ list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL
     ))
   }
 
- data_tibble = list_all_resources_query()
+  data_tibble <- list_all_resources_query()
 
 
   if (!is.null(resource_contains)) {

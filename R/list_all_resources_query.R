@@ -1,4 +1,4 @@
-list_all_resources_query <- function(){
+list_all_resources_query <- function() {
   # query for the API call
   query <- list(q = "*:*", rows = 3200)
 
