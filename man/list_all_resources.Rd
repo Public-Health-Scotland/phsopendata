@@ -21,7 +21,7 @@ resources, or those containing the string specified in the
 \description{
 Provides an overview of all resources available from
 \href{https://www.opendata.nhs.scot/}{opendata.nhs.scot}, with the option to limit results based on both package
-and resource names. The returned data.frame can be used to look-up package
+and resource names. The returned tibble can be used to look-up dataset
 and resource ids and is useful for exploring the available data sets.
 }
 \examples{
