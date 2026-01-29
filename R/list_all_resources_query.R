@@ -4,27 +4,43 @@ list_all_resources_query <- function() {
 
   # API call
   content <- phs_GET(action = "package_search", query = query)
+
   # extract the data
-  extracted_content <- jsonlite::fromJSON(jsonlite::toJSON(content$result))$results
+  results <- purrr::chuck(content, "result", "results")
 
-  # Create a named vector of package names keyed by package IDs
-  pkgs <- unlist(extracted_content$name)
-  names(pkgs) <- unlist(extracted_content$id)
+  datasets_list <- purrr::map(
+    results,
+    function(dataset) {
+      resources <- purrr::chuck(dataset, "resources")
 
-  # extract resources
-  resources <- jsonlite::fromJSON(jsonlite::toJSON(extracted_content$resources), flatten = TRUE)
-  # Combine all resources into one
-  resources_df <- purrr::list_rbind(resources)
-
-  # tidying up
-  data_tibble <- tibble::tibble(
-    resource_name = unlist(resources_df$name),
-    resource_id = unlist(resources_df$id),
-    dataset_name = pkgs[unlist(resources_df$package_id)],
-    dataset_id = unlist(resources_df$package_id),
-    url = unlist(resources_df$url),
-    last_modified = unlist(resources_df$last_modified)
+      tibble::tibble(
+        resource_name = purrr::map_chr(
+          resources,
+          ~ purrr::pluck(.x, "name", .default = NA_character_)
+        ),
+        resource_id = purrr::map_chr(
+          resources,
+          ~ purrr::pluck(.x, "id", .default = NA_character_)
+        ),
+        dataset_name = purrr::chuck(dataset, "name"),
+        dataset_id = purrr::chuck(dataset, "id"),
+        url = purrr::map_chr(
+          resources,
+          ~ purrr::pluck(.x, "url", .default = NA_character_)
+        ),
+        last_modified = as.POSIXct(
+          purrr::map_chr(
+            resources,
+            ~ purrr::pluck(.x, "last_modified", .default = NA_character_)
+          ),
+          format = "%FT%X",
+          tz = "UTC"
+        )
+      )
+    }
   )
+
+  data_tibble <- purrr::list_rbind(datasets_list)
 
   return(data_tibble)
 }

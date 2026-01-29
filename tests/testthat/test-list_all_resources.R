@@ -21,6 +21,7 @@ test_that("returns data in the expected format", {
   expect_gte(ncol(all_data), 6)
 
   expect_type(all_data$resource_id, "character")
+  expect_s3_class(all_data$last_modified, "POSIXct")
   expect_true(anyDuplicated(all_data$resource_id) == 0)
   expect_false(anyNA(all_data$resource_id))
   expect_false(anyNA(all_data$dataset_id))
