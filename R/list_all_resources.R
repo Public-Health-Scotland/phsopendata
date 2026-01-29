@@ -98,7 +98,7 @@ list_all_resources <- function(
     ]
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
-        "No resources found for arguments provided. Returning empty data.frame."
+        "No resources found for {.arg resource_contains} = {.val {resource_contains}}. Returning an empty tibble."
       )
     }
   }
@@ -109,7 +109,7 @@ list_all_resources <- function(
     ]
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
-        "No packages found for arguments provided. Returning empty data.frame."
+        "No resources found for the provided arguments. Returning an empty tibble."
       )
     }
   }

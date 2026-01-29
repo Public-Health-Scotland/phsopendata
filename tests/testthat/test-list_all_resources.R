@@ -62,7 +62,7 @@ test_that("filters by dataset_contains (case-insensitive) and warns when empty",
   # Explicit empty case to assert warning + empty tibble
   expect_warning(
     data_none <- list_all_resources(dataset_contains = "___no_such_package___"),
-    regexp = "No packages found"
+    regexp = "No resources found"
   )
   expect_equal(nrow(data_none), 0)
 })
