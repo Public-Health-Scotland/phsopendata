@@ -1,3 +1,5 @@
+skip_if_offline(host = "www.opendata.nhs.scot")
+
 test_that("returns data for a dataset that is listed", {
   expect_no_error(get_latest_resource("gp-practice-populations"))
 })
