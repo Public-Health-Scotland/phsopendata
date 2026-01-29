@@ -102,6 +102,33 @@ test_that("combined filtering works", {
   )
 })
 
+test_that("empty/whitespace/NA filters are treated as NULL", {
+  expect_identical(
+    object = list_all_resources(resource_contains = ""),
+    expected = all_data
+  )
+  expect_identical(
+    object = list_all_resources(resource_contains = "   "),
+    expected = all_data
+  )
+  expect_identical(
+    object = list_all_resources(dataset_contains = ""),
+    expected = all_data
+  )
+  expect_identical(
+    object = list_all_resources(dataset_contains = "   "),
+    expected = all_data
+  )
+  expect_identical(
+    object = list_all_resources(dataset_contains = NA_character_),
+    expected = all_data
+  )
+  expect_identical(
+    object = list_all_resources(resource_contains = NA_character_),
+    expected = all_data
+  )
+})
+
 test_that("input validation: dataset_contains/resource_contains must be NULL or length-1", {
   # Length > 1 should error
   expect_error(
@@ -112,10 +139,4 @@ test_that("input validation: dataset_contains/resource_contains must be NULL or 
     list_all_resources(resource_contains = c("x", "y")),
     regexp = "length-1"
   )
-
-  # Valid inputs should not error
-  expect_no_error(list_all_resources(dataset_contains = NULL))
-  expect_no_error(list_all_resources(resource_contains = NULL))
-  expect_no_error(list_all_resources(dataset_contains = "hospital"))
-  expect_no_error(list_all_resources(resource_contains = "admissions"))
 })

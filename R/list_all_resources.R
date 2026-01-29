@@ -23,7 +23,23 @@
 #' )
 #'
 #' @export
-list_all_resources <- function(dataset_contains = NULL, resource_contains = NULL) {
+list_all_resources <- function(
+  dataset_contains = NULL,
+  resource_contains = NULL
+) {
+  # Normalise empty/whitespace strings to NULL
+  normalise <- function(string) {
+    if (is.null(string)) return(NULL)
+    if (!is.character(string)) return(string)
+    if (length(string) != 1L) return(string)
+    if (is.na(string)) return(NULL)
+    string_trimmed <- trimws(string)
+    if (identical(string_trimmed, "")) return(NULL)
+    return(string_trimmed)
+  }
+  dataset_contains <- normalise(dataset_contains)
+  resource_contains <- normalise(resource_contains)
+
   # Validate that `dataset_contains` is NULL or a length-1 value
   if (!is.null(dataset_contains) && length(dataset_contains) != 1) {
     cli::cli_abort(c(
