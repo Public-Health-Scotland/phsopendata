@@ -129,6 +129,19 @@ test_that("empty/whitespace/NA filters are treated as NULL", {
   )
 })
 
+
+test_that("invalid regex patterns error clearly", {
+  expect_error(
+    list_all_resources(resource_contains = "("),
+    "invalid regular expression"
+  )
+  expect_error(
+    list_all_resources(dataset_contains = "("),
+    "invalid regular expression"
+  )
+})
+
+
 test_that("input validation: dataset_contains/resource_contains must be NULL or length-1", {
   # Length > 1 should error
   expect_error(

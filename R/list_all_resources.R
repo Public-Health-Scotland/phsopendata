@@ -68,11 +68,34 @@ list_all_resources <- function(
     }
   }
 
+  validate_regex <- function(pattern, arg_name, call = rlang::caller_env()) {
+    if (is.null(pattern)) return(invisible(TRUE))
+    tryCatch(
+      {
+        suppressWarnings(grepl(pattern, ""))
+        TRUE
+      },
+      error = function(e) {
+        cli::cli_abort(
+          c(
+            "i" = "{.arg {arg_name}} must be a valid regular expression.",
+            "x" = e$message
+          ),
+          call = call
+        )
+      }
+    )
+  }
+
+  validate_regex(resource_contains, "resource_contains")
+  validate_regex(dataset_contains, "dataset_contains")
+
   data_tibble <- list_all_resources_query()
 
-
   if (!is.null(resource_contains)) {
-    data_tibble <- data_tibble[grepl(as.character(resource_contains), data_tibble$resource_name, ignore.case = TRUE), ]
+    data_tibble <- data_tibble[
+      grepl(resource_contains, data_tibble$resource_name, ignore.case = TRUE),
+    ]
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
         "No resources found for arguments provided. Returning empty data.frame."
@@ -81,7 +104,9 @@ list_all_resources <- function(
   }
 
   if (!is.null(dataset_contains)) {
-    data_tibble <- data_tibble[grepl(as.character(dataset_contains), data_tibble$dataset_name, ignore.case = TRUE), ]
+    data_tibble <- data_tibble[
+      grepl(dataset_contains, data_tibble$dataset_name, ignore.case = TRUE),
+    ]
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
         "No packages found for arguments provided. Returning empty data.frame."
