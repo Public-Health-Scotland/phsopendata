@@ -29,12 +29,22 @@ list_all_resources <- function(
 ) {
   # Normalise empty/whitespace strings to NULL
   normalise <- function(string) {
-    if (is.null(string)) return(NULL)
-    if (!is.character(string)) return(string)
-    if (length(string) != 1L) return(string)
-    if (is.na(string)) return(NULL)
+    if (is.null(string)) {
+      return(NULL)
+    }
+    if (!is.character(string)) {
+      return(string)
+    }
+    if (length(string) != 1L) {
+      return(string)
+    }
+    if (is.na(string)) {
+      return(NULL)
+    }
     string_trimmed <- trimws(string)
-    if (identical(string_trimmed, "")) return(NULL)
+    if (identical(string_trimmed, "")) {
+      return(NULL)
+    }
     return(string_trimmed)
   }
   dataset_contains <- normalise(dataset_contains)
@@ -69,7 +79,9 @@ list_all_resources <- function(
   }
 
   validate_regex <- function(pattern, arg_name, call = rlang::caller_env()) {
-    if (is.null(pattern)) return(invisible(TRUE))
+    if (is.null(pattern)) {
+      return(invisible(TRUE))
+    }
     tryCatch(
       {
         suppressWarnings(grepl(pattern, ""))
