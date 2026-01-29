@@ -1,6 +1,6 @@
-skip_if_offline(host = "www.opendata.nhs.scot")
-
 test_that("returns data in the expected format", {
+  skip_if_offline(host = "www.opendata.nhs.scot")
+
   data <- list_resources("diagnostic-waiting-times")
 
   expect_s3_class(data, "tbl_df")
@@ -9,12 +9,17 @@ test_that("returns data in the expected format", {
   expect_equal(dplyr::n_distinct(data[["name"]]), nrow(data))
 })
 
-test_that("returns errors properly", {
+test_that("returns errors properly (offline)", {
   expect_error(
     list_resources(),
     "argument \"dataset_name\" is missing, with no default$"
   )
   expect_error(list_resources("bad_name"), "dataset_name must be in dash-case")
+})
+
+test_that("returns errors properly", {
+  skip_if_offline(host = "www.opendata.nhs.scot")
+
   expect_error(list_resources("incorrect-name"), "Can't find the dataset name")
   expect_error(
     list_resources("diagnostic-waiting-time"),
