@@ -135,8 +135,14 @@ test_that("input validation: dataset_contains/resource_contains must be NULL or 
     list_all_resources(dataset_contains = c("a", "b")),
     regexp = "length 1 not length 2"
   )
+
+  # Non character should error
   expect_error(
-    list_all_resources(resource_contains = c("x", "y")),
-    regexp = "length-1"
+    list_all_resources(dataset_contains = TRUE),
+    "must be .*character"
+  )
+  expect_error(
+    list_all_resources(resource_contains = 123),
+    "must be .*character"
   )
 })

@@ -41,19 +41,31 @@ list_all_resources <- function(
   resource_contains <- normalise(resource_contains)
 
   # Validate that `dataset_contains` is NULL or a length-1 value
-  if (!is.null(dataset_contains) && length(dataset_contains) != 1) {
-    cli::cli_abort(c(
-      "x" = "{.arg dataset_contains} must be {.val NULL} or length 1 not length {length(dataset_contains)}.",
-      "i" = "Provide a single string (or leave it NULL) for this filter."
-    ))
+  if (!is.null(dataset_contains)) {
+    if (!inherits(dataset_contains, "character")) {
+      cli::cli_abort(c(
+        "i" = "{.arg dataset_contains} must be {.class character} not a {.class {class(dataset_contains)}}."
+      ))
+    } else if (length(dataset_contains) != 1) {
+      cli::cli_abort(c(
+        "x" = "{.arg dataset_contains} must be {.val NULL} or length 1 not length {length(dataset_contains)}.",
+        "i" = "Provide a single string (or leave it NULL) for this filter."
+      ))
+    }
   }
 
   # Validate that `resource_contains` is NULL or a length-1 value
-  if (!is.null(resource_contains) && length(resource_contains) != 1) {
-    cli::cli_abort(c(
-      "!" = "{.arg resource_contains} must be {.val NULL} or length 1 not length {length(resource_contains)}.",
-      "i" = "Provide a single string (or leave it NULL) for this filter."
-    ))
+  if (!is.null(resource_contains)) {
+    if (!inherits(resource_contains, "character")) {
+      cli::cli_abort(c(
+        "i" = "{.arg resource_contains} must be {.class character} not a {.class {class(resource_contains)}}."
+      ))
+    } else if (length(resource_contains) != 1) {
+      cli::cli_abort(c(
+        "!" = "{.arg resource_contains} must be {.val NULL} or length 1 not length {length(resource_contains)}.",
+        "i" = "Provide a single string (or leave it NULL) for this filter."
+      ))
+    }
   }
 
   data_tibble <- list_all_resources_query()
