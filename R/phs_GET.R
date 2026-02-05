@@ -40,7 +40,7 @@ phs_GET <- function(
     content <- httr::content(response)
   } else if (httr::http_type(response) == "text/csv") {
     content <- readr::read_csv(
-      file = httr::content(response, as = "text"),
+      file = I(httr::content(response, as = "text")),
       guess_max = Inf
     )
   } else {

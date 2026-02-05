@@ -1,6 +1,6 @@
-skip_if_offline(host = "www.opendata.nhs.scot")
-
 test_that("returns httr::content", {
+  skip_if_offline(host = "www.opendata.nhs.scot")
+
   content <- phs_GET("package_list", "")
 
   expect_true(content$success)
@@ -12,6 +12,8 @@ test_that("returns httr::content", {
 })
 
 test_that("error_check() works as expected", {
+  skip_if_offline(host = "www.opendata.nhs.scot")
+
   # no error for valid endpoint
   expect_type(
     phs_GET("package_list", ""),
@@ -25,7 +27,7 @@ test_that("error_check() works as expected", {
   )
 })
 
-test_that("request_url() works as expected", {
+test_that("request_url() works as expected (offline test)", {
   # invalid action argument
   expect_error(
     phs_GET("", ""),

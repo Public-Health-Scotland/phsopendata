@@ -1,4 +1,6 @@
-# phsopendata (development version)
+# phsopendata 1.0.2
+
+- No user-facing changes. Update the maintainer (temporarily) to James Hayes (james.hayes2@phs.scot) while Csilla is on a career break!
 
 # phsopendata 1.0.1 (2025-11-10)
 

@@ -1,5 +1,3 @@
-skip_if_offline(host = "www.opendata.nhs.scot")
-
 test_that("throws errors on invalid sql argument", {
   # wrong class
   expect_error(
@@ -21,6 +19,7 @@ test_that("throws errors on invalid sql argument", {
 })
 
 test_that("gets expected data for a simple SQL query", {
+  skip_if_offline(host = "www.opendata.nhs.scot")
   data <- get_resource_sql(
     sql = "
      SELECT
@@ -41,6 +40,7 @@ test_that("gets expected data for a simple SQL query", {
 })
 
 test_that("gets expected data for a joined SQL query", {
+  skip_if_offline(host = "www.opendata.nhs.scot")
   data <- get_resource_sql(
     sql = paste(
       "SELECT pops.\"Year\", pops.\"HB\", lookup.\"HBName\", pops.\"AllAges\"",
@@ -57,6 +57,7 @@ test_that("gets expected data for a joined SQL query", {
 })
 
 test_that("SQL errors", {
+  skip_if_offline(host = "www.opendata.nhs.scot")
   # non-existent column in real table
   expect_error(
     get_resource_sql(
