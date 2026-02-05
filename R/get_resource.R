@@ -13,7 +13,7 @@
 #' @return A [tibble][tibble::tibble-package] with the data.
 #' @export
 #'
-#' @examples
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
 #' res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
 #'
 #' data <- get_resource(res_id)
@@ -39,34 +39,36 @@ get_resource <- function(
   parsed_col_select <- parse_col_select(col_select)
   parsed_row_filters <- parse_row_filters(row_filters)
 
-  if (is.logical(parsed_row_filters) && !parsed_row_filters) {
-    if (!is.null(row_filters)) {
-      col_select_sql <- dplyr::if_else(
-        is.null(col_select),
-        "*",
-        paste0("\"", paste(col_select, collapse = "\",\""), "\"")
-      )
+  if (
+    is.logical(parsed_row_filters) &&
+      !parsed_row_filters &&
+      !is.null(row_filters)
+  ) {
+    col_select_sql <- dplyr::if_else(
+      is.null(col_select),
+      "*",
+      paste0("\"", paste(col_select, collapse = "\",\""), "\"")
+    )
 
-      row_filters_sql <- paste(
-        purrr::imap_chr(
-          row_filters,
-          function(value, col) {
-            paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
-          }
-        ),
-        collapse = ") AND ("
-      )
+    row_filters_sql <- paste(
+      purrr::imap_chr(
+        row_filters,
+        function(value, col) {
+          paste0("\"", col, "\"=\'", value, "\'", collapse = " OR ")
+        }
+      ),
+      collapse = ") AND ("
+    )
 
-      sql <- sprintf(
-        "SELECT %s FROM \"%s\" WHERE (%s) %s",
-        col_select_sql,
-        res_id,
-        row_filters_sql,
-        dplyr::if_else(is.null(rows), "", paste("LIMIT", rows))
-      )
+    sql <- sprintf(
+      "SELECT %s FROM \"%s\" WHERE (%s) %s",
+      col_select_sql,
+      res_id,
+      row_filters_sql,
+      dplyr::if_else(is.null(rows), "", paste("LIMIT", rows))
+    )
 
-      return(get_resource_sql(sql))
-    }
+    return(get_resource_sql(sql))
   }
 
   # define query
@@ -83,11 +85,10 @@ get_resource <- function(
   } else {
     # if there is no row limit set
     # set limit to CKAN max
-    if (is.null(query$limit)) query$limit <- 99999
+    if (is.null(query$limit)) query$limit <- 99999L
 
     # remove null values from query
-    null_q_field <- sapply(query, is.null)
-    query[null_q_field] <- NULL
+    query <- purrr::compact(query)
 
     # fetch the data
     res_content <- phs_GET("datastore_search", query)
@@ -116,10 +117,11 @@ get_resource <- function(
     }
 
     # extract data from response content
-    data <- purrr::map_dfr(
+    data <- purrr::map(
       res_content$result$records,
       ~.x
     ) %>%
+      dplyr::bind_rows() %>%
       dplyr::select(
         -dplyr::starts_with("rank "),
         -dplyr::matches("_id")
@@ -138,13 +140,13 @@ get_resource <- function(
     res_created_date <- context_content$result$created
     res_modified_date <- context_content$result$last_modified
 
-    data <- data %>%
-      add_context(
-        id = res_id,
-        name = res_name,
-        created_date = res_created_date,
-        modified_date = res_modified_date
-      )
+    data <- add_context(
+      data = data,
+      id = res_id,
+      name = res_name,
+      created_date = res_created_date,
+      modified_date = res_modified_date
+    )
   }
 
   return(data)

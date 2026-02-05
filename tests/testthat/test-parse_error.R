@@ -6,7 +6,7 @@ test_that("correctly extracts error from API response", {
       request_url("datastore_search", "id=doop")
     )
   )
-  expect_equal(
+  expect_identical(
     parse_error(content$error),
     "Not Found Error: Not found: Resource \"doop\" was not found."
   )
@@ -16,7 +16,7 @@ test_that("correctly extracts error from API response", {
       request_url("datastore_search", "")
     )
   )
-  expect_equal(
+  expect_identical(
     parse_error(content$error),
     "resource_id: Missing value"
   )

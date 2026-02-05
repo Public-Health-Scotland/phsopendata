@@ -5,8 +5,8 @@ test_that("returns data in the expected format", {
 
   expect_s3_class(data, "tbl_df")
   expect_named(data, c("res_id", "name", "created", "last_modified"))
-  expect_equal(dplyr::n_distinct(data[["res_id"]]), nrow(data))
-  expect_equal(dplyr::n_distinct(data[["name"]]), nrow(data))
+  expect_identical(dplyr::n_distinct(data[["res_id"]]), nrow(data))
+  expect_identical(dplyr::n_distinct(data[["name"]]), nrow(data))
 })
 
 test_that("returns errors properly (offline)", {

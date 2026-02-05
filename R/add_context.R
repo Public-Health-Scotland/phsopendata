@@ -1,6 +1,7 @@
 #' Add resource context columns to a data frame
 #'
-#' @description Adds resource context columns (ID, name, created date, modified date) to a data frame returned from a resource query.
+#' @description Adds resource context columns (ID, name, created date, modified
+#' date) to a data frame returned from a resource query.
 #'
 #' @param data A data frame or tibble containing resource data.
 #' @param id The resource ID (character).
@@ -30,10 +31,10 @@ add_context <- function(data, id, name, created_date, modified_date) {
 
   data_with_context <- dplyr::mutate(
     data,
-    "ResID" = id,
-    "ResName" = name,
-    "ResCreatedDate" = created_date,
-    "ResModifiedDate" = modified_date,
+    ResID = id,
+    ResName = name,
+    ResCreatedDate = created_date,
+    ResModifiedDate = modified_date,
     .before = dplyr::everything()
   )
 

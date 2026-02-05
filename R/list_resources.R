@@ -8,14 +8,14 @@
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
-#' @examples
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
 #' list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
 list_resources <- function(dataset_name) {
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
   # define query and try API call
-  query <- list("id" = dataset_name)
+  query <- list(id = dataset_name)
   content <- try(
     phs_GET("package_show", query),
     silent = TRUE
@@ -23,7 +23,7 @@ list_resources <- function(dataset_name) {
 
   # if content contains a 'Not Found Error'
   # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1])) {
+  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
     suggest_dataset_name(dataset_name)
   }
 
@@ -38,10 +38,10 @@ list_resources <- function(dataset_name) {
   ) %>%
     as.POSIXct(format = "%FT%X", tz = "UTC")
   return_value <- tibble::tibble(
-    "res_id" = all_ids,
-    "name" = all_names,
-    "created" = all_date_created,
-    "last_modified" = all_date_modified
+    res_id = all_ids,
+    name = all_names,
+    created = all_date_created,
+    last_modified = all_date_modified
   )
 
   return(return_value)
