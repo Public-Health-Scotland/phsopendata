@@ -16,6 +16,7 @@ A \link[tibble:tibble-package]{tibble} with the query results. Only 32,000 rows 
 Downloads data from the NHS Open Data platform using a SQL query. Similar to \code{\link[=get_resource]{get_resource()}}, but allows more flexible server-side querying. This function has a lower maximum row number (32,000 vs 99,999) for returned results.
 }
 \examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 sql <- "
    SELECT
      \"TotalCancelled\",\"TotalOperations\",\"Hospital\",\"Month\"
@@ -35,6 +36,7 @@ df2 <- get_resource(
   col_select = cols,
   row_filters = row_filter
 )
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=get_resource]{get_resource()}} for downloading a resource without using a

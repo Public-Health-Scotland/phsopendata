@@ -13,8 +13,7 @@ test_that("errors for incorrect type", {
 })
 
 test_that("returns nothing for valid type and format", {
-  expect_equal(
-    check_dataset_name("hospital-codes"),
-    NULL
+  expect_null(
+    check_dataset_name("hospital-codes")
   )
 })

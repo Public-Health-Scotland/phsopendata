@@ -25,23 +25,23 @@ test_that("throws error for bad types", {
 
 test_that("returns FALSE for length > 1", {
   expect_false(
-    parse_row_filters(list(x = letters)),
+    parse_row_filters(list(x = letters))
   )
 })
 
 test_that("returns FALSE if `Sex = 'All'` is given", {
   expect_false(
-    parse_row_filters(list("Sex" = "All"))
+    parse_row_filters(list(Sex = "All"))
   )
 
   expect_false(
-    parse_row_filters(list("Sex" = c("Male", "All")))
+    parse_row_filters(list(Sex = c("Male", "All")))
   )
 
   expect_false(
     parse_row_filters(list(
-      "Sex" = "All",
-      "HBT" = "S1234"
+      Sex = "All",
+      HBT = "S1234"
     ))
   )
 })

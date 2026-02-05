@@ -10,8 +10,11 @@ list_datasets()
 A tibble.
 }
 \description{
-\code{list_datasets()} shows all of the datasets hosted on the phs open data platform.
+\code{list_datasets()} shows all of the datasets hosted on the PHS Open Data
+Platform.
 }
 \examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 head(list_datasets())
+\dontshow{\}) # examplesIf}
 }

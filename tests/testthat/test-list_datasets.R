@@ -1,7 +1,7 @@
 skip_if_offline(host = "www.opendata.nhs.scot")
 
 test_that("returns more than 0 datasets", {
-  expect_gte(nrow(list_datasets()), 1)
+  expect_gte(nrow(list_datasets()), 1L)
 })
 
 test_that("returns data in the expected format", {
@@ -9,5 +9,5 @@ test_that("returns data in the expected format", {
 
   expect_s3_class(data, "tbl_df")
   expect_named(data, "name")
-  expect_equal(dplyr::n_distinct(data[["name"]]), nrow(data))
+  expect_identical(dplyr::n_distinct(data[["name"]]), nrow(data))
 })

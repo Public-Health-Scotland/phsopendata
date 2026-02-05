@@ -1,52 +1,44 @@
 #' Determines if the datastore dump should be used
 #'
 #' @param query a list of items to query
-#' @param rows the number of rows user is requesting
+#' @param rows Integer(1) or NULL. Number of rows requested.
 #'
-#' @return a logical value. TRUE indicates that the dump should be used
-#' @keywords internal
+#' @return TRUE to use the datastore dump; FALSE to use the standard endpoint.#' @keywords internal
 #' @noRd
 use_dump_check <- function(query, rows) {
-  # if row input is > 99999 or NULL
-  # or all queries (inc. rows) are null
-  # then use GET datastore_dump
-  no_rows <- is.null(rows)
-  if (no_rows) {
-    use_dump <- is.null(c(query$q, query$filter, query$fields, rows))
-  } else {
-    use_dump <- rows > 99999 ||
-      is.null(c(query$q, query$filter, query$fields, rows))
-  }
+  null_query <- purrr::every(list(query$q, query$filter, query$fields), is.null)
+  null_rows <- is.null(rows)
 
-  # warn users that dump will be used,
-  # if user queried the data
-  queried <- !is.null(query$q) ||
-    !is.null(query$filter) ||
-    !is.null(query$fields)
-
-  if (queried && use_dump) {
-    cli::cli_warn(c(
-      "Invalid combination of {.var rows}, {.var row_filters}
-      and/or {.var col_select}.",
-      x = "Can't request over 99,999 rows of a resource
-      AND query its rows/columns.",
-      i = "ALL rows and columns of the resource will be downloaded."
-    ))
-  }
-
-  # warn users if they haven't queried
-  # the data but have requested rows > 99999
-
-  if (is.null(rows)) rows <- 0
-  if (!queried && rows > 99999) {
-    cli::cli_warn(c(
-      "Getting all rows of resource.",
-      i = "All rows will be returned if you
+  if (null_query && null_rows) {
+    # No filters specified - Use dump
+    return(TRUE)
+  } else if (null_rows) {
+    # Filters specified, but no row limit - Don't use dump
+    return(FALSE)
+  } else if (rows > 99999L) {
+    if (null_query) {
+      # No filters specified but rows over 99999 requested. - Use dump
+      cli::cli_warn(c(
+        "Getting all rows of resource.",
+        i = "All rows will be returned if you
       request over 99,999 rows of data.",
-      i = "You set {.var rows} to
+        i = "You set {.var rows} to
       {format(rows, big.mark = ',', scientific = FALSE)}"
-    ))
+      ))
+      return(TRUE)
+    } else {
+      # Filters specified and rows over 99999 requested. - Use dump
+      cli::cli_warn(c(
+        "Invalid combination of {.var rows}, {.var row_filters}
+      and/or {.var col_select}.",
+        x = "Can't request over 99,999 rows of a resource
+      AND query its rows/columns.",
+        i = "ALL rows and columns of the resource will be downloaded."
+      ))
+      return(TRUE)
+    }
   }
 
-  return(use_dump)
+  # Normal query with filters and/or small num of rows - Don't use dump
+  return(FALSE)
 }

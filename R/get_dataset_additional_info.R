@@ -9,18 +9,17 @@
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
-#' @examples
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
 #' get_dataset_additional_info("gp-practice-populations")
 get_dataset_additional_info <- function(dataset_name) {
   # define query
 
-  query <- list("id" = dataset_name)
+  query <- list(id = dataset_name)
   # fetch the data
   content <- phs_GET("package_show", query)
 
   # get the amount of resources
-  amount_of_resources <- content$result$resources %>%
-    length()
+  amount_of_resources <- length(content$result$resources)
 
   # get the last recourse created and modified dates
   last_resource_created_date <- purrr::map_chr(
@@ -32,7 +31,8 @@ get_dataset_additional_info <- function(dataset_name) {
     ~ .$last_modified
   )
 
-  # get the latest between the created and modified dates and change to datetime format
+  # get the latest between the created and modified dates and
+  # change to datetime format
   most_recent_resource_date <- max(
     last_resource_modified_date,
     last_resource_created_date
@@ -41,9 +41,9 @@ get_dataset_additional_info <- function(dataset_name) {
 
   # create tibble to return
   return_value <- tibble::tibble(
-    "name" = dataset_name,
-    "n_resources" = amount_of_resources,
-    "last_updated" = most_recent_resource_date
+    name = dataset_name,
+    n_resources = amount_of_resources,
+    last_updated = most_recent_resource_date
   )
 
   return(return_value)

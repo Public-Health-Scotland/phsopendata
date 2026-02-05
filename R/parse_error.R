@@ -20,15 +20,20 @@ parse_error <- function(error) {
     error_output <- paste0(names(error[1][1]), ": ", error[1][[1]])
 
     # translate message for package users
-    error_output <- sub("fields", "col_select", error_output)
-    error_output <- sub("q", "row_filters", error_output)
+    error_output <- sub("fields", "col_select", error_output, fixed = TRUE)
+    error_output <- sub("q", "row_filters", error_output, fixed = TRUE)
   }
 
   # special case for SQL validation errors
   if (!is.null(error$info$orig)) {
-    error_output <- sub("\\^", "", error$info$orig[[1]])
-    error_output <- sub("LINE 1:", "in SQL:", error_output)
-    error_output <- sub("relation", "resource/table", error_output)
+    error_output <- sub("\\^", "", error$info$orig[[1]], fixed = TRUE)
+    error_output <- sub("LINE 1:", "in SQL:", error_output, fixed = TRUE)
+    error_output <- sub(
+      "relation",
+      "resource/table",
+      error_output,
+      fixed = TRUE
+    )
   }
 
   return(error_output)

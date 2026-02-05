@@ -10,7 +10,7 @@
 #' @noRd
 check_res_id <- function(res_id, call = rlang::caller_env()) {
   # check res_id is single value
-  if (length(res_id) > 1) {
+  if (length(res_id) > 1L) {
     cli::cli_abort(
       c(
         "Argument {.var res_id} must be of length 1.",

@@ -11,15 +11,13 @@ dump_download <- function(res_id, call = rlang::caller_env()) {
   )
 
   # if content is a web page
-  if ("xml_document" %in% class(content)) {
+  if (inherits(content, "xml_document")) {
     cli::cli_abort(
-      c(
-        "Can't find resource with ID {.var {res_id}} in datastore."
-      ),
+      "Can't find resource with ID {.var {res_id}} in datastore.",
       call = call
     )
   }
 
   # return data
-  return(content[, -1])
+  return(content[, -1L])
 }

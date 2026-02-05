@@ -14,9 +14,11 @@ get_dataset(
 )
 }
 \arguments{
-\item{dataset_name}{Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
+\item{dataset_name}{Name of the dataset as found on the
+\href{https://www.opendata.nhs.scot}{NHS Open Data platform} (character).}
 
-\item{max_resources}{(optional) The maximum number of resources to return (integer). If not set, all resources are returned.}
+\item{max_resources}{(optional) The maximum number of resources to return
+(integer). If not set, all resources are returned.}
 
 \item{rows}{(optional) Maximum number of rows to return (integer).}
 
@@ -30,10 +32,15 @@ get_dataset(
 A \link[tibble:tibble-package]{tibble} with the data.
 }
 \description{
-Downloads multiple resources from a dataset on the NHS Open Data platform by dataset name, with optional row limits and context columns.
+Downloads multiple resources from a dataset on the NHS Open Data
+platform by dataset name, with optional row limits and context columns.
 }
 \examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
+\dontrun{
 get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=get_resource]{get_resource()}} for downloading a single resource from a dataset.

@@ -26,5 +26,5 @@ parse_col_select <- function(col_select, call = rlang::caller_env()) {
     )
   }
 
-  return(paste0(col_select, collapse = ","))
+  return(paste(col_select, collapse = ","))
 }

@@ -10,7 +10,7 @@
 #' @return A [tibble][tibble::tibble-package] with the query results. Only 32,000 rows can be returned from a single SQL query.
 #' @export
 #'
-#' @examples
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
 #' sql <- "
 #'    SELECT
 #'      \"TotalCancelled\",\"TotalOperations\",\"Hospital\",\"Month\"
@@ -31,7 +31,7 @@
 #'   row_filters = row_filter
 #' )
 get_resource_sql <- function(sql) {
-  if (length(sql) != 1) {
+  if (length(sql) != 1L) {
     cli::cli_abort(c(
       x = "SQL validation error.",
       i = "{.var sql} must be length 1 not {length(sql)}."
@@ -54,7 +54,7 @@ get_resource_sql <- function(sql) {
   }
 
   # Add the SQL statement to the query
-  query <- list("sql" = sql)
+  query <- list(sql = sql)
 
   # attempt get request
   content <- phs_GET("datastore_search_sql", query)
@@ -67,7 +67,7 @@ get_resource_sql <- function(sql) {
   }
 
   # extract the records (rows) from content
-  data <- purrr::map_dfr(
+  query_data <- purrr::map(
     content$result$records,
     ~ {
       # replace NULL with "" so tibble works
@@ -76,22 +76,23 @@ get_resource_sql <- function(sql) {
 
       tibble::as_tibble(.x)
     }
-  )
+  ) %>%
+    purrr::list_rbind()
 
   # If the query returned no rows, exit now.
-  if (nrow(data) == 0L) {
-    return(data)
+  if (nrow(query_data) == 0L) {
+    return(query_data)
   }
 
   # get correct order of columns
-  order <- purrr::map_chr(
+  col_order <- purrr::map_chr(
     content$result$fields,
     ~ .x$id
   )
-  order <- order[!order %in% c("_id", "_full_text")]
+  col_order <- col_order[!col_order %in% c("_id", "_full_text")]
 
   # select and reorder columns to reflect
-  cleaner <- dplyr::select(data, dplyr::all_of(order))
+  cleaner <- dplyr::select(query_data, dplyr::all_of(col_order))
 
   # warn if limit may have been surpassed
   if (nrow(cleaner) == 32000L) {

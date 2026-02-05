@@ -3,25 +3,25 @@ test_that("Returned context is the same for resource and dataset", {
 
   dataset <- get_dataset(
     "general-practitioner-contact-details",
-    rows = 10,
+    rows = 10L,
     include_context = TRUE
   )
 
   res_id_1 <- "647b256e-4a03-4963-8402-bf559c9e2fff"
   resource_1 <- get_resource(
     res_id = res_id_1,
-    rows = 10,
+    rows = 10L,
     include_context = TRUE
   )
 
   res_id_2 <- "e37c14fe-51f7-4935-87d1-c79b30fe8824"
   resource_2 <- get_resource(
     res_id = res_id_2,
-    rows = 10,
+    rows = 10L,
     include_context = TRUE
   )
 
-  expect_equal(
+  expect_identical(
     dataset %>%
       dplyr::filter(ResID == res_id_1) %>%
       dplyr::select(!dplyr::where(~ anyNA(.x))),
@@ -29,7 +29,7 @@ test_that("Returned context is the same for resource and dataset", {
     # list_as_map = TRUE will sort variable names before comparing
     list_as_map = TRUE
   )
-  expect_equal(
+  expect_identical(
     dataset %>%
       dplyr::filter(ResID == res_id_2) %>%
       dplyr::select(!dplyr::where(~ anyNA(.x))),
@@ -41,10 +41,10 @@ test_that("Returned context is the same for resource and dataset", {
 test_that("add_context works with odd data (offline)", {
   df <- tibble::tibble(
     Surname = letters[1:5],
-    Sex = rep("Female", 5),
-    Postcode = rep("EH1 1AA", 5),
-    HB = rep("S08000030", 5),
-    HSCP = rep("S37000026", 5)
+    Sex = rep("Female", 5L),
+    Postcode = rep("EH1 1AA", 5L),
+    HB = rep("S08000030", 5L),
+    HSCP = rep("S37000026", 5L)
   )
 
   res_id <- "647b256e-4a03-4963-8402-bf559c9e2fff"
@@ -77,7 +77,7 @@ test_that("add_context works with odd data (offline)", {
 
 test_that("add_context() coerces modified_date >= created_date (offline)", {
   # 'modified_date' is slightly earlier than 'created_date' — function should correct it
-  df <- tibble::tibble(A = 1:3, B = letters[1:3])
+  df <- tibble::tibble(A = 1L:3L, B = letters[1:3])
 
   created <- "2025-01-01T00:00:00"
   modified <- "2024-12-31T23:59:59" # earlier than created
@@ -92,11 +92,11 @@ test_that("add_context() coerces modified_date >= created_date (offline)", {
 
   expect_s3_class(out, "tbl_df")
   expect_true(all(out$ResModifiedDate >= out$ResCreatedDate))
-  expect_equal(nrow(out), nrow(df))
+  expect_identical(nrow(out), nrow(df))
 })
 
 test_that("add_context() prepends context columns in fixed order (offline)", {
-  df <- tibble::tibble(x = 1:2, y = 3:4)
+  df <- tibble::tibble(x = 1L:2L, y = 3L:4L)
 
   out <- add_context(
     data = df,

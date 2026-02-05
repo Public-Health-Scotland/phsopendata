@@ -20,8 +20,7 @@ test_that("errors for invalid format", {
 })
 
 test_that("returns nothing for correct format/length/type", {
-  expect_equal(
-    check_res_id("a965ee86-0974-4c93-bbea-e839e27d7085"),
-    NULL
+  expect_null(
+    check_res_id("a965ee86-0974-4c93-bbea-e839e27d7085")
   )
 })

@@ -7,7 +7,8 @@
 get_dataset_additional_info(dataset_name)
 }
 \arguments{
-\item{dataset_name}{Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
+\item{dataset_name}{Name of the dataset as found on the
+\href{https://www.opendata.nhs.scot}{NHS Open Data platform} (character).}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data
@@ -19,5 +20,7 @@ is taken to mean the most recent date a resource within the dataset was
 created or modified.
 }
 \examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 get_dataset_additional_info("gp-practice-populations")
+\dontshow{\}) # examplesIf}
 }

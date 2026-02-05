@@ -21,7 +21,8 @@
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
 #'
-#' @examples
+#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' \dontrun{
 #' dataset_name <- "gp-practice-contact-details-and-list-sizes"
 #'
 #' data <- get_latest_resource(dataset_name)
@@ -34,7 +35,7 @@
 #'   row_filters = filters,
 #'   col_select = wanted_cols
 #' )
-#'
+#' }
 get_latest_resource <- function(
   dataset_name,
   rows = NULL,
@@ -60,8 +61,8 @@ get_latest_resource <- function(
       c(
         "The dataset name supplied {.val {dataset_name}} is not within the applicable datasets.
       These are: {.val {applicable_datasets}}",
-        "x" = "Please see {.fun get_latest_resource} documentation.",
-        "i" = "You can find dataset names in the URL
+        x = "Please see {.fun get_latest_resource} documentation.",
+        i = "You can find dataset names in the URL
       of a dataset's page on {.url www.opendata.nhs.scot}."
       ),
       call = rlang::caller_env()
@@ -71,7 +72,7 @@ get_latest_resource <- function(
   # get the latest resource id
   id <- get_latest_resource_id(dataset_name)
 
-  data <- get_resource(
+  resource_data <- get_resource(
     res_id = id,
     rows = rows,
     row_filters = row_filters,
@@ -79,5 +80,5 @@ get_latest_resource <- function(
     include_context = include_context
   )
 
-  return(data)
+  return(resource_data)
 }

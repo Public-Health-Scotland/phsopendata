@@ -5,7 +5,7 @@ test_that("returns full data if only res_id is input", {
 
   data <- get_resource(res_id = gp_list_apr_2021)
 
-  expect_equal(nrow(data), 926)
+  expect_identical(nrow(data), 926L)
 })
 
 test_that("returns full data if rows is set to over 99999", {
@@ -15,21 +15,21 @@ test_that("returns full data if rows is set to over 99999", {
     data <- get_resource(
       res_id = gp_list_apr_2021,
       rows = 9999999,
-      row_filters = list("GPPracticeName" = "The Blue Practice")
+      row_filters = list(GPPracticeName = "The Blue Practice")
     ),
     regexp = "Can't request over 99,999 rows"
   )
 
-  expect_equal(nrow(data), 926)
+  expect_identical(nrow(data), 926L)
 })
 
 test_that("first 99999 rows returned if query matches > 99999 rows", {
   prescriptions_apr_2021 <- "51b7ad3f-6d52-4165-94f4-92e322656c85"
 
   expect_warning(
-    df <- get_resource(prescriptions_apr_2021, col_select = c("HBT")),
+    df <- get_resource(prescriptions_apr_2021, col_select = "HBT"),
     regexp = "(Returning the first 99999 results)"
   )
 
-  expect_true(nrow(df) == 99999)
+  expect_identical(nrow(df), 99999L)
 })

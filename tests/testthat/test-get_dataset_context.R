@@ -1,17 +1,17 @@
 skip_if_offline(host = "www.opendata.nhs.scot")
 
 test_that("returns expected context with the data", {
-  n_rows <- 2
+  n_rows <- 2L
   data_col_names <- names(
     get_dataset(
       dataset_name = "gp-practice-populations",
-      max_resources = 1,
-      rows = 1
+      max_resources = 1L,
+      rows = 1L
     )
   )
   data <- get_dataset(
     dataset_name = "gp-practice-populations",
-    max_resources = 1,
+    max_resources = 1L,
     rows = n_rows,
     include_context = TRUE
   )
@@ -22,7 +22,7 @@ test_that("returns expected context with the data", {
   expect_s3_class(data$ResCreatedDate, "POSIXct")
   expect_s3_class(data$ResModifiedDate, "POSIXct")
 
-  expect_equal(nrow(data), n_rows)
+  expect_identical(nrow(data), n_rows)
   expect_named(
     data,
     c("ResID", "ResName", "ResCreatedDate", "ResModifiedDate", data_col_names)
@@ -30,8 +30,8 @@ test_that("returns expected context with the data", {
 })
 
 test_that("returns expected context and length of data", {
-  n_resources <- 2
-  n_rows <- 2
+  n_resources <- 2L
+  n_rows <- 2L
 
   data <- get_dataset(
     dataset_name = "gp-practice-populations",
@@ -46,6 +46,6 @@ test_that("returns expected context and length of data", {
   expect_s3_class(data$ResCreatedDate, "POSIXct")
   expect_s3_class(data$ResModifiedDate, "POSIXct")
 
-  expect_equal(nrow(data), n_resources * n_rows)
+  expect_identical(nrow(data), n_resources * n_rows)
   expect_length(unique(data[["ResID"]]), n_resources)
 })

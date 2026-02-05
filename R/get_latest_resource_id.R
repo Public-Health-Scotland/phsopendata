@@ -19,16 +19,13 @@
 #' @noRd
 get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   # send the api request
-  query <- list("id" = dataset_name)
+  query <- list(id = dataset_name)
   content <- phs_GET("package_show", query)
 
-  # retrieve the resource id's from returned contect
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
-
-  # add the id, created date and last_modified to a dataframe
-  id <- c()
-  created_date <- c()
-  modified_date <- c()
+  # add the id, created date and last_modified to a data.frame
+  id <- vector("character")
+  created_date <- vector("character")
+  modified_date <- vector("character")
 
   for (res in content$result$resources) {
     id <- append(id, res$id)
@@ -42,10 +39,9 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
   ) %>%
     dplyr::mutate(most_recent_date_created = max(created_date))
 
-  # get the first row of the resources, this will be the same that appears on the top
-  # on the open data platform
-  all_id_data_first_row <- all_id_data %>%
-    dplyr::slice(1)
+  # get the first row of the resources, this will be the same that appears
+  # on the top on the open data platform
+  all_id_data_first_row <- dplyr::slice_head(all_id_data, n = 1L)
 
   # If the resource at the top as appearing on the open data platform also has the most
   # recent date created, return it. Otherwise, error

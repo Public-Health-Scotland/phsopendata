@@ -2,12 +2,12 @@ skip_if_offline(host = "www.opendata.nhs.scot")
 
 test_that("returns expected context with the data", {
   gp_list_apr_2021 <- "a794d603-95ab-4309-8c92-b48970478c14"
-  data_col_names <- names(get_resource(res_id = gp_list_apr_2021, rows = 1))
+  data_col_names <- names(get_resource(res_id = gp_list_apr_2021, rows = 1L))
 
   # without query
   data <- get_resource(
     res_id = gp_list_apr_2021,
-    rows = 10,
+    rows = 10L,
     include_context = TRUE
   )
 
@@ -17,8 +17,8 @@ test_that("returns expected context with the data", {
   expect_s3_class(data$ResCreatedDate, "POSIXct")
   expect_s3_class(data$ResModifiedDate, "POSIXct")
 
-  expect_length(data, 19)
-  expect_equal(nrow(data), 10)
+  expect_length(data, 19L)
+  expect_identical(nrow(data), 10L)
   expect_named(
     data,
     c(
@@ -49,5 +49,5 @@ test_that("returns expected context with the data", {
       "AddressLine1"
     )
   )
-  expect_equal(data_q[["PracticeCode"]], 10002)
+  expect_identical(data_q[["PracticeCode"]], 10002L)
 })

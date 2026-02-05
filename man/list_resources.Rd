@@ -7,7 +7,8 @@
 list_resources(dataset_name)
 }
 \arguments{
-\item{dataset_name}{Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
+\item{dataset_name}{Name of the dataset as found on the
+\href{https://www.opendata.nhs.scot}{NHS Open Data platform} (character).}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data
@@ -17,5 +18,7 @@ a \link[tibble:tibble-package]{tibble} with the data
 with a dataset
 }
 \examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
+\dontshow{\}) # examplesIf}
 }

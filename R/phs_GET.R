@@ -18,7 +18,7 @@ phs_GET <- function(
   response <- httr::RETRY(
     verb = "GET",
     url = url,
-    terminate_on = c(409),
+    terminate_on = 409L,
     user_agent = httr::user_agent(
       "phsopendata (https://github.com/Public-Health-Scotland/phsopendata)"
     )
@@ -29,7 +29,7 @@ phs_GET <- function(
     cli::cli_abort(
       c(
         "Can't connect to the CKAN server.",
-        i = "Check your network/proxy settings."
+        i = "Check your network or proxy settings."
       ),
       call = call
     )
