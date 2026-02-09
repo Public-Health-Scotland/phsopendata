@@ -5,7 +5,7 @@ test_that("returns httr::content", {
 
   expect_true(content$success)
 
-  expect_equal(
+  expect_identical(
     content$help,
     "https://www.opendata.nhs.scot/api/3/action/help_show?name=package_list"
   )

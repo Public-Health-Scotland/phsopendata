@@ -1,5 +1,5 @@
 test_that("creates commas separated string from vector", {
-  expect_equal(
+  expect_identical(
     parse_col_select(letters[1:5]),
     "a,b,c,d,e"
   )
@@ -10,15 +10,15 @@ test_that("returns NULL if input is NULL", {
 })
 
 test_that("Can deal with a list in some cases", {
-  expect_equal(
+  expect_identical(
     parse_col_select(list("col1", "col2")),
     "col1,col2"
   )
-  expect_equal(
+  expect_identical(
     parse_col_select(list(columns = c("col1", "col2"))),
     "col1,col2"
   )
-  expect_equal(
+  expect_identical(
     parse_col_select(list(
       columns = c("col1", "col2"),
       columns2 = c("col1", "col2")
@@ -31,7 +31,7 @@ test_that("Can deal with a list in some cases", {
 
 test_that("parse_col_select() removes duplicates and preserves order of first occurrence", {
   x <- c("A", "A", "B", "A", "C", "B")
-  expect_equal(parse_col_select(x), "A,B,C")
+  expect_identical(parse_col_select(x), "A,B,C")
 })
 
 test_that("errors on bad input", {
@@ -40,7 +40,7 @@ test_that("errors on bad input", {
     "`col_select` must be a .+?character.+? vector, not a .+?numeric"
   )
   expect_error(
-    parse_col_select(1:3),
+    parse_col_select(1L:3L),
     "`col_select` must be a .+?character.+? vector, not a .+?integer"
   )
   expect_error(

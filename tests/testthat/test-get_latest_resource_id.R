@@ -4,7 +4,7 @@ test_that("returns data for a dataset that is listed", {
   gp_latest <- get_latest_resource("gp-practice-populations")
 
   expect_s3_class(gp_latest, "tbl")
-  expect_gt(nrow(gp_latest), 1)
+  expect_gt(nrow(gp_latest), 1L)
   expect_named(gp_latest)
   expect_contains(
     names(gp_latest),

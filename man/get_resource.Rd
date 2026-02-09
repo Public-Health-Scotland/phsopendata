@@ -30,6 +30,7 @@ A \link[tibble:tibble-package]{tibble} with the data.
 Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
 }
 \examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 res_id <- "ca3f8e44-9a84-43d6-819c-a880b23bd278"
 
 data <- get_resource(res_id)
@@ -42,6 +43,7 @@ filtered_data <- get_resource(
   row_filters = filters,
   col_select = wanted_cols
 )
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=get_dataset]{get_dataset()}} for downloading all resources from a given dataset.

@@ -1,3 +1,7 @@
+# phsopendata 1.0.3
+
+- No user-facing changes. Strengthened examples and tests, particularly when ran on CRAN.
+
 # phsopendata 1.0.2
 
 - No user-facing changes. Update the maintainer (temporarily) to James Hayes (james.hayes2@phs.scot) while Csilla is on a career break!

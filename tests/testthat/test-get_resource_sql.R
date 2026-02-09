@@ -32,7 +32,7 @@ test_that("gets expected data for a simple SQL query", {
   )
 
   expect_s3_class(data, "tbl")
-  expect_equal(unique(data$Hospital), "D102H")
+  expect_identical(unique(data$Hospital), "D102H")
   expect_named(
     data,
     c("TotalCancelled", "TotalOperations", "Hospital", "Month")

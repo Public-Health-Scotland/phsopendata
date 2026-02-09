@@ -6,6 +6,6 @@ test_that("returns data in the expected format", {
   )
 
   expect_s3_class(dataset, "tbl_df")
-  expect_equal(nrow(dataset), 1)
+  expect_identical(nrow(dataset), 1L)
   expect_named(dataset, c("name", "n_resources", "last_updated"))
 })

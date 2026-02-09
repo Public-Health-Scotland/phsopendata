@@ -13,7 +13,8 @@ get_latest_resource(
 )
 }
 \arguments{
-\item{dataset_name}{Name of the dataset as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
+\item{dataset_name}{Name of the dataset as found on the
+\href{https://www.opendata.nhs.scot}{NHS Open Data platform} (character).}
 
 \item{rows}{(optional) Maximum number of rows to return (integer).}
 
@@ -46,6 +47,8 @@ resource. As of 1.8.2024 these data sets include:
 }
 }
 \examples{
+\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
+\dontrun{
 dataset_name <- "gp-practice-contact-details-and-list-sizes"
 
 data <- get_latest_resource(dataset_name)
@@ -58,5 +61,6 @@ filtered_data <- get_latest_resource(
   row_filters = filters,
   col_select = wanted_cols
 )
-
+}
+\dontshow{\}) # examplesIf}
 }

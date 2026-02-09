@@ -16,19 +16,18 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
 
   # Check if `row_filters` is a list or a character or numeric vector
   if (
-    !inherits(row_filters, "list") &&
-      !is.character(row_filters) &&
-      !is.numeric(row_filters)
+    !rlang::is_bare_list(row_filters) &&
+      !rlang::is_bare_character(row_filters) &&
+      !rlang::is_bare_numeric(row_filters)
   ) {
     cli::cli_abort(
-      "{.arg row_filters} must be a named {.cls list} or a named
-      {.cls character} or {.cls numeric} vector, not a {.cls {class(row_filters)}}.",
+      "{.arg row_filters} must be a named {.cls list}, not a {.cls {class(row_filters)}}.",
       call = call
     )
   }
 
-  # Ensure it's elements are named
-  if (is.null(names(row_filters)) || any(names(row_filters) == "")) {
+  # Ensure its elements are named
+  if (is.null(names(row_filters)) || !all(nzchar(names(row_filters)))) {
     cli::cli_abort(
       "{.arg row_filters} should be a named {.cls list}.",
       call = call
@@ -55,7 +54,7 @@ parse_row_filters <- function(row_filters, call = rlang::caller_env()) {
   }
 
   # check if any filters in list have length > 1
-  multiple <- purrr::map_lgl(row_filters, ~ length(.x) > 1)
+  multiple <- purrr::map_lgl(row_filters, ~ length(.x) > 1L)
 
   if (any(multiple)) {
     # Default to using SQL
