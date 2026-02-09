@@ -100,8 +100,6 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res_id</span> <span class="op">&lt;-</span> <span class="st">"ca3f8e44-9a84-43d6-819c-a880b23bd278"</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">get_resource</span><span class="op">(</span><span class="va">res_id</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">filters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"HB"</span> <span class="op">=</span> <span class="st">"S08000030"</span>, <span class="st">"Month"</span> <span class="op">=</span> <span class="st">"202109"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">wanted_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"HB"</span>, <span class="st">"Month"</span>, <span class="st">"TotalPatientsSeen"</span><span class="op">)</span></span></span>
@@ -111,14 +109,6 @@
 <span class="r-in"><span>  row_filters <span class="op">=</span> <span class="va">filters</span>,</span></span>
 <span class="r-in"><span>  col_select <span class="op">=</span> <span class="va">wanted_cols</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Error in curl::curl_fetch_memory(url, handle = handle): Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Request failed [ERROR]. Retrying in 1 seconds...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Error in curl::curl_fetch_memory(url, handle = handle): Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Request failed [ERROR]. Retrying in 1.3 seconds...</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
 </code></pre></div>
     </div>
   </div>

@@ -85,9 +85,6 @@ SQL query.</p></div>
 <span class="r-in"><span><span class="st">     \"Hospital\" = 'D102H'</span></span></span>
 <span class="r-in"><span><span class="st">"</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">get_resource_sql</span><span class="op">(</span><span class="va">sql</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Error in curl::curl_fetch_memory(url, handle = handle): Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Request failed [ERROR]. Retrying in 1 seconds...</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># This is equivalent to:</span></span></span>
 <span class="r-in"><span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TotalCancelled"</span>, <span class="st">"TotalOperations"</span>, <span class="st">"Hospital"</span>, <span class="st">"Month"</span><span class="op">)</span></span></span>

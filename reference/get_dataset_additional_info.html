@@ -79,14 +79,10 @@ created or modified.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_dataset_additional_info</span><span class="op">(</span><span class="st">"gp-practice-populations"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Error in curl::curl_fetch_memory(url, handle = handle): Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Request failed [ERROR]. Retrying in 1 seconds...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Error in curl::curl_fetch_memory(url, handle = handle): Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Request failed [ERROR]. Retrying in 1.9 seconds...</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> Failure when receiving data from the peer [www.opendata.nhs.scot]:</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Recv failure: Connection reset by peer</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name                    n_resources last_updated       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> gp-practice-populations          49 2026-02-03 <span style="color: #949494;">10:00:14</span></span>
 </code></pre></div>
     </div>
   </div>
