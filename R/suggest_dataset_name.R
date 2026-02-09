@@ -12,7 +12,7 @@ suggest_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
   string_distances <- stringdist::stringdist(dataset_name, dataset_names)
 
   # if min distance is too big, abort
-  if (min(string_distances) > 10) {
+  if (min(string_distances) > 10.0) {
     cli::cli_abort(
       c(
         "Can't find the dataset name
@@ -33,7 +33,7 @@ suggest_dataset_name <- function(dataset_name, call = rlang::caller_env()) {
   cli::cli_abort(
     c(
       "Can't find the dataset name {.var {dataset_name}}.",
-      "i" = "Did you mean {?any of }{.val {closest_match}}?"
+      i = "Did you mean {?any of }{.val {closest_match}}?"
     ),
     call = call
   )

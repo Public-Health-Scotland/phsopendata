@@ -2,4 +2,6 @@
 
 0 errors | 0 warnings | 0 notes
 
-Fixes errors caused by open data platform being unavailable, all affected tests are now skipped if the platform is offline. Tests also more robust against changes to the data getting pulled.  
+Few substantive changes, examples that were failing are now 'not run'. The 
+failure was due to the flakiness of the API / platform that's difficult to 
+guard against.
