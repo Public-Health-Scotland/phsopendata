@@ -53,7 +53,7 @@ jobs:
           R -q -e 'revdepcheck::revdep_summary(); revdepcheck::revdep_report(cran = TRUE)'
           echo "Report written to revdep/"
       - name: Upload revdep results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: revdep-results
           path: revdep
