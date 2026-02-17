@@ -6,6 +6,8 @@
 
 - No user-facing changes. Update the maintainer (temporarily) to James Hayes (james.hayes2@phs.scot) while Csilla is on a career break!
 
+- Add [`list_all_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_all_resources.html) which can be used to list and search for resources or datasets.
+
 # phsopendata 1.0.1 (2025-11-10)
 
 - No user-facing changes. Fixes some tests that were failing when the open data platform is offline, and fixes tests that were failing due to a change in the open data resource. Tests are now more robust against changes to the data.  
