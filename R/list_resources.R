@@ -1,8 +1,19 @@
 #' Lists all available resources for a dataset
 #'
-#' `list_resources()` returns all of the resources associated
-#' with a dataset
+
 #'
+#' @description
+#' `list_resources()` returns all of the resources associated
+#' with a dataset.
+#'
+#' @section Lifecycle:
+#'
+#' `r lifecycle::badge("superseded")`
+#'
+#' `list_resources()` has been superseded by `list_all_resources()`,
+#' which provides a more complete and consistent interface for
+#' exploring datasets and their resources.
+
 #' @inheritParams get_dataset
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
@@ -10,7 +21,13 @@
 #'
 #' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
 #' list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
+#' @seealso [list_all_resources()]
 list_resources <- function(dataset_name) {
+  lifecycle::deprecate_warn(
+    when = "1.0.3",
+    what = "list_resources()",
+    with = "list_all_resources()"
+  )
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
