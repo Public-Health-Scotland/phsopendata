@@ -12,7 +12,7 @@
 #'
 #' `r lifecycle::badge("superseded")`
 #'
-#'`list_datasets()` has been superseded by `list_all_resources()`.
+#' `list_datasets()` has been superseded by `list_all_resources()`.
 #' While `list_datasets()` only returns a list of dataset packages,
 #' `list_all_resources()` provides a more comprehensive and flexible
 #' interface for exploring the PHS Open Data platform. It returns both
@@ -27,7 +27,6 @@
 #' head(list_datasets())
 #' @seealso [list_all_resources()]
 list_datasets <- function() {
-
   lifecycle::deprecate_warn(
     when = "1.0.3",
     what = "list_datasets()",
