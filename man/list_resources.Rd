@@ -15,10 +15,23 @@ a \link[tibble:tibble-package]{tibble} with the data
 }
 \description{
 \code{list_resources()} returns all of the resources associated
-with a dataset
+with a dataset.
 }
+\section{Lifecycle}{
+
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
+\code{list_resources()} has been superseded by \code{list_all_resources()},
+which provides a more complete and consistent interface for
+exploring datasets and their resources.
+}
+
 \examples{
 \dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=list_all_resources]{list_all_resources()}}
 }
