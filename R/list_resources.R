@@ -23,11 +23,6 @@
 #' list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
 #' @seealso [list_all_resources()]
 list_resources <- function(dataset_name) {
-  lifecycle::deprecate_warn(
-    when = "1.0.3",
-    what = "list_resources()",
-    with = "list_all_resources()"
-  )
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 

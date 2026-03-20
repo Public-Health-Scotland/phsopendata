@@ -27,11 +27,6 @@
 #' head(list_datasets())
 #' @seealso [list_all_resources()]
 list_datasets <- function() {
-  lifecycle::deprecate_warn(
-    when = "1.0.3",
-    what = "list_datasets()",
-    with = "list_all_resources()"
-  )
   # fetch the data
   content <- phs_GET("package_list", "")
 
