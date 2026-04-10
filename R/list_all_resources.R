@@ -15,8 +15,8 @@
 #' @keywords internal
 #' @export
 list_all_resources <- function(
-    dataset_contains = NULL,
-    resource_contains = NULL
+  dataset_contains = NULL,
+  resource_contains = NULL
 ) {
   lifecycle::deprecate_warn(
     when = "1.0.3",

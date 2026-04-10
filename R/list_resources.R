@@ -26,12 +26,12 @@
 #' @export
 #' @importFrom lifecycle deprecated
 list_resources <- function(
-    dataset_contains = NULL,
-    resource_contains = NULL,
-    dataset_name = deprecated()
+  dataset_contains = NULL,
+  resource_contains = NULL,
+  dataset_name = deprecated()
 ) {
   # Handling any use of "list_resources(dataset_name)"
-  if(lifecycle::is_present(dataset_name)){
+  if (lifecycle::is_present(dataset_name)) {
     lifecycle::deprecate_warn(
       when = "1.0.3",
       what = "list_resources(dataset_name)",
