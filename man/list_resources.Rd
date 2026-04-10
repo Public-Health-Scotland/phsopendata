@@ -2,36 +2,40 @@
 % Please edit documentation in R/list_resources.R
 \name{list_resources}
 \alias{list_resources}
-\title{Lists all available resources for a dataset}
+\title{Provides an overview of all resources available on the Open Data platform.}
 \usage{
-list_resources(dataset_name)
+list_resources(
+  dataset_contains = NULL,
+  resource_contains = NULL,
+  dataset_name = deprecated()
+)
 }
 \arguments{
-\item{dataset_name}{Name of the dataset as found on the
-\href{https://www.opendata.nhs.scot}{NHS Open Data platform} (character).}
+\item{dataset_contains}{A character string containing an expression to be
+used as search criteria against the dataset 'title' field.}
+
+\item{resource_contains}{A character string containing a \href{https://www.geeksforgeeks.org/dsa/write-regular-expressions/}{regular expression}
+to be matched against available resource names.}
+
+\item{dataset_name}{Deprecated. Use dataset_contains instead.}
 }
 \value{
-a \link[tibble:tibble-package]{tibble} with the data
+A \link[tibble:tibble-package]{tibble} containing details of all available datasets and
+resources, or those containing the string specified in the
+\code{dataset_contains} and \code{resource_contains} arguments.
 }
 \description{
-\code{list_resources()} returns all of the resources associated
-with a dataset.
+Provides an overview of all resources available from
+\href{https://www.opendata.nhs.scot/}{opendata.nhs.scot}, with the option to limit results based on both package
+and resource names. The returned tibble can be used to look-up dataset
+and resource ids and is useful for exploring the available data sets.
 }
-\section{Lifecycle}{
-
-
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
-
-\code{list_resources()} has been superseded by \code{list_all_resources()},
-which provides a more complete and consistent interface for
-exploring datasets and their resources.
-}
-
 \examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
-list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
-\dontshow{\}) # examplesIf}
-}
-\seealso{
-\code{\link[=list_all_resources]{list_all_resources()}}
+
+list_resources()
+list_resources(dataset_contains = "standard-populations")
+list_resources(
+  dataset_contains = "standard-populations", resource_contains = "European"
+)
+
 }

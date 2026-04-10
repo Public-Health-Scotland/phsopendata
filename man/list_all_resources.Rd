@@ -2,15 +2,15 @@
 % Please edit documentation in R/list_all_resources.R
 \name{list_all_resources}
 \alias{list_all_resources}
-\title{Provides an overview of all resources available on the Open Data platform.}
+\title{Deprecated: please use \code{list_resources()} instead.}
 \usage{
 list_all_resources(dataset_contains = NULL, resource_contains = NULL)
 }
 \arguments{
-\item{dataset_contains}{a character string containing an expression to be
+\item{dataset_contains}{A character string containing an expression to be
 used as search criteria against the dataset 'title' field.}
 
-\item{resource_contains}{a character string containing a \href{https://www.geeksforgeeks.org/dsa/write-regular-expressions/}{regular expression}
+\item{resource_contains}{A character string containing a regular expression
 to be matched against available resource names.}
 }
 \value{
@@ -19,17 +19,17 @@ resources, or those containing the string specified in the
 \code{dataset_contains} and \code{resource_contains} arguments.
 }
 \description{
-Provides an overview of all resources available from
-\href{https://www.opendata.nhs.scot/}{opendata.nhs.scot}, with the option to limit results based on both package
-and resource names. The returned tibble can be used to look-up dataset
-and resource ids and is useful for exploring the available data sets.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+\code{list_all_resources()} was renamed to \code{\link[=list_resources]{list_resources()}} for naming consistency.
 }
 \examples{
 
-list_all_resources()
-list_all_resources(dataset_contains = "standard-populations")
-list_all_resources(
+list_resources()
+list_resources(dataset_contains = "standard-populations")
+list_resources(
   dataset_contains = "standard-populations", resource_contains = "European"
 )
 
 }
+\keyword{internal}
