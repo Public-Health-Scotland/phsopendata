@@ -27,7 +27,7 @@
 list_resources <- function(
   dataset_contains = NULL,
   resource_contains = NULL,
-  dataset_name = deprecated()
+  dataset_name = lifecycle::deprecated()
 ) {
   # Handling any use of "list_resources(dataset_name)"
   if (lifecycle::is_present(dataset_name)) {
