@@ -25,7 +25,8 @@ Imports:
     readr (>= 1.0.0),
     rlang (>= 1.0.0),
     stringdist,
-    tibble (>= 3.0.0)
+    tibble (>= 3.0.0),
+    lifecycle
 Suggests:
     covr,
     curl,
