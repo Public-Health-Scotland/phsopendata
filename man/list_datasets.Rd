@@ -18,9 +18,9 @@ Platform.
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
 
-\code{list_datasets()} has been superseded by \code{list_all_resources()}.
+\code{list_datasets()} has been superseded by \code{list_resources()}.
 While \code{list_datasets()} only returns a list of dataset packages,
-\code{list_all_resources()} provides a more comprehensive and flexible
+\code{list_resources()} provides a more comprehensive and flexible
 interface for exploring the PHS Open Data platform. It returns both
 datasets and their associated resources in a single tibble, and
 supports filtering by dataset titles or resource names.
@@ -32,5 +32,5 @@ head(list_datasets())
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=list_all_resources]{list_all_resources()}}
+\code{\link[=list_resources]{list_resources()}}
 }

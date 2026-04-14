@@ -1,8 +1,5 @@
 #' Lists all available datasets
 #'
-#'
-
-#'
 #' @description
 #' `list_datasets()` shows all of the datasets hosted on the PHS Open Data
 #' Platform.
@@ -12,9 +9,9 @@
 #'
 #' `r lifecycle::badge("superseded")`
 #'
-#' `list_datasets()` has been superseded by `list_all_resources()`.
+#' `list_datasets()` has been superseded by `list_resources()`.
 #' While `list_datasets()` only returns a list of dataset packages,
-#' `list_all_resources()` provides a more comprehensive and flexible
+#' `list_resources()` provides a more comprehensive and flexible
 #' interface for exploring the PHS Open Data platform. It returns both
 #' datasets and their associated resources in a single tibble, and
 #' supports filtering by dataset titles or resource names.
@@ -25,13 +22,8 @@
 #'
 #' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
 #' head(list_datasets())
-#' @seealso [list_all_resources()]
+#' @seealso [list_resources()]
 list_datasets <- function() {
-  lifecycle::deprecate_warn(
-    when = "1.0.3",
-    what = "list_datasets()",
-    with = "list_all_resources()"
-  )
   # fetch the data
   content <- phs_GET("package_list", "")
 

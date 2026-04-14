@@ -1,65 +1,142 @@
-#' Lists all available resources for a dataset
+#' Provides an overview of all resources available on the Open Data platform.
 #'
-
+#' @description Provides an overview of all resources available from
+#'  [opendata.nhs.scot](https://www.opendata.nhs.scot/), with the option to limit results based on both package
+#'  and resource names. The returned tibble can be used to look-up dataset
+#'  and resource ids, and is useful for exploring the available data sets.
 #'
-#' @description
-#' `list_resources()` returns all of the resources associated
-#' with a dataset.
+#' @param dataset_contains A character string containing an expression to be
+#'  used as search criteria against the dataset 'title' field.
+#' @param resource_contains A character string containing a [regular expression](https://www.geeksforgeeks.org/dsa/write-regular-expressions/)
+#'  to be matched against available resource names.
+#' @param dataset_name Deprecated. Use dataset_contains instead.
 #'
-#' @section Lifecycle:
+#' @return A [tibble][tibble::tibble-package] containing details of all available datasets and
+#'  resources, or those containing the string specified in the
+#'  `dataset_contains` and `resource_contains` arguments.
 #'
-#' `r lifecycle::badge("superseded")`
+#' @examples
 #'
-#' `list_resources()` has been superseded by `list_all_resources()`,
-#' which provides a more complete and consistent interface for
-#' exploring datasets and their resources.
-
-#' @inheritParams get_dataset
+#' list_resources()
+#' list_resources(dataset_contains = "standard-populations")
+#' list_resources(
+#'   dataset_contains = "standard-populations", resource_contains = "European"
+#' )
 #'
-#' @return a [tibble][tibble::tibble-package] with the data
 #' @export
-#'
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
-#' list_resources("weekly-accident-and-emergency-activity-and-waiting-times")
-#' @seealso [list_all_resources()]
-list_resources <- function(dataset_name) {
-  lifecycle::deprecate_warn(
-    when = "1.0.3",
-    what = "list_resources()",
-    with = "list_all_resources()"
-  )
-  # throw error if name type/format is invalid
-  check_dataset_name(dataset_name)
-
-  # define query and try API call
-  query <- list(id = dataset_name)
-  content <- try(
-    phs_GET("package_show", query),
-    silent = TRUE
-  )
-
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
+list_resources <- function(
+  dataset_contains = NULL,
+  resource_contains = NULL,
+  dataset_name = deprecated()
+) {
+  # Handling any use of "list_resources(dataset_name)"
+  if (lifecycle::is_present(dataset_name)) {
+    lifecycle::deprecate_warn(
+      when = "1.0.3",
+      what = "list_resources(dataset_name)",
+      with = "list_resources(dataset_contains)"
+    )
+    dataset_contains <- dataset_name
   }
 
-  # define list of resource IDs names date created and date modified within dataset
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
-  all_names <- purrr::map_chr(content$result$resources, ~ .x$name)
-  all_date_created <- purrr::map_chr(content$result$resources, ~ .x$created) %>%
-    as.POSIXct(format = "%FT%X", tz = "UTC")
-  all_date_modified <- purrr::map_chr(
-    content$result$resources,
-    ~ .x$last_modified
-  ) %>%
-    as.POSIXct(format = "%FT%X", tz = "UTC")
-  return_value <- tibble::tibble(
-    res_id = all_ids,
-    name = all_names,
-    created = all_date_created,
-    last_modified = all_date_modified
-  )
+  # Normalise empty/whitespace strings to NULL
+  normalise <- function(string) {
+    if (is.null(string)) {
+      return(NULL)
+    }
+    if (!is.character(string)) {
+      return(string)
+    }
+    if (length(string) != 1L) {
+      return(string)
+    }
+    if (is.na(string)) {
+      return(NULL)
+    }
+    string_trimmed <- trimws(string)
+    if (identical(string_trimmed, "")) {
+      return(NULL)
+    }
+    return(string_trimmed)
+  }
+  dataset_contains <- normalise(dataset_contains)
+  resource_contains <- normalise(resource_contains)
 
-  return(return_value)
+  # Validate that `dataset_contains` is NULL or a length-1 value
+  if (!is.null(dataset_contains)) {
+    if (!inherits(dataset_contains, "character")) {
+      cli::cli_abort(c(
+        "i" = "{.arg dataset_contains} must be {.class character} not a {.class {class(dataset_contains)}}."
+      ))
+    } else if (length(dataset_contains) != 1) {
+      cli::cli_abort(c(
+        "x" = "{.arg dataset_contains} must be {.val NULL} or length 1 not length {length(dataset_contains)}.",
+        "i" = "Provide a single string (or leave it NULL) for this filter."
+      ))
+    }
+  }
+
+  # Validate that `resource_contains` is NULL or a length-1 value
+  if (!is.null(resource_contains)) {
+    if (!inherits(resource_contains, "character")) {
+      cli::cli_abort(c(
+        "i" = "{.arg resource_contains} must be {.class character} not a {.class {class(resource_contains)}}."
+      ))
+    } else if (length(resource_contains) != 1) {
+      cli::cli_abort(c(
+        "!" = "{.arg resource_contains} must be {.val NULL} or length 1 not length {length(resource_contains)}.",
+        "i" = "Provide a single string (or leave it NULL) for this filter."
+      ))
+    }
+  }
+
+  validate_regex <- function(pattern, arg_name, call = rlang::caller_env()) {
+    if (is.null(pattern)) {
+      return(invisible(TRUE))
+    }
+    tryCatch(
+      {
+        suppressWarnings(grepl(pattern, ""))
+        TRUE
+      },
+      error = function(e) {
+        cli::cli_abort(
+          c(
+            "i" = "{.arg {arg_name}} must be a valid regular expression.",
+            "x" = e$message
+          ),
+          call = call
+        )
+      }
+    )
+  }
+
+  validate_regex(resource_contains, "resource_contains")
+  validate_regex(dataset_contains, "dataset_contains")
+
+  data_tibble <- list_all_resources_query()
+
+  if (!is.null(resource_contains)) {
+    data_tibble <- data_tibble[
+      grepl(resource_contains, data_tibble$resource_name, ignore.case = TRUE),
+    ]
+    if (nrow(data_tibble) == 0) {
+      cli::cli_warn(
+        "No resources found for {.arg resource_contains} = {.val {resource_contains}}. Returning an empty tibble."
+      )
+    }
+  }
+
+  if (!is.null(dataset_contains)) {
+    data_tibble <- data_tibble[
+      grepl(dataset_contains, data_tibble$dataset_name, ignore.case = TRUE),
+    ]
+    if (nrow(data_tibble) == 0) {
+      cli::cli_warn(
+        "No resources found for the provided arguments. Returning an empty tibble."
+      )
+    }
+  }
+
+  return(data_tibble)
 }
