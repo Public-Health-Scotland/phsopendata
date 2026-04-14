@@ -7,7 +7,7 @@
 list_resources(
   dataset_contains = NULL,
   resource_contains = NULL,
-  dataset_name = deprecated()
+  dataset_name = lifecycle::deprecated()
 )
 }
 \arguments{
