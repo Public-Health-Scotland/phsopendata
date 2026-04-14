@@ -20,13 +20,13 @@ Imports:
     cli (>= 3.2.0),
     dplyr (>= 1.0.0),
     httr (>= 1.0.0),
+    lifecycle,
     magrittr (>= 1.0.0),
     purrr (>= 1.0.0),
     readr (>= 1.0.0),
     rlang (>= 1.0.0),
     stringdist,
-    tibble (>= 3.0.0),
-    lifecycle
+    tibble (>= 3.0.0)
 Suggests:
     covr,
     curl,
