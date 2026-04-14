@@ -3,7 +3,7 @@
 #' @description Provides an overview of all resources available from
 #'  [opendata.nhs.scot](https://www.opendata.nhs.scot/), with the option to limit results based on both package
 #'  and resource names. The returned tibble can be used to look-up dataset
-#'  and resource ids and is useful for exploring the available data sets.
+#'  and resource ids, and is useful for exploring the available data sets.
 #'
 #' @param dataset_contains A character string containing an expression to be
 #'  used as search criteria against the dataset 'title' field.
@@ -24,7 +24,6 @@
 #' )
 #'
 #' @export
-#' @importFrom lifecycle deprecated
 list_resources <- function(
   dataset_contains = NULL,
   resource_contains = NULL,
