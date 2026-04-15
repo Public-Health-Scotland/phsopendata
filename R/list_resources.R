@@ -167,6 +167,7 @@ list_resources_query <- function() {
           ~ purrr::pluck(.x, "id", .default = NA_character_)
         ),
         dataset_name = purrr::chuck(dataset, "name"),
+        dataset_title = purrr::chuck(dataset, "title"),
         dataset_id = purrr::chuck(dataset, "id"),
         url = purrr::map_chr(
           resources,
