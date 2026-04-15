@@ -1,4 +1,4 @@
-# phsopendata (development version)
+# phsopendata 1.1.0
 
 - [`list_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_resources.html) has been upgraded. Instead of just returning all resources from a dataset (given the exact title), it can now search both resources and dataset titles and will list all resources that match the search!
 
