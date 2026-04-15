@@ -13,8 +13,24 @@ A tibble.
 \code{list_datasets()} shows all of the datasets hosted on the PHS Open Data
 Platform.
 }
+\section{Lifecycle}{
+
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
+\code{list_datasets()} has been superseded by \code{list_resources()}.
+While \code{list_datasets()} only returns a list of dataset packages,
+\code{list_resources()} provides a more comprehensive and flexible
+interface for exploring the PHS Open Data platform. It returns both
+datasets and their associated resources in a single tibble, and
+supports filtering by dataset titles or resource names.
+}
+
 \examples{
 \dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 head(list_datasets())
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=list_resources]{list_resources()}}
 }
