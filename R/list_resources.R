@@ -96,7 +96,7 @@ list_resources <- function(
     }
     tryCatch(
       {
-        suppressWarnings(grepl(pattern, ""))
+        suppressWarnings(grepl(pattern, "", perl = TRUE))
         TRUE
       },
       error = function(e) {
@@ -116,9 +116,25 @@ list_resources <- function(
 
   data_tibble <- list_resources_query()
 
+  build_and_anywhere_regex <- function(query) {
+    # Split on one-or-more whitespace
+    tokens <- strsplit(query, "\\s+")[[1]]
+    tokens <- tokens[nzchar(tokens)]
+
+    # Ensures all elements in 'tokens' appear somewhere in the string
+    paste0("(?=.*", tokens, ")", collapse = "")
+  }
+
   if (!is.null(resource_contains)) {
+    resource_contains_regex <- build_and_anywhere_regex(resource_contains)
+
     data_tibble <- data_tibble[
-      grepl(resource_contains, data_tibble$resource_name, ignore.case = TRUE),
+      grepl(
+        resource_contains_regex,
+        data_tibble$resource_name,
+        ignore.case = TRUE,
+        perl = TRUE
+      ),
     ]
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
@@ -128,9 +144,24 @@ list_resources <- function(
   }
 
   if (!is.null(dataset_contains)) {
-    data_tibble <- data_tibble[
-      grepl(dataset_contains, data_tibble$dataset_name, ignore.case = TRUE),
-    ]
+    dataset_contains_regex <- build_and_anywhere_regex(dataset_contains)
+
+    name_match <- grepl(
+      dataset_contains_regex,
+      data_tibble$dataset_name,
+      ignore.case = TRUE,
+      perl = TRUE
+    )
+
+    title_match <- grepl(
+      dataset_contains_regex,
+      data_tibble$dataset_title,
+      ignore.case = TRUE,
+      perl = TRUE
+    )
+
+    data_tibble <- data_tibble[name_match | title_match, ]
+
     if (nrow(data_tibble) == 0) {
       cli::cli_warn(
         "No resources found for the provided arguments. Returning an empty tibble."
