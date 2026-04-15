@@ -1,5 +1,7 @@
 # phsopendata (development version)
 
+- [`list_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_resources.html) has been upgraded. Instead of just returning all resources from a dataset (given the exact title), it can now search both resources and dataset titles and will list all resources that match the search!
+
 # phsopendata 1.0.3
 
 - No user-facing changes. Strengthened examples and tests, particularly when ran on CRAN.
@@ -7,8 +9,6 @@
 # phsopendata 1.0.2
 
 - No user-facing changes. Update the maintainer (temporarily) to James Hayes (james.hayes2@phs.scot) while Csilla is on a career break!
-
-- Add [`list_all_resources()`](https://public-health-scotland.github.io/phsopendata/reference/list_all_resources.html) which can be used to list and search for resources or datasets.
 
 # phsopendata 1.0.1 (2025-11-10)
 
