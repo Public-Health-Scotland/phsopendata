@@ -10,6 +10,7 @@ test_that("returns data in the expected format", {
       "resource_name",
       "resource_id",
       "dataset_name",
+      "dataset_title",
       "dataset_id",
       "url",
       "last_modified"
@@ -53,19 +54,17 @@ test_that("filters by dataset_contains (case-insensitive) and warns when empty",
   data_pkg <- list_resources(dataset_contains = "hospital")
   expect_s3_class(data_pkg, "tbl_df")
   expect_gte(nrow(data_pkg), 0)
-  expect_match(
-    object = data_pkg$dataset_name,
-    regexp = "hospital",
-    ignore.case = TRUE,
-    all = TRUE
-  )
 
-  # Explicit empty case to assert warning + empty tibble
+  name_ok <- grepl("hospital", data_pkg$dataset_name, ignore.case = TRUE)
+  title_ok <- grepl("hospital", data_pkg$dataset_title, ignore.case = TRUE)
+
+  expect_all_true(name_ok | title_ok)
+
   expect_warning(
     data_none <- list_resources(dataset_contains = "___no_such_package___"),
     regexp = "No resources found"
   )
-  expect_equal(nrow(data_none), 0)
+  expect_identical(nrow(data_none), 0L)
 })
 
 test_that("combined filtering works", {
@@ -83,18 +82,18 @@ test_that("combined filtering works", {
       "resource_name",
       "resource_id",
       "dataset_name",
+      "dataset_title",
       "dataset_id",
       "url",
       "last_modified"
     )
   )
 
-  expect_match(
-    object = data_combo$dataset_name,
-    regexp = "hospital",
-    ignore.case = TRUE,
-    all = TRUE
-  )
+  name_ok <- grepl("hospital", data_combo$dataset_name, ignore.case = TRUE)
+  title_ok <- grepl("hospital", data_combo$dataset_title, ignore.case = TRUE)
+
+  expect_all_true(name_ok | title_ok)
+
   expect_match(
     object = data_combo$resource_name,
     regexp = "admissions",
@@ -134,11 +133,11 @@ test_that("empty/whitespace/NA filters are treated as NULL", {
 test_that("invalid regex patterns error clearly", {
   expect_error(
     list_resources(resource_contains = "("),
-    "invalid regular expression"
+    "must be a valid regular expression"
   )
   expect_error(
     list_resources(dataset_contains = "("),
-    "invalid regular expression"
+    "must be a valid regular expression"
   )
 })
 
@@ -166,4 +165,72 @@ test_that("dataset_name argument is deprecated", {
     list_resources(dataset_name = "hospital"),
     class = "lifecycle_warning_deprecated"
   )
+})
+
+test_that("dataset_contains is AND-anywhere (any order): 'Flu covid' == 'covid flu'", {
+  res1 <- list_resources(dataset_contains = "Flu covid")
+  res2 <- list_resources(dataset_contains = "covid flu")
+
+  titles1 <- sort(unique(res1$dataset_title))
+  titles2 <- sort(unique(res2$dataset_title))
+
+  expect_gt(length(titles1), 0L)
+  expect_identical(titles1, titles2)
+
+  combined <- paste(res1$dataset_name, res1$dataset_title)
+  expect_all_true(grepl("flu", combined, ignore.case = TRUE))
+  expect_all_true(grepl("covid", combined, ignore.case = TRUE))
+})
+
+test_that("dataset_contains supports multi-term queries like 'GP list'", {
+  res <- list_resources(dataset_contains = "GP list")
+  titles <- unique(res$dataset_title)
+
+  expect_gt(length(titles), 0L)
+  expect_true(any(grepl(
+    "GP Practice Contact Details and List Sizes",
+    titles,
+    fixed = TRUE
+  )))
+
+  combined <- paste(res$dataset_name, res$dataset_title)
+  expect_all_true(grepl("gp", combined, ignore.case = TRUE))
+  expect_all_true(grepl("list", combined, ignore.case = TRUE))
+})
+
+test_that("single-term dataset_contains behaves like a normal search", {
+  res <- list_resources(dataset_contains = "GP")
+  titles <- sort(unique(res$dataset_title))
+
+  expect_true(any(grepl(
+    "GP Practice Population Demographics",
+    titles,
+    fixed = TRUE
+  )))
+  expect_true(any(grepl(
+    "GP Practice Contact Details and List Sizes",
+    titles,
+    fixed = TRUE
+  )))
+
+  combined <- paste(res$dataset_name, res$dataset_title)
+  expect_all_true(grepl("gp", combined, ignore.case = TRUE))
+})
+
+test_that("dataset_contains allows regex (alternation) inside tokens", {
+  # Should behave like 'Flu covid' because covid|covid is trivial,
+  # but demonstrates regex parsing works.
+  res <- list_resources(dataset_contains = "Flu (covid|covid)")
+
+  combined <- paste(res$dataset_name, res$dataset_title)
+  expect_all_true(grepl("flu", combined, ignore.case = TRUE))
+  expect_all_true(grepl("covid", combined, ignore.case = TRUE))
+})
+
+test_that("resource_contains supports multi-term AND-anywhere semantics", {
+  res <- list_resources(resource_contains = "GP sizes")
+  skip_if(nrow(res) == 0)
+
+  expect_all_true(grepl("gp", res$resource_name, ignore.case = TRUE))
+  expect_all_true(grepl("sizes", res$resource_name, ignore.case = TRUE))
 })
