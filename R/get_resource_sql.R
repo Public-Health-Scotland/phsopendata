@@ -2,7 +2,10 @@
 #'
 #' @description Downloads data from the NHS Open Data platform using a SQL query. Similar to [get_resource()], but allows more flexible server-side querying. This function has a lower maximum row number (32,000 vs 99,999) for returned results.
 #'
-#' @param sql A single PostgreSQL SELECT query (character). Must include a resource ID, which must be double-quoted (e.g., `SELECT * from "58527343-a930-4058-bf9e-3c6e5cb04010"`).
+#' @param sql A single `SELECT` query (character). The resource ID must be double-quoted (e.g., `SELECT * FROM "58527343-a930-4058-bf9e-3c6e5cb04010"`), as must column names (e.g., `"Year"`). Strings require single quotes (e.g., `'value'`). This syntax is needed because the CKAN DataStore uses PostgreSQL.
+#'
+#' Enclosing the query in an R raw string avoids the need to escape embedded quotes (e.g. `\"TotalCancelled\"`). Square brackets are the recommended delimiter (i.e. `r"[...]"`), because `)"` within a query (e.g. `SUM("TotalCancelled")`) would prematurely close the string. Another option is `r"{...}"`, in the rare case that the query contains `]"`.
+#'
 #'
 #' @seealso [get_resource()] for downloading a resource without using a
 #' SQL query.
@@ -11,25 +14,34 @@
 #' @export
 #'
 #' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
-#' sql <- "
-#'    SELECT
-#'      \"TotalCancelled\",\"TotalOperations\",\"Hospital\",\"Month\"
-#'    FROM
-#'      \"bcc860a4-49f4-4232-a76b-f559cf6eb885\"
-#'    WHERE
-#'      \"Hospital\" = 'D102H'
-#' "
-#' df <- get_resource_sql(sql)
+#' # Basic query
+#' cancelled_ops <- get_resource_sql(r"[
+#' SELECT
+#'     "TotalCancelled",
+#'     "TotalOperations",
+#'     "Hospital",
+#'     "Month"
+#' FROM
+#'     "bcc860a4-49f4-4232-a76b-f559cf6eb885"
+#' WHERE
+#'     "Hospital" = 'D102H'
+#' ]")
 #'
-#' # This is equivalent to:
-#' cols <- c("TotalCancelled", "TotalOperations", "Hospital", "Month")
-#' row_filter <- c(Hospital = "D102H")
+#' # Joining two resources
+#' hb_pop <- get_resource_sql(r"[
+#' SELECT
+#'     pops."Year",
+#'     pops."HB",
+#'     lookup."HBName",
+#'     pops."AllAges"
+#' FROM
+#'     "27a72cc8-d6d8-430c-8b4f-3109a9ceadb1" AS pops
+#'     JOIN "652ff726-e676-4a20-abda-435b98dd7bdc" AS lookup ON pops."HB" = lookup."HB"
+#' WHERE
+#'     pops."Sex" = 'All'
+#'     AND pops."Year" > 2006
+#' ]")
 #'
-#' df2 <- get_resource(
-#'   "bcc860a4-49f4-4232-a76b-f559cf6eb885",
-#'   col_select = cols,
-#'   row_filters = row_filter
-#' )
 get_resource_sql <- function(sql) {
   if (length(sql) != 1L) {
     cli::cli_abort(c(
