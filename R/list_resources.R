@@ -1,7 +1,7 @@
 #' Provides an overview of all resources available on the Open Data platform.
 #'
 #' @description Provides an overview of all resources available from
-#'  [opendata.nhs.scot](https://www.opendata.nhs.scot/), with the option to limit results based on both package
+#'  [opendata.nhs.scot](https://www.opendata.nhs.scot/), with the option to limit results based on both dataset
 #'  and resource names. The returned tibble can be used to look-up dataset
 #'  and resource ids, and is useful for exploring the available data sets.
 #'
