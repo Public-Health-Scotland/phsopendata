@@ -6,7 +6,8 @@
 #'  and resource ids, and is useful for exploring the available data sets.
 #'
 #' @param dataset_contains A character string containing an expression to be
-#'  used as search criteria against the dataset 'title' field.
+#' @param dataset_contains A character string containing an expression to be
+#'  used as search criteria against the dataset name.
 #' @param resource_contains A character string containing a [regular expression](https://www.geeksforgeeks.org/dsa/write-regular-expressions/)
 #'  to be matched against available resource names.
 #' @param dataset_name Deprecated. Use dataset_contains instead.
