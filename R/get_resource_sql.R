@@ -1,16 +1,37 @@
 #' Get PHS Open Data using SQL
 #'
-#' @description Downloads data from the NHS Open Data platform using a SQL query. Similar to [get_resource()], but allows more flexible server-side querying. This function has a lower maximum row number (32,000 vs 99,999) for returned results.
+#' @description
+#' Downloads data from the NHS Open Data platform using a SQL query. Similar to
+#' [get_resource()], but allows more flexible server-side querying. This
+#' function has a lower maximum row number (32,000 vs 99,999) for returned
+#' results.
 #'
-#' @param sql A single `SELECT` query (character). The resource ID must be double-quoted (e.g., `SELECT * FROM "58527343-a930-4058-bf9e-3c6e5cb04010"`), as must column names (e.g., `"Year"`). Strings require single quotes (e.g., `'value'`). This syntax is needed because the CKAN DataStore uses [PostgreSQL](https://www.postgresql.org/docs/9.2/index.html).
+#' @param sql A single `SELECT` query (character).
 #'
-#' Enclosing the query in an R raw string avoids the need to escape embedded quotes (e.g. `\"TotalCancelled\"`). Square brackets are the recommended delimiter (i.e. `r"[...]"`), because `)"` within a query (e.g. `SUM("TotalCancelled")`) would prematurely close the string. Another option is `r"{...}"`, in the rare case that the query contains `]"`.
+#' @details
+#' Only 32,000 rows can be returned from a single SQL query.
 #'
+#' @section SQL syntax:
+#' The resource ID must be double-quoted, e.g.
+#' `SELECT * FROM "58527343-a930-4058-bf9e-3c6e5cb04010"`, as must column names,
+#' e.g. `"Year"`. Strings require single quotes, e.g. `'value'`. This syntax is
+#' needed because the CKAN DataStore uses
+#' [PostgreSQL](https://www.postgresql.org/docs/9.2/index.html).
 #'
-#' @seealso [get_resource()] for downloading a resource without using a
-#' SQL query.
+#' @section R raw strings:
+#' Enclosing the query in an R raw string avoids the need to escape embedded
+#' quotes, e.g. `\"TotalCancelled\"`. Square brackets are the recommended
+#' delimiter, i.e. `r"[...]"`, because `)"` within a query, e.g.
+#' `SUM("TotalCancelled")`, would prematurely close the string. Another option
+#' is `r"{...}"`, in the rare case that the query contains `]"`.
 #'
-#' @return A [tibble][tibble::tibble-package] with the query results. Only 32,000 rows can be returned from a single SQL query.
+#' @return
+#' A [tibble][tibble::tibble-package] with the query results. Only 32,000 rows
+#' can be returned from a single SQL query.
+#'
+#' @seealso
+#' [get_resource()] for downloading a resource without using a SQL query.
+#'
 #' @export
 #'
 #' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
@@ -41,7 +62,6 @@
 #'     pops."Sex" = 'All'
 #'     AND pops."Year" > 2006
 #' ]")
-#'
 get_resource_sql <- function(sql) {
   if (length(sql) != 1L) {
     cli::cli_abort(c(

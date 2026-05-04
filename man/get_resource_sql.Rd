@@ -7,16 +7,39 @@
 get_resource_sql(sql)
 }
 \arguments{
-\item{sql}{A single \code{SELECT} query (character). The resource ID must be double-quoted (e.g., \verb{SELECT * FROM "58527343-a930-4058-bf9e-3c6e5cb04010"}), as must column names (e.g., \code{"Year"}). Strings require single quotes (e.g., \code{'value'}). This syntax is needed because the CKAN DataStore uses \href{https://www.postgresql.org/docs/9.2/index.html}{PostgreSQL}.
-
-Enclosing the query in an R raw string avoids the need to escape embedded quotes (e.g. \verb{\\"TotalCancelled\\"}). Square brackets are the recommended delimiter (i.e. \code{r"[...]"}), because \verb{)"} within a query (e.g. \code{SUM("TotalCancelled")}) would prematurely close the string. Another option is \code{r"{...}"}, in the rare case that the query contains \verb{]"}.}
+\item{sql}{A single \code{SELECT} query (character).}
 }
 \value{
-A \link[tibble:tibble-package]{tibble} with the query results. Only 32,000 rows can be returned from a single SQL query.
+A \link[tibble:tibble-package]{tibble} with the query results. Only 32,000 rows
+can be returned from a single SQL query.
 }
 \description{
-Downloads data from the NHS Open Data platform using a SQL query. Similar to \code{\link[=get_resource]{get_resource()}}, but allows more flexible server-side querying. This function has a lower maximum row number (32,000 vs 99,999) for returned results.
+Downloads data from the NHS Open Data platform using a SQL query. Similar to
+\code{\link[=get_resource]{get_resource()}}, but allows more flexible server-side querying. This
+function has a lower maximum row number (32,000 vs 99,999) for returned
+results.
 }
+\details{
+Only 32,000 rows can be returned from a single SQL query.
+}
+\section{SQL syntax}{
+
+The resource ID must be double-quoted, e.g.
+\verb{SELECT * FROM "58527343-a930-4058-bf9e-3c6e5cb04010"}, as must column names,
+e.g. \code{"Year"}. Strings require single quotes, e.g. \code{'value'}. This syntax is
+needed because the CKAN DataStore uses
+\href{https://www.postgresql.org/docs/9.2/index.html}{PostgreSQL}.
+}
+
+\section{R raw strings}{
+
+Enclosing the query in an R raw string avoids the need to escape embedded
+quotes, e.g. \verb{\\"TotalCancelled\\"}. Square brackets are the recommended
+delimiter, i.e. \code{r"[...]"}, because \verb{)"} within a query, e.g.
+\code{SUM("TotalCancelled")}, would prematurely close the string. Another option
+is \code{r"{...}"}, in the rare case that the query contains \verb{]"}.
+}
+
 \examples{
 \dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 # Basic query
@@ -49,6 +72,5 @@ WHERE
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=get_resource]{get_resource()}} for downloading a resource without using a
-SQL query.
+\code{\link[=get_resource]{get_resource()}} for downloading a resource without using a SQL query.
 }
