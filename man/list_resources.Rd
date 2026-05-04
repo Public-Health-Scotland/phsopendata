@@ -12,7 +12,7 @@ list_resources(
 }
 \arguments{
 \item{dataset_contains}{A character string containing an expression to be
-used as search criteria against the dataset 'title' field.}
+used as search criteria against the dataset name.}
 
 \item{resource_contains}{A character string containing a \href{https://www.geeksforgeeks.org/dsa/write-regular-expressions/}{regular expression}
 to be matched against available resource names.}
