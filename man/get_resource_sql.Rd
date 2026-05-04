@@ -7,7 +7,7 @@
 get_resource_sql(sql)
 }
 \arguments{
-\item{sql}{A single \code{SELECT} query (character). The resource ID must be double-quoted (e.g., \verb{SELECT * FROM "58527343-a930-4058-bf9e-3c6e5cb04010"}), as must column names (e.g., \code{"Year"}). Strings require single quotes (e.g., \code{'value'}). This syntax is needed because the CKAN DataStore uses PostgreSQL.
+\item{sql}{A single \code{SELECT} query (character). The resource ID must be double-quoted (e.g., \verb{SELECT * FROM "58527343-a930-4058-bf9e-3c6e5cb04010"}), as must column names (e.g., \code{"Year"}). Strings require single quotes (e.g., \code{'value'}). This syntax is needed because the CKAN DataStore uses \href{https://www.postgresql.org/docs/9.2/index.html}{PostgreSQL}.
 
 Enclosing the query in an R raw string avoids the need to escape embedded quotes (e.g. \verb{\\"TotalCancelled\\"}). Square brackets are the recommended delimiter (i.e. \code{r"[...]"}), because \verb{)"} within a query (e.g. \code{SUM("TotalCancelled")}) would prematurely close the string. Another option is \code{r"{...}"}, in the rare case that the query contains \verb{]"}.}
 }
