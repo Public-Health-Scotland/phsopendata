@@ -13,7 +13,8 @@ request_url <- function(action, query, call = rlang::caller_env()) {
     "dump",
     "package_show",
     "package_list",
-    "resource_show"
+    "resource_show",
+    "package_search"
   )
   if (!(action %in% valid_actions)) {
     cli::cli_abort(
