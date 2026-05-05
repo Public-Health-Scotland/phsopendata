@@ -18,7 +18,7 @@ Platform."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">phsopendata</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3.9000</span>
       </span>
     </div>
 
@@ -45,7 +45,7 @@ Platform."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Lists all available datasets</h1>
-    <small class="dont-index">Source: <a href="https://github.com/Public-Health-Scotland/phsopendata/blob/main/R/list_datasets.R" class="external-link"><code>R/list_datasets.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/Public-Health-Scotland/phsopendata/blob/gh-readonly-queue/main/pr-93-95d397bfde9793aa0dcc00776a2c88ee75c44c73/R/list_datasets.R" class="external-link"><code>R/list_datasets.R</code></a></small>
     <div class="hidden name"><code>list_datasets.Rd</code></div>
     </div>
 
@@ -61,6 +61,23 @@ Platform.</p>
     <div id="value">
     <h2>Value</h2>
     <p>A tibble.</p>
+    </div>
+    <div id="lifecycle">
+    <h2>Lifecycle</h2>
+
+
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#superseded" class="external-link"><img src="figures/lifecycle-superseded.svg" alt="[Superseded]"></a></p>
+<p><code>list_datasets()</code> has been superseded by <code><a href="list_resources.html">list_resources()</a></code>.
+While <code>list_datasets()</code> only returns a list of dataset packages,
+<code><a href="list_resources.html">list_resources()</a></code> provides a more comprehensive and flexible
+interface for exploring the PHS Open Data platform. It returns both
+datasets and their associated resources in a single tibble, and
+supports filtering by dataset titles or resource names.</p>
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p><code><a href="list_resources.html">list_resources()</a></code></p></div>
     </div>
 
     <div id="ref-examples">
@@ -85,7 +102,7 @@ Platform.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Csilla Scharle, James Hayes, David Aikman, Ross Hull.</p>
+  <p></p><p>Developed by Csilla Scharle, James Hayes, David Aikman, Ross Hull, Haritha Jagadeesh.</p>
 </div>
 
 <div class="pkgdown">
