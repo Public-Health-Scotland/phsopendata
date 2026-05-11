@@ -71,20 +71,17 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p><code>phsopendata</code> contains functions to interact with open data from the <a href="https://www.opendata.nhs.scot/" class="external-link">Scottish Health and Social Care Open Data platform</a> via the CKAN API.</p>
+<p><code>phsopendata</code> provides helper functions for discovering and downloading data from the <a href="https://www.opendata.nhs.scot/" class="external-link">Scottish Health and Social Care Open Data platform</a> using the CKAN API.</p>
+<p>It can be used to:</p>
 <ul>
-<li>
-<code><a href="reference/get_resource.html">get_resource()</a></code> extracts a single resource from an open dataset by resource id</li>
-<li>
-<code><a href="reference/get_latest_resource.html">get_latest_resource()</a></code> extracts the most recent resource from applicable datasets, by dataset name</li>
-<li>
-<code><a href="reference/get_dataset.html">get_dataset()</a></code> extracts multiple resources from an open dataset by dataset name</li>
-<li>
-<code><a href="reference/list_datasets.html">list_datasets()</a></code> returns the names of all available datasets</li>
-<li>
-<code><a href="reference/list_resources.html">list_resources()</a></code> returns information on all resources within an open dataset by dataset name</li>
+<li>search for datasets and resources;</li>
+<li>download a single resource by resource ID;</li>
+<li>download multiple resources from a dataset;</li>
+<li>filter rows and select columns before downloading data;</li>
+<li>retrieve the latest resource from datasets that publish new resources over time;</li>
+<li>run SQL queries against Open Data resources.</li>
 </ul>
-<p><code>phsopendata</code> can be used on both Posit Workbench and desktop versions of RStudio.</p>
+<p>See the <a href="https://public-health-scotland.github.io/phsopendata/" class="external-link">package website</a> for full documentation.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -101,38 +98,48 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <div class="section level3">
-<h3 id="downloading-a-data-table-with-get_resource">Downloading a data table with <code>get_resource()</code>
-<a class="anchor" aria-label="anchor" href="#downloading-a-data-table-with-get_resource"></a>
+<h3 id="find-resources">Find resources<a class="anchor" aria-label="anchor" href="#find-resources"></a>
 </h3>
-<p>To extract a specific resource, you will need its unique identifier - resource id. This can be found in the dataset metadata, the URL of a resource’s page on <a href="https://www.opendata.nhs.scot/" class="external-link uri">https://www.opendata.nhs.scot/</a>, or extracted using <code><a href="reference/list_resources.html">list_resources()</a></code>.</p>
+<p>To download data, you will usually need either a <code>dataset_name</code> or a <code>resource_id</code>.</p>
+<p>These can be found in the dataset metadata, in the URL of a dataset or resource page on <a href="https://www.opendata.nhs.scot/" class="external-link uri">https://www.opendata.nhs.scot/</a>, or by searching with <code><a href="reference/list_resources.html">list_resources()</a></code>. <code><a href="reference/list_datasets.html">list_datasets()</a></code> is still available for compatibility, but <code><a href="reference/list_resources.html">list_resources()</a></code> is recommended for new code.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Public-Health-Scotland/phsopendata" class="external-link">phsopendata</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># define a resource ID</span></span>
-<span><span class="va">res_id</span> <span class="op">&lt;-</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span></span>
+<span><span class="va">resources</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/list_resources.html">list_resources</a></span><span class="op">(</span></span>
+<span>  dataset_contains <span class="op">=</span> <span class="st">"gp practice"</span>,</span>
+<span>  resource_contains <span class="op">=</span> <span class="st">"list sizes"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># download the data from the CKAN database</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span>res_id <span class="op">=</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">all_datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/list_datasets.html">list_datasets</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="queryingfiltering-data-with-get_resource">Querying/filtering data with <code>get_resource()</code>
-<a class="anchor" aria-label="anchor" href="#queryingfiltering-data-with-get_resource"></a>
+<h3 id="download-a-resource">Download a resource<a class="anchor" aria-label="anchor" href="#download-a-resource"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># define a resource ID</span></span>
+<span><span class="va">res_id</span> <span class="op">&lt;-</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span></span>
+<span></span>
+<span><span class="co"># download the data</span></span>
+<span><span class="va">open_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span><span class="va">res_id</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="filter-rows-and-select-columns">Filter rows and select columns<a class="anchor" aria-label="anchor" href="#filter-rows-and-select-columns"></a>
 </h3>
 <p>You can define a row limit with the <code>rows</code> argument to get the first <em>N</em> rows of a table.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># get first 100 rows</span></span>
-<span><span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span></span>
-<span>  res_id <span class="op">=</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span>,</span>
-<span>  rows <span class="op">=</span> <span class="fl">100</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>You can use <code>col_select</code> and <code>row_filters</code> to query the data server-side (i.e., the data is filtered before it is downloaded to your machine).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get first 100 rows</span></span>
-<span><span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span></span>
-<span>  res_id <span class="op">=</span> <span class="st">"a794d603-95ab-4309-8c92-b48970478c14"</span>,</span>
+<span><span class="va">open_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span></span>
+<span>  res_id <span class="op">=</span> <span class="va">res_id</span>,</span>
+<span>  rows <span class="op">=</span> <span class="fl">100</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>You can use <code>col_select</code> and <code>row_filters</code> to query the data server-side, i.e. the data is filtered before it is downloaded.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># select columns and filter rows before downloading</span></span>
+<span><span class="va">open_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_resource.html">get_resource</a></span><span class="op">(</span></span>
+<span>  res_id <span class="op">=</span> <span class="va">res_id</span>,</span>
 <span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GPPracticeName"</span>, <span class="st">"TelephoneNumber"</span><span class="op">)</span>,</span>
 <span>  row_filters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    HB <span class="op">=</span> <span class="st">"S08000017"</span>,</span>
@@ -141,22 +148,67 @@
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="downloading-multiple-tables-with-get_dataset">Downloading multiple tables with <code>get_dataset()</code>
-<a class="anchor" aria-label="anchor" href="#downloading-multiple-tables-with-get_dataset"></a>
+<h3 id="download-a-dataset">Download a dataset<a class="anchor" aria-label="anchor" href="#download-a-dataset"></a>
 </h3>
-<p>To extract all resources from a dataset, you will need to use the <em>dataset name</em>. Note that this will differ from the <em>dataset title</em> that displays on the website. This can be found using <code><a href="reference/list_datasets.html">list_datasets()</a></code>, or taken from the dataset URL.</p>
 <p>In this example, we are downloading GP Practice Population Demographics from: <a href="https://www.opendata.nhs.scot/dataset/gp-practice-populations" class="external-link">opendata.nhs.scot/dataset/<em>gp-practice-populations</em></a>, so the dataset name will be gp-practice-populations.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># if max_resources is not set, all resources will be returned by default.</span></span>
 <span><span class="co"># Here we pull 10 rows from the first 2 resources only</span></span>
-<span><span class="fu"><a href="reference/get_dataset.html">get_dataset</a></span><span class="op">(</span><span class="st">"gp-practice-populations"</span>, max_resources <span class="op">=</span> <span class="fl">2</span>, rows <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">practice_pops</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_dataset.html">get_dataset</a></span><span class="op">(</span><span class="st">"gp-practice-populations"</span>, max_resources <span class="op">=</span> <span class="fl">2</span>, rows <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="download-the-latest-resource-from-a-dataset">Download the latest resource from a dataset<a class="anchor" aria-label="anchor" href="#download-the-latest-resource-from-a-dataset"></a>
+</h3>
+<p>Some datasets publish new resources over time rather than replacing an existing resource. For these datasets, you can use <code><a href="reference/get_latest_resource.html">get_latest_resource()</a></code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">latest_contacts</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_latest_resource.html">get_latest_resource</a></span><span class="op">(</span></span>
+<span>  dataset_name <span class="op">=</span> <span class="st">"gp-practice-contact-details-and-list-sizes"</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PracticeCode"</span>, <span class="st">"PracticeName"</span>, <span class="st">"Postcode"</span>, <span class="st">"Dispensing"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="query-using-sql">Query using SQL<a class="anchor" aria-label="anchor" href="#query-using-sql"></a>
+</h3>
+<p>For more flexible server-side queries, use <code><a href="reference/get_resource_sql.html">get_resource_sql()</a></code>. SQL queries can return a maximum of 32,000 rows.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cancelled_ops</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_resource_sql.html">get_resource_sql</a></span><span class="op">(</span><span class="st">r"[</span></span>
+<span><span class="st">SELECT</span></span>
+<span><span class="st">    "Hospital",</span></span>
+<span><span class="st">    "Month",</span></span>
+<span><span class="st">    "TotalCancelled",</span></span>
+<span><span class="st">    "TotalOperations"</span></span>
+<span><span class="st">FROM</span></span>
+<span><span class="st">    "bcc860a4-49f4-4232-a76b-f559cf6eb885"</span></span>
+<span><span class="st">WHERE</span></span>
+<span><span class="st">    "Hospital" = 'D102H'</span></span>
+<span><span class="st">]"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="contributing-to-phsopendata">Contributing to phsopendata<a class="anchor" aria-label="anchor" href="#contributing-to-phsopendata"></a>
+<h2 id="function-overview">Function overview<a class="anchor" aria-label="anchor" href="#function-overview"></a>
 </h2>
-<p>At present, this package is maintained by <a href="https://github.com/Moohan" class="external-link">James Hayes</a>.</p>
-<p>If you have requests or suggestions for additional functionality, please contact the package maintainer and/or the <a href="mailto:phs.opendata@phs.scot">PHS Open Data team</a>.</p>
+<ul>
+<li>
+<code><a href="reference/list_resources.html">list_resources()</a></code> searches available datasets and resources on the Open Data platform.</li>
+<li>
+<code><a href="reference/get_resource.html">get_resource()</a></code> downloads a single resource by resource ID, with optional row filtering and column selection.</li>
+<li>
+<code><a href="reference/get_dataset.html">get_dataset()</a></code> downloads multiple resources from a dataset by dataset name.</li>
+<li>
+<code><a href="reference/get_latest_resource.html">get_latest_resource()</a></code> downloads the most recent resource from datasets that publish new resources over time.</li>
+<li>
+<code><a href="reference/get_resource_sql.html">get_resource_sql()</a></code> runs a SQL query against one or more Open Data resources.</li>
+<li>
+<code><a href="reference/get_dataset_additional_info.html">get_dataset_additional_info()</a></code> returns summary information about a dataset, including the number of resources and the latest update date.</li>
+<li>
+<code><a href="reference/list_datasets.html">list_datasets()</a></code> returns dataset names only. It is retained for compatibility but has been superseded by <code><a href="reference/list_resources.html">list_resources()</a></code>.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
+<p>This package is maintained by Public Health Scotland.</p>
+<p>For requests, bug reports or suggestions, please use the GitHub issues page or contact the <a href="mailto:phs.opendata@phs.scot">PHS Open Data team</a>.</p>
 <p>If you would like to share examples of how you work with open data, you can also do so in the <a href="https://github.com/Public-Health-Scotland/Open-Data" class="external-link">Open Data repository</a>, where example scripts and resources are collated.</p>
 </div>
 </div>
@@ -205,7 +257,7 @@
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=phsopendata" class="external-link"><img src="https://www.r-pkg.org/badges/version/phsopendata" alt="CRAN status"></a></li>
 <li><a href="https://github.com/Public-Health-Scotland/phsopendata/releases/latest" class="external-link"><img src="https://img.shields.io/github/v/release/Public-Health-Scotland/phsopendata" alt="GitHub release (latest by date)"></a></li>
-<li><a href="https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/phs_checks.yaml" class="external-link"><img src="https://github.com/Public-Health-Scotland/phsopendata/actions/workflows/phs_checks.yaml/badge.svg" alt="PHS package checks"></a></li>
 <li><a href="https://app.codecov.io/gh/Public-Health-Scotland/phsopendata?branch=master" class="external-link"><img src="https://codecov.io/gh/Public-Health-Scotland/phsopendata/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
