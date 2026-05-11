@@ -127,6 +127,7 @@ latest_contacts <- get_latest_resource(
   dataset_name = "gp-practice-contact-details-and-list-sizes",
   col_select = c("PracticeCode", "PracticeName", "Postcode", "Dispensing")
 )
+```
 
 ### Query using SQL
 
