@@ -66,7 +66,7 @@ library(phsopendata)
 
 resources <- list_resources(
   dataset_contains = "gp practice",
-  resource_contains = "contact"
+  resource_contains = "list"
 )
 
 all_datasets <- list_datasets()
