@@ -94,7 +94,7 @@ open_data <- get_resource(
 )
 ```
 
-You can use `col_select` and `row_filters` to query the data server-side (i.e., the data is filtered before it is downloaded to your machine).
+You can use `col_select` and `row_filters` to query the data server-side, i.e. the data is filtered before it is downloaded.
 
 ```{r example_query, eval = FALSE}
 # select columns and filter rows before downloading
