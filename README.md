@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # phsopendata
@@ -35,16 +36,20 @@ documentation.
 
 ## Installation
 
-    # The easiest way to get phsopendata is to install from CRAN:
-    install.packages("phsopendata")
+``` r
+# The easiest way to get phsopendata is to install from CRAN:
+install.packages("phsopendata")
+```
 
 ### Development version
 
 To get a bug fix or to use a feature from the development version, you
 can install the development version of phsopendata from GitHub.
 
-    # install.packages("remotes")
-    remotes::install_github("Public-Health-Scotland/phsopendata")
+``` r
+# install.packages("remotes")
+remotes::install_github("Public-Health-Scotland/phsopendata")
+```
 
 ## Quick start
 
@@ -58,46 +63,54 @@ resource page on <https://www.opendata.nhs.scot/>, or by searching with
 `list_resources()`. `list_datasets()` is still available for
 compatibility, but `list_resources()` is recommended for new code.
 
-    library(phsopendata)
+``` r
+library(phsopendata)
 
-    resources <- list_resources(
-      dataset_contains = "gp practice",
-      resource_contains = "contact"
-    )
+resources <- list_resources(
+  dataset_contains = "gp practice",
+  resource_contains = "contact"
+)
 
-    all_datasets <- list_datasets()
+all_datasets <- list_datasets()
+```
 
 ### Download a resource
 
-    # define a resource ID
-    res_id <- "a794d603-95ab-4309-8c92-b48970478c14"
+``` r
+# define a resource ID
+res_id <- "a794d603-95ab-4309-8c92-b48970478c14"
 
-    # download the data
-    open_data <- get_resource(res_id)
+# download the data
+open_data <- get_resource(res_id)
+```
 
 ### Filter rows and select columns
 
 You can define a row limit with the `rows` argument to get the first *N*
 rows of a table.
 
-    # get first 100 rows
-    open_data <- get_resource(
-      res_id = res_id,
-      rows = 100
-    )
+``` r
+# get first 100 rows
+open_data <- get_resource(
+  res_id = res_id,
+  rows = 100
+)
+```
 
 You can use `col_select` and `row_filters` to query the data
 server-side, i.e. the data is filtered before it is downloaded.
 
-    # select columns and filter rows before downloading
-    open_data <- get_resource(
-      res_id = res_id,
-      col_select = c("GPPracticeName", "TelephoneNumber"),
-      row_filters = list(
-        HB = "S08000017",
-        Dispensing = "Y"
-      )
-    )
+``` r
+# select columns and filter rows before downloading
+open_data <- get_resource(
+  res_id = res_id,
+  col_select = c("GPPracticeName", "TelephoneNumber"),
+  row_filters = list(
+    HB = "S08000017",
+    Dispensing = "Y"
+  )
+)
+```
 
 ### Download a dataset
 
@@ -106,9 +119,11 @@ from:
 [opendata.nhs.scot/dataset/*gp-practice-populations*](https://www.opendata.nhs.scot/dataset/gp-practice-populations),
 so the dataset name will be gp-practice-populations.
 
-    # if max_resources is not set, all resources will be returned by default.
-    # Here we pull 10 rows from the first 2 resources only
-    practice_pops <- get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+``` r
+# if max_resources is not set, all resources will be returned by default.
+# Here we pull 10 rows from the first 2 resources only
+practice_pops <- get_dataset("gp-practice-populations", max_resources = 2, rows = 10)
+```
 
 ### Download the latest resource from a dataset
 
@@ -116,26 +131,30 @@ Some datasets publish new resources over time rather than replacing an
 existing resource. For these datasets, you can use
 `get_latest_resource()`.
 
-    latest_contacts <- get_latest_resource(
-      dataset_name = "gp-practice-contact-details-and-list-sizes",
-      col_select = c("PracticeCode", "PracticeName", "Postcode", "Dispensing")
-    )
+``` r
+latest_contacts <- get_latest_resource(
+  dataset_name = "gp-practice-contact-details-and-list-sizes",
+  col_select = c("PracticeCode", "PracticeName", "Postcode", "Dispensing")
+)
 
-    ### Query using SQL
+### Query using SQL
 
-    For more flexible server-side queries, use `get_resource_sql()`. SQL queries can return a maximum of 32,000 rows.
+For more flexible server-side queries, use `get_resource_sql()`. SQL queries can return a maximum of 32,000 rows.
+```
 
-    cancelled_ops <- get_resource_sql(r"[
-    SELECT
-        "Hospital",
-        "Month",
-        "TotalCancelled",
-        "TotalOperations"
-    FROM
-        "bcc860a4-49f4-4232-a76b-f559cf6eb885"
-    WHERE
-        "Hospital" = 'D102H'
-    ]")
+``` r
+cancelled_ops <- get_resource_sql(r"[
+SELECT
+    "Hospital",
+    "Month",
+    "TotalCancelled",
+    "TotalOperations"
+FROM
+    "bcc860a4-49f4-4232-a76b-f559cf6eb885"
+WHERE
+    "Hospital" = 'D102H'
+]")
+```
 
 ## Function overview
 
