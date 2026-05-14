@@ -108,7 +108,7 @@ get_resource_sql <- function(sql) {
 
       tibble::as_tibble(.x)
     }
-  ) %>%
+  ) |>
     purrr::list_rbind()
 
   # If the query returned no rows, exit now.
