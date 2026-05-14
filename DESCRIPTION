@@ -17,12 +17,13 @@ License: MIT + file LICENSE
 URL: https://github.com/Public-Health-Scotland/phsopendata,
     https://public-health-scotland.github.io/phsopendata/
 BugReports: https://github.com/Public-Health-Scotland/phsopendata/issues
+Depends:
+    R (>= 4.1.0)
 Imports:
     cli (>= 3.2.0),
     dplyr (>= 1.0.0),
     httr (>= 1.0.0),
     lifecycle,
-    magrittr (>= 1.0.0),
     purrr (>= 1.0.0),
     readr (>= 1.0.0),
     rlang (>= 1.0.0),

@@ -35,7 +35,7 @@ test_that("returns data with row specifications", {
   expect_identical(
     nrow(get_resource(res_id = gp_list_apr_2021, rows = 999L)),
     926L
-  ) %>%
+  ) |>
     expect_warning()
 })
 
