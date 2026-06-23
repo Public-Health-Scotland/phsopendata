@@ -27,8 +27,8 @@
 resolve_dataset_name <- function(dataset_name) {
   # return malformed input unchanged for check_dataset_name()
   if (!inherits(dataset_name, "character") ||
-      length(dataset_name) != 1 ||
-      is.na(dataset_name)) {
+    length(dataset_name) != 1 ||
+    is.na(dataset_name)) {
     return(dataset_name)
   }
 
@@ -71,7 +71,7 @@ resolve_dataset_name <- function(dataset_name) {
 
   # use this vector to drop results where title is not paired with name
   all_titles <- all_titles[dataset_index]
-  all_names  <- all_names[dataset_index]
+  all_names <- all_names[dataset_index]
 
   # check input for an exact match with all_titles (case insensitive)
   exact_index <- tolower(all_titles) == tolower(dataset_name)

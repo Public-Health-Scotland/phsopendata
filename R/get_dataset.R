@@ -29,7 +29,6 @@ get_dataset <- function(
   col_select = NULL,
   include_context = FALSE
 ) {
-
   # resolve a title to the dataset name; submitted names pass through
   dataset_name <- resolve_dataset_name(dataset_name)
 

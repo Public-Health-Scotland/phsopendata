@@ -101,4 +101,3 @@ test_that("get_dataset resolves an exact dataset title and warns", {
   expect_s3_class(data, "tbl_df")
   expect_identical(nrow(data), 2L)
 })
-

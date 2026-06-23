@@ -21,9 +21,9 @@ test_that("resolve_dataset_name() passes malformed input through unchanged", {
     }
   )
   # tests for 3 kinds of malformed input
-  x_num <- 1              # input is only a number
-  x_vec <- c("a", "b")    # input not a single character string (fails length==1)
-  x_na  <- NA_character_  # fails is.na check
+  x_num <- 1 # input is only a number
+  x_vec <- c("a", "b") # input not a single character string (fails length==1)
+  x_na <- NA_character_ # fails is.na check
   # confirm resolve_dataset_name returns these unchanged (for check_dataset_name)
   expect_identical(resolve_dataset_name(x_num), x_num)
   expect_identical(resolve_dataset_name(x_vec), x_vec)
