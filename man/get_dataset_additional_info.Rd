@@ -8,7 +8,10 @@ get_dataset_additional_info(dataset_name)
 }
 \arguments{
 \item{dataset_name}{Name of the dataset as found on the
-\href{https://www.opendata.nhs.scot}{NHS Open Data platform} (character).}
+\href{https://www.opendata.nhs.scot}{NHS Open Data platform} (character).
+A human-readable dataset title may also be submitted. This is resolved to the
+corresponding name, with a warning, because titles can change while names are
+stable.}
 }
 \value{
 a \link[tibble:tibble-package]{tibble} with the data

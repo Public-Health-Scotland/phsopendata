@@ -5,6 +5,9 @@
 #'
 #' @param dataset_name Name of the dataset as found on the
 #' [NHS Open Data platform](https://www.opendata.nhs.scot) (character).
+#' A human-readable dataset title may also be submitted. This is resolved to the
+#' corresponding name, with a warning, because titles can change while names are
+#' stable.
 #' @param max_resources (optional) The maximum number of resources to return
 #' (integer). If not set, all resources are returned.
 #' @inheritParams get_resource
@@ -26,6 +29,10 @@ get_dataset <- function(
   col_select = NULL,
   include_context = FALSE
 ) {
+
+  # resolve a title to the dataset name; submitted names pass through
+  dataset_name <- resolve_dataset_name(dataset_name)
+
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
