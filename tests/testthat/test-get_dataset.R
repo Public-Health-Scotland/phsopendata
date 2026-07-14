@@ -36,8 +36,14 @@ test_that("get_dataset works properly with filters", {
 
 test_that("get_dataset errors properly", {
   expect_error(
+    # treated as a title due to the capital letter - it matches none exactly
     get_dataset("Mal-formed-name"),
-    regexp = "The dataset name supplied `Mal-formed-name` is invalid"
+    regexp = 'Dataset title "Mal-formed-name" did not match any dataset title exactly'
+  )
+  expect_error(
+    # made lower case, so it passes through resolve_dataset_title_to_name()
+    get_dataset("-bad-name-"),
+    regexp = "The dataset name supplied `-bad-name-` is invalid"
   )
   expect_error(
     get_dataset("dataset-name-with-no-close-match"),
@@ -86,4 +92,17 @@ test_that("Warns when having to coerce types", {
   expect_s3_class(coerced_data, "tbl_df")
   expect_named(coerced_data, "PracticeListSize")
   expect_type(coerced_data[["PracticeListSize"]], "character")
+})
+
+test_that("get_dataset resolves an exact dataset title and warns", {
+  expect_warning(
+    data <- get_dataset(
+      "GP Practice Population Demographics",
+      max_resources = 1L,
+      rows = 2L
+    ),
+    "resolved to name"
+  )
+  expect_s3_class(data, "tbl_df")
+  expect_identical(nrow(data), 2L)
 })
