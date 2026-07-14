@@ -24,7 +24,7 @@
 #'
 #' @keywords internal
 #' @noRd
-resolve_dataset_name <- function(dataset_name) {
+resolve_dataset_title_to_name <- function(dataset_name) {
   # return malformed input unchanged for check_dataset_name()
   if (!inherits(dataset_name, "character") ||
     length(dataset_name) != 1 ||

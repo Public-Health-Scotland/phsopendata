@@ -13,7 +13,7 @@ mock_package_search <- function(...) {
 }
 
 # Block 1: malformed input is returned unchanged
-test_that("resolve_dataset_name() passes malformed input through unchanged", {
+test_that("resolve_dataset_title_to_name() passes malformed input through unchanged", {
   testthat::local_mocked_bindings(
     phs_GET = function(...) {
       # any attempt to call phs_GET causes this test to fail
@@ -24,27 +24,27 @@ test_that("resolve_dataset_name() passes malformed input through unchanged", {
   x_num <- 1 # input is only a number
   x_vec <- c("a", "b") # input not a single character string (fails length==1)
   x_na <- NA_character_ # fails is.na check
-  # confirm resolve_dataset_name returns these unchanged (for check_dataset_name)
-  expect_identical(resolve_dataset_name(x_num), x_num)
-  expect_identical(resolve_dataset_name(x_vec), x_vec)
-  expect_identical(resolve_dataset_name(x_na), x_na)
+  # confirm resolve_dataset_title_to_name returns these unchanged (for check_dataset_name)
+  expect_identical(resolve_dataset_title_to_name(x_num), x_num)
+  expect_identical(resolve_dataset_title_to_name(x_vec), x_vec)
+  expect_identical(resolve_dataset_title_to_name(x_na), x_na)
 })
 
 # Block 2: input that looks like a dataset name passes through unchanged
-test_that("resolve_dataset_name() passes name-like input through unchanged", {
+test_that("resolve_dataset_title_to_name() passes name-like input through unchanged", {
   testthat::local_mocked_bindings(
     phs_GET = function(...) {
       stop("phs_GET() should not be called for name-like input")
     }
   )
   expect_identical(
-    resolve_dataset_name("gp-practice-populations"),
+    resolve_dataset_title_to_name("gp-practice-populations"),
     "gp-practice-populations"
   )
 })
 
 # Block 3: a single exact title match resolves to its name, and emits a warning
-test_that("resolve_dataset_name() resolves a unique exact title match and warns", {
+test_that("resolve_dataset_title_to_name() resolves a unique exact title match and warns", {
   mock_content <- mock_package_search(
     # lists below are nested to match the CKAN API output
     list(
@@ -66,14 +66,14 @@ test_that("resolve_dataset_name() resolves a unique exact title match and warns"
     }
   )
   expect_warning(
-    out <- resolve_dataset_name("gp practice populations"),
+    out <- resolve_dataset_title_to_name("gp practice populations"),
     "resolved to name"
   )
   expect_identical(out, "gp-practice-populations")
 })
 
 # Block 4: error if datasets share the same title (case insensitive)
-test_that("resolve_dataset_name() errors on ambiguous exact title matches", {
+test_that("resolve_dataset_title_to_name() errors on ambiguous exact title matches", {
   # construct mock API output
   mock_content <- mock_package_search(
     list(
@@ -98,7 +98,7 @@ test_that("resolve_dataset_name() errors on ambiguous exact title matches", {
     }
   )
   err <- rlang::catch_cnd(
-    resolve_dataset_name("Hospital Admissions"),
+    resolve_dataset_title_to_name("Hospital Admissions"),
     classes = "error"
   )
   expect_s3_class(err, "rlang_error")
@@ -109,7 +109,7 @@ test_that("resolve_dataset_name() errors on ambiguous exact title matches", {
 })
 
 # Block 5: no exact match, but error lists any candidates
-test_that("resolve_dataset_name() errors on no exact match and shows substring candidates", {
+test_that("resolve_dataset_title_to_name() errors on no exact match and shows substring candidates", {
   # construct mock API output
   mock_content <- mock_package_search(
     list(
@@ -136,7 +136,7 @@ test_that("resolve_dataset_name() errors on no exact match and shows substring c
   )
   # ensure errors are captured
   err <- rlang::catch_cnd(
-    resolve_dataset_name("GP Practice"),
+    resolve_dataset_title_to_name("GP Practice"),
     classes = "error"
   )
 
@@ -147,7 +147,7 @@ test_that("resolve_dataset_name() errors on no exact match and shows substring c
 })
 
 # Block 6: no exact match AND no partial matches from substrings
-test_that("resolve_dataset_name() errors on no exact match and no candidates", {
+test_that("resolve_dataset_title_to_name() errors on no exact match and no candidates", {
   mock_content <- mock_package_search(
     list(
       title = "GP Practice Populations",
@@ -167,7 +167,7 @@ test_that("resolve_dataset_name() errors on no exact match and no candidates", {
     }
   )
   err <- rlang::catch_cnd(
-    resolve_dataset_name("Completely Different Dataset"),
+    resolve_dataset_title_to_name("Completely Different Dataset"),
     classes = "error"
   )
 
@@ -177,7 +177,7 @@ test_that("resolve_dataset_name() errors on no exact match and no candidates", {
 })
 
 # Block 7: missing names or titles in retrieved data are ignored
-test_that("resolve_dataset_name() ignores results with missing title or name", {
+test_that("resolve_dataset_title_to_name() ignores results with missing title or name", {
   mock_content <- mock_package_search(
     list(
       title = "GP Practice Populations",
@@ -201,7 +201,7 @@ test_that("resolve_dataset_name() ignores results with missing title or name", {
     }
   )
   expect_warning(
-    out <- resolve_dataset_name("GP Practice Populations"),
+    out <- resolve_dataset_title_to_name("GP Practice Populations"),
     "resolved to name"
   )
   expect_identical(out, "gp-practice-populations")
