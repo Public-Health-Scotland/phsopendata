@@ -23,8 +23,11 @@ suggest_dataset_name <- function(
   looking_for_name <- !is.null(name)
   looking_for_text <- if (looking_for_name) "name" else "title"
   search_term <- if (looking_for_name) name else title
-  search_target <- if (looking_for_name) datasets$dataset_name else
+  search_target <- if (looking_for_name) {
+    datasets$dataset_name
+  } else {
     datasets$dataset_title
+  }
 
   # calculate string distances
   string_distances <- stringdist::stringdist(search_term, search_target)
