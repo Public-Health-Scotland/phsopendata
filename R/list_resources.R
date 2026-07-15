@@ -115,7 +115,7 @@ list_resources <- function(
   validate_regex(resource_contains, "resource_contains")
   validate_regex(dataset_contains, "dataset_contains")
 
-  data_tibble <- list_resources_query()
+  data_tibble <- dplyr::select(list_resources_query(), !"created")
 
   build_and_anywhere_regex <- function(query) {
     # Split on one-or-more whitespace
@@ -174,7 +174,7 @@ list_resources <- function(
 }
 
 
-list_resources_query <- function() {
+list_resources_query <- memoise::memoise(function() {
   # query for the API call
   query <- list(q = "*:*", rows = 3200)
 
@@ -212,12 +212,18 @@ list_resources_query <- function() {
           ),
           format = "%FT%X",
           tz = "UTC"
+        ),
+        created = as.POSIXct(
+          purrr::map_chr(
+            resources,
+            ~ purrr::pluck(.x, "created", .default = NA_character_)
+          ),
+          format = "%FT%X",
+          tz = "UTC"
         )
       )
     }
   )
 
-  data_tibble <- purrr::list_rbind(datasets_list)
-
-  return(data_tibble)
-}
+  purrr::list_rbind(datasets_list)
+})

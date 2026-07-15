@@ -40,24 +40,19 @@ get_dataset <- function(
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
-  # define query and try API call
-  query <- list(id = dataset_name)
-  content <- try(
-    phs_GET("package_show", query),
-    silent = TRUE
-  )
+  datasets <- list_resources_query()
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
+  if (!dataset_name %in% datasets$dataset_name) {
+    suggest_dataset_name(name = dataset_name)
   }
 
+  dataset_info <- datasets[datasets$dataset_name == dataset_name, ]
+
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  all_ids <- dataset_info$resource_id
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_index <- seq_len(min(n_res, max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -79,6 +74,7 @@ get_dataset <- function(
 
   # for each df, check if next df class matches
   inconsistencies <- vector(length = length(types) - 1L, mode = "list")
+
   for (i in seq_along(types)) {
     if (i == length(types)) break
 
@@ -122,22 +118,14 @@ get_dataset <- function(
       list(
         data = all_data,
         id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
+        name = dataset_info[res_index, ]$resource_name,
+        created_date = dataset_info[res_index, ]$created,
+        modified_date = dataset_info[res_index, ]$last_modified
       ),
       add_context
     )
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
-
-  return(combined)
+  purrr::list_rbind(all_data)
 }

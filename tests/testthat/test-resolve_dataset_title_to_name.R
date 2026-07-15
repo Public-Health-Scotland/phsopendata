@@ -65,11 +65,10 @@ test_that("resolve_dataset_title_to_name() resolves a unique exact title match a
       mock_content
     }
   )
-  expect_warning(
-    out <- resolve_dataset_title_to_name("gp practice populations"),
-    "resolved to name"
-  )
-  expect_identical(out, "gp-practice-populations")
+
+  resolve_dataset_title_to_name("GP Practice Population Demographics") |>
+    expect_identical("gp-practice-populations") |>
+    expect_warning("resolved to name")
 })
 
 # Block 4: error if datasets share the same title (case insensitive)
