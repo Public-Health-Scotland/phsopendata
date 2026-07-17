@@ -38,16 +38,16 @@ test_that("get_dataset errors properly", {
   expect_error(
     # treated as a title due to the capital letter - it matches none exactly
     get_dataset("Mal-formed-name"),
-    regexp = 'Dataset title "Mal-formed-name" did not match any dataset title exactly'
+    regexp = "Can't find the dataset title .+?Mal-formed-name.+?"
   )
   expect_error(
     # made lower case, so it passes through resolve_dataset_title_to_name()
     get_dataset("-bad-name-"),
-    regexp = "The dataset name supplied `-bad-name-` is invalid"
+    regexp = "The dataset name supplied .+?-bad-name-.+? is invalid"
   )
   expect_error(
     get_dataset("dataset-name-with-no-close-match"),
-    regexp = "Can't find the dataset name `dataset-name-with-no-close-match`"
+    regexp = "Can't find the dataset name .+?dataset-name-with-no-close-match.+?"
   )
   expect_error(
     get_dataset("gp-practice-population"),
