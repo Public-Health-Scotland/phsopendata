@@ -1,207 +1,146 @@
-# This test suite mocks phs_GET() rather than calling the CKAN API. Beyond
-# avoiding the need for real API calls, this allows testing for issues not
-# currently present on the Scottish Health and Social Care Open Data platform.
+# These tests mock list_resources_query() rather than phs_GET() because
+# list_resources_query() is memoised, and phs_GET() is only called if
+# the memoise cache is empty
 
-# helper to nest lists created for the tests in Blocks 3-7 below under
-# result$results, matching the structure of CKAN API output retrieved via phs_GET()
-mock_package_search <- function(...) {
-  list(
-    result = list(
-      results = list(...)
-    )
+mock_catalogue <- function(...) {
+  tibble::tribble(
+    ~dataset_name, ~dataset_title,
+    ...
   )
 }
 
-# Block 1: malformed input is returned unchanged
+# Malformed input is returned unchanged without retrieving the dataset catalogue
 test_that("resolve_dataset_title_to_name() passes malformed input through unchanged", {
   testthat::local_mocked_bindings(
-    phs_GET = function(...) {
-      # any attempt to call phs_GET causes this test to fail
-      stop("phs_GET() should not be called for malformed input")
+    list_resources_query = function(...) {
+      stop("list_resources_query() should not be called for malformed input")
     }
   )
-  # tests for 3 kinds of malformed input
-  x_num <- 1 # input is only a number
-  x_vec <- c("a", "b") # input not a single character string (fails length==1)
-  x_na <- NA_character_ # fails is.na check
-  # confirm resolve_dataset_title_to_name returns these unchanged (for check_dataset_name)
+
+  x_num <- 1
+  x_vec <- c("a", "b")
+  x_na <- NA_character_
+
   expect_identical(resolve_dataset_title_to_name(x_num), x_num)
   expect_identical(resolve_dataset_title_to_name(x_vec), x_vec)
   expect_identical(resolve_dataset_title_to_name(x_na), x_na)
 })
 
-# Block 2: input that looks like a dataset name passes through unchanged
+# Input shaped like a dataset name is returned unchanged without accessing the
+# catalogue
 test_that("resolve_dataset_title_to_name() passes name-like input through unchanged", {
   testthat::local_mocked_bindings(
-    phs_GET = function(...) {
-      stop("phs_GET() should not be called for name-like input")
+    list_resources_query = function(...) {
+      stop("list_resources_query() should not be called for name-like input")
     }
   )
+
   expect_identical(
     resolve_dataset_title_to_name("gp-practice-populations"),
     "gp-practice-populations"
   )
 })
 
-# Block 3: a single exact title match resolves to its name, and emits a warning
-test_that("resolve_dataset_title_to_name() resolves a unique exact title match and warns", {
-  mock_content <- mock_package_search(
-    # lists below are nested to match the CKAN API output
-    list(
-      title = "GP Practice Populations",
-      name = "gp-practice-populations"
-    ),
-    list(
-      title = "Cancelled Operations",
-      name = "cancelled-operations"
-    )
-  )
-  # make mock API call
-  testthat::local_mocked_bindings(
-    phs_GET = function(action, query, ...) {
-      expect_identical(action, "package_search")
-      expect_identical(query$q, "*:*")
-      expect_identical(query$rows, 10000)
-      mock_content
-    }
+# A unique exact title match is case-insensitive and produces a warning
+test_that("resolve_dataset_title_to_name() resolves a unique exact title match", {
+  catalogue <- mock_catalogue(
+    "gp-practice-populations", "GP Practice Populations",
+    "cancelled-operations", "Cancelled Operations"
   )
 
-  resolve_dataset_title_to_name("GP Practice Population Demographics") |>
-    expect_identical("gp-practice-populations") |>
-    expect_warning("resolved to name")
+  testthat::local_mocked_bindings(
+    list_resources_query = function(...) catalogue
+  )
+
+  # Use different capitalisation to confirm exact matching is case-insensitive
+  expect_warning(
+    out <- resolve_dataset_title_to_name("gp practice populations"),
+    "resolved to name"
+  )
+
+  expect_identical(out, "gp-practice-populations")
 })
 
-# Block 4: error if datasets share the same title (case insensitive)
-test_that("resolve_dataset_title_to_name() errors on ambiguous exact title matches", {
-  # construct mock API output
-  mock_content <- mock_package_search(
-    list(
-      title = "Hospital Admissions",
-      name = "hospital-admissions-monthly"
-    ),
-    list(
-      title = "hospital admissions",
-      name = "hospital-admissions-quarterly"
-    ),
-    list(
-      title = "Cancelled Operations",
-      name = "cancelled-operations"
-    )
+# Identical ambiguous titles tie as the closest suggestions
+test_that("identical ambiguous titles list both closest candidates", {
+  catalogue <- mock_catalogue(
+    "hospital-admissions-monthly", "Hospital Admissions",
+    "hospital-admissions-quarterly", "Hospital Admissions",
+    "hospital-codes", "Hospital Codes"
   )
+
   testthat::local_mocked_bindings(
-    phs_GET = function(action, query, ...) {
-      expect_identical(action, "package_search")
-      expect_identical(query$q, "*:*")
-      expect_identical(query$rows, 10000)
-      mock_content
-    }
+    list_resources_query = function(...) catalogue
   )
+
   err <- rlang::catch_cnd(
     resolve_dataset_title_to_name("Hospital Admissions"),
     classes = "error"
   )
+
   expect_s3_class(err, "rlang_error")
-  # match on conditionMessage()
-  expect_match(conditionMessage(err), "matched more than one dataset")
-  expect_match(conditionMessage(err), "hospital-admissions-monthly")
-  expect_match(conditionMessage(err), "hospital-admissions-quarterly")
+
+  error_message <- conditionMessage(err)
+
+  expect_match(error_message, "Can't find the dataset title")
+  expect_match(error_message, "Did you mean")
+  expect_match(error_message, "hospital-admissions-monthly")
+  expect_match(error_message, "hospital-admissions-quarterly")
+
+  # Ambiguous exact matches cannot be resolved uniquely, so both matching
+  # dataset names are suggested
 })
 
-# Block 5: no exact match, but error lists any candidates
-test_that("resolve_dataset_title_to_name() errors on no exact match and shows substring candidates", {
-  # construct mock API output
-  mock_content <- mock_package_search(
-    list(
-      title = "GP Practice Populations",
-      name = "gp-practice-populations"
-    ),
-    list(
-      title = "GP Practice Contact Details",
-      name = "gp-practice-contact-details"
-    ),
-    list(
-      title = "Cancelled Operations",
-      name = "cancelled-operations"
-    )
+# A near-miss title returns the closest matching dataset as a suggestion
+test_that("resolve_dataset_title_to_name() suggests a close title", {
+  catalogue <- mock_catalogue(
+    "gp-practice-populations", "GP Practice Populations",
+    "cancelled-operations", "Cancelled Operations",
+    "standard-populations", "Standard Populations"
   )
-  # mock API call
+
   testthat::local_mocked_bindings(
-    phs_GET = function(action, query, ...) {
-      expect_identical(action, "package_search")
-      expect_identical(query$q, "*:*")
-      expect_identical(query$rows, 10000)
-      mock_content
-    }
+    list_resources_query = function(...) catalogue
   )
-  # ensure errors are captured
+
   err <- rlang::catch_cnd(
-    resolve_dataset_title_to_name("GP Practice"),
+    resolve_dataset_title_to_name("GP Practice Population"),
     classes = "error"
   )
 
   expect_s3_class(err, "rlang_error")
-  expect_match(conditionMessage(err), "did not match any dataset title exactly")
-  expect_match(conditionMessage(err), "gp-practice-populations")
-  expect_match(conditionMessage(err), "gp-practice-contact-details")
+
+  error_message <- conditionMessage(err)
+
+  expect_match(error_message, "Can't find the dataset title")
+  expect_match(error_message, "Did you mean")
+  expect_match(error_message, "gp-practice-populations")
+  expect_match(error_message, "GP Practice Populations")
 })
 
-# Block 6: no exact match AND no partial matches from substrings
-test_that("resolve_dataset_title_to_name() errors on no exact match and no candidates", {
-  mock_content <- mock_package_search(
-    list(
-      title = "GP Practice Populations",
-      name = "gp-practice-populations"
-    ),
-    list(
-      title = "Cancelled Operations",
-      name = "cancelled-operations"
-    )
+# Titles with no close match return an error rather than a suggestion
+test_that("resolve_dataset_title_to_name() reports when no title is close", {
+  catalogue <- mock_catalogue(
+    "gp-practice-populations", "GP Practice Populations",
+    "cancelled-operations", "Cancelled Operations"
   )
+
   testthat::local_mocked_bindings(
-    phs_GET = function(action, query, ...) {
-      expect_identical(action, "package_search")
-      expect_identical(query$q, "*:*")
-      expect_identical(query$rows, 10000)
-      mock_content
-    }
+    list_resources_query = function(...) catalogue
   )
+
   err <- rlang::catch_cnd(
     resolve_dataset_title_to_name("Completely Different Dataset"),
     classes = "error"
   )
 
   expect_s3_class(err, "rlang_error")
-  expect_match(conditionMessage(err), "did not match any dataset title exactly")
-  expect_match(conditionMessage(err), "Candidates: none")
+
+  error_message <- conditionMessage(err)
+
+  expect_match(error_message, "Can't find the dataset title")
+  expect_match(error_message, "or a close match")
+  expect_match(error_message, "Find a dataset's name")
+  expect_false(grepl("Did you mean", error_message, fixed = TRUE))
 })
 
-# Block 7: missing names or titles in retrieved data are ignored
-test_that("resolve_dataset_title_to_name() ignores results with missing title or name", {
-  mock_content <- mock_package_search(
-    list(
-      title = "GP Practice Populations",
-      name = NULL
-    ),
-    list(
-      title = NULL,
-      name = "gp-practice-populations-old"
-    ),
-    list(
-      title = "GP Practice Populations",
-      name = "gp-practice-populations"
-    )
-  )
-  testthat::local_mocked_bindings(
-    phs_GET = function(action, query, ...) {
-      expect_identical(action, "package_search")
-      expect_identical(query$q, "*:*")
-      expect_identical(query$rows, 10000)
-      mock_content
-    }
-  )
-  expect_warning(
-    out <- resolve_dataset_title_to_name("GP Practice Populations"),
-    "resolved to name"
-  )
-  expect_identical(out, "gp-practice-populations")
-})
