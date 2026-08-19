@@ -20,7 +20,9 @@
 #' }
 get_dataset <- function(
   dataset_name,
+  resource_contains,
   max_resources = NULL,
+  confirm_latest = FALSE,
   rows = NULL,
   row_filters = NULL,
   col_select = NULL,
@@ -43,12 +45,37 @@ get_dataset <- function(
   }
 
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  if (is.null(resource_contains) & is.null(confirm_latest)) {
+    all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  }
+
+  if (!is.null(resource_contains) | !is.null(confirm_latest)) {
+    all_id_data <- list_resources(dataset_contains = dataset_name, resource_contains = resource_contains)
+    all_ids <- all_id_data$resource_id
+  }
 
   n_res <- length(all_ids)
+  n_res_selected <- min(n_res, max_resources)
   res_index <- 1L:min(n_res, max_resources)
 
   selection_ids <- all_ids[res_index]
+
+  # confirm selected ids are latest resources
+  if (confirm_latest) {
+    # find most recent date_created dates
+    most_recent_date_created <- dplyr::slice_max(all_id_data, created_date, n = n_res_selected)
+
+    # get the first n rows of the resources, this will be the same that appears
+    # on the top on the open data platform
+    all_id_data_first_row <- dplyr::slice_head(all_id_data, n = n_res_selected)
+
+    # If the n resources at the top as appearing on the open data platform match the most
+    # recent date created, return it. Otherwise, error
+    if (!identical(all_id_data_first_row, most_recent_date_created)
+    ) {
+      cli::cli_abort("The most recent resource ids could not be identified")
+    }
+  }
 
   # get all resources
   all_data <- purrr::map(
