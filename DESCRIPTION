@@ -15,7 +15,7 @@ Description: Extract and interact with data from the Scottish Health and
     Social Care Open Data platform <https://www.opendata.nhs.scot>.
 License: MIT + file LICENSE
 URL: https://github.com/Public-Health-Scotland/phsopendata,
-    https://public-health-scotland.github.io/phsopendata/
+    https://code.publichealthscotland.scot/phsopendata/
 BugReports: https://github.com/Public-Health-Scotland/phsopendata/issues
 Depends:
     R (>= 4.1.0)
