@@ -35,7 +35,7 @@ It can be used to:
 - retrieve the latest resource from datasets that publish new resources over time;
 - run SQL queries against Open Data resources.
 
-See the [package website](https://public-health-scotland.github.io/phsopendata/) for full documentation.
+See the [package website](https://code.publichealthscotland.scot/phsopendata/) for full documentation.
 
 ## Installation
 

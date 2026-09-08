@@ -31,7 +31,7 @@ It can be used to:
 - run SQL queries against Open Data resources.
 
 See the [package
-website](https://public-health-scotland.github.io/phsopendata/) for full
+website](https://code.publichealthscotland.scot/phsopendata/) for full
 documentation.
 
 ## Installation
