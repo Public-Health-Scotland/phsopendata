@@ -45,11 +45,11 @@ get_dataset <- function(
   }
 
   # define list of resource IDs to get
-  if (is.null(resource_contains) & is.null(confirm_latest)) {
+  if (is.null(resource_contains) && is.null(confirm_latest)) {
     all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
   }
 
-  if (!is.null(resource_contains) | !is.null(confirm_latest)) {
+  if (!is.null(resource_contains) || !is.null(confirm_latest)) {
     all_id_data <- list_resources(dataset_contains = dataset_name, resource_contains = resource_contains)
     all_ids <- all_id_data$resource_id
   }
@@ -71,7 +71,7 @@ get_dataset <- function(
 
     # If the n resources at the top as appearing on the open data platform match the most
     # recent date created, return it. Otherwise, error
-    if (!identical(all_id_data_first_row, most_recent_date_created)
+    if (!identical(all_id_data_first_row$res_id, most_recent_date_created$res_id)
     ) {
       cli::cli_abort("The most recent resource ids could not be identified")
     }
