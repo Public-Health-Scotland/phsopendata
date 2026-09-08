@@ -6,7 +6,9 @@
 \usage{
 get_dataset(
   dataset_name,
+  resource_contains,
   max_resources = NULL,
+  confirm_latest = FALSE,
   rows = NULL,
   row_filters = NULL,
   col_select = NULL,

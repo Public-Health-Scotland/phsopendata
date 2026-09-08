@@ -212,6 +212,14 @@ list_resources_query <- function() {
           ),
           format = "%FT%X",
           tz = "UTC"
+        ),
+        created_date = as.POSIXct(
+          purrr::map_chr(
+            resources,
+            ~ purrr::pluck(.x, "created", .default = NA_character_)
+          ),
+          format = "%FT%X",
+          tz = "UTC"
         )
       )
     }
