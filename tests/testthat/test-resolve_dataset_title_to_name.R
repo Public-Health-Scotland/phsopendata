@@ -144,3 +144,25 @@ test_that("resolve_dataset_title_to_name() reports when no title is close", {
   expect_false(grepl("Did you mean", error_message, fixed = TRUE))
 })
 
+# Surrounding white space is trimmed before resolving names and titles
+test_that("resolve_dataset_title_to_name() trims surrounding whitespace", {
+  catalogue <- mock_catalogue(
+    "gp-practice-populations", "GP Practice Populations"
+  )
+
+  testthat::local_mocked_bindings(
+    list_resources_query = function(...) catalogue
+  )
+
+  expect_identical(
+    resolve_dataset_title_to_name("  gp-practice-populations  "),
+    "gp-practice-populations"
+  )
+
+  expect_warning(
+    out <- resolve_dataset_title_to_name("  GP Practice Populations  "),
+    "resolved to name"
+  )
+
+  expect_identical(out, "gp-practice-populations")
+})

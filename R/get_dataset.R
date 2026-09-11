@@ -34,6 +34,26 @@ get_dataset <- function(
   col_select = NULL,
   include_context = FALSE
 ) {
+
+  # check_dataset_name() assumes a length-1 character vector, so reject
+  # anything else
+  if (
+    !is.character(dataset_name) ||
+    length(dataset_name) != 1L ||
+    is.na(dataset_name)
+  ) {
+    detail <- if (length(dataset_name) == 1L && is.na(dataset_name)) {
+      "You supplied a missing value (`NA`)."
+    } else {
+      "You supplied {.obj_type_friendly {dataset_name}} of length {length(dataset_name)}."
+    }
+
+    cli::cli_abort(c(
+      "{.arg dataset_name} must be a single, non-missing character string.",
+      "x" = detail
+    ))
+  }
+
   # resolve a title to the dataset name; submitted names pass through
   dataset_name <- resolve_dataset_title_to_name(dataset_name)
 

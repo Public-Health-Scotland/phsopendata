@@ -11,9 +11,9 @@
 #' Matching is exact and case-insensitive against the titles of every dataset on
 #' the platform, retrieved via a single `package_search` call. This assumes the
 #' platform holds fewer than 10,000 datasets. A unique match returns the name
-#' with a warning that titles are not a stable key. An ambiguous match, or
-#' absence of an exact match, leads to an error that lists candidate titles to
-#' help the user correct their input.
+#' with a warning that titles are not a stable key. Input is trimmed of
+#' surrounding white space before matching. Ambiguous or non-exact entries are
+#' passed to [suggest_dataset_name()], which errors and lists any potential matches.
 #'
 #' @param dataset_name A single string: either a dataset name or a dataset title.
 #'
@@ -33,6 +33,9 @@ resolve_dataset_title_to_name <- function(dataset_name) {
   ) {
     return(dataset_name)
   }
+
+  # trim any white space before matching
+  dataset_name <- trimws(dataset_name)
 
   # if input looks like a dataset name, return unchanged for check_dataset_name()
   if (grepl("^[a-z0-9-]+$", dataset_name)) {
