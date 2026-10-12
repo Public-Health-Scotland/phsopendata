@@ -34,13 +34,12 @@ get_dataset <- function(
   col_select = NULL,
   include_context = FALSE
 ) {
-
   # check_dataset_name() assumes a length-1 character vector, so reject
   # anything else
   if (
     !is.character(dataset_name) ||
-    length(dataset_name) != 1L ||
-    is.na(dataset_name)
+      length(dataset_name) != 1L ||
+      is.na(dataset_name)
   ) {
     detail <- if (length(dataset_name) == 1L && is.na(dataset_name)) {
       "You supplied a missing value (`NA`)."

@@ -107,7 +107,7 @@ test_that("get_dataset resolves an exact dataset title and warns", {
   expect_identical(nrow(data), 2L)
 })
 
-test_that("get_dataset() rejects invalid dataset_name",{
+test_that("get_dataset() rejects invalid dataset_name", {
   expect_error(
     get_dataset(c("a", "b")),
     "character vector of length 2",
@@ -121,6 +121,3 @@ test_that("get_dataset() rejects invalid dataset_name",{
   expect_error(get_dataset(1), "number of length 1", class = "rlang_error")
   expect_error(get_dataset(NA_character_), "missing value", class = "rlang_error")
 })
-
-
-
