@@ -1,13 +1,12 @@
 CKAN
-CMD
 Codecov
+DataStore
+Lifecycle
 PostgreSQL
-RStudio
 gp
 magrittr
 nhs
 nhsscotland
 opendata
 org
-phs
 tibble

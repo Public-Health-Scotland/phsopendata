@@ -7,18 +7,18 @@ test_that("returns true as expected", {
   # rows > 99999 and all query is NULL
   expect_true(
     use_dump_check(list(), 100000L)
-  ) %>%
+  ) |>
     expect_warning()
 
   # query entries are not all NULL and rows > 99999
   expect_true(
     use_dump_check(list(q = 4L), 100000L)
-  ) %>%
+  ) |>
     expect_warning()
 
   expect_true(
     use_dump_check(list(q = 4L), 100000L)
-  ) %>%
+  ) |>
     expect_warning()
 })
 

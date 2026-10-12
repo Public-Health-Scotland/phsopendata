@@ -36,7 +36,7 @@ get_latest_resource_id <- function(dataset_name, call = rlang::caller_env()) {
     id = id,
     created_date = strptime(created_date, format = "%FT%X", tz = "UTC"),
     modified_date = strptime(modified_date, format = "%FT%X", tz = "UTC")
-  ) %>%
+  ) |>
     dplyr::mutate(most_recent_date_created = max(created_date))
 
   # get the first row of the resources, this will be the same that appears

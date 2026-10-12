@@ -120,8 +120,8 @@ get_resource <- function(
     data <- purrr::map(
       res_content$result$records,
       ~.x
-    ) %>%
-      dplyr::bind_rows() %>%
+    ) |>
+      dplyr::bind_rows() |>
       dplyr::select(
         -dplyr::starts_with("rank "),
         -dplyr::matches("_id")
