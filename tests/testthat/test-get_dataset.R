@@ -87,3 +87,26 @@ test_that("Warns when having to coerce types", {
   expect_named(coerced_data, "PracticeListSize")
   expect_type(coerced_data[["PracticeListSize"]], "character")
 })
+
+test_that("get_dataset works with resource_contains", {
+
+  data <- get_dataset(
+    "geography-codes-and-labels",
+    resource_contains = "country"
+  )
+
+  expect_s3_class(data, "tbl_df")
+  expect_identical(nrow(data), 1L)
+})
+
+test_that("warns when resource_contains filters return empty", {
+
+  # Explicit empty case to assert warning + empty tibble
+  expect_warning(
+    data_none <- get_dataset(
+      "geography-codes-and-labels",
+      resource_contains = "___no_such_resource___"
+    ),
+    regexp = "No resources found"
+  )
+})

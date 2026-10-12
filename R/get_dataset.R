@@ -5,8 +5,12 @@
 #'
 #' @param dataset_name Name of the dataset as found on the
 #' [NHS Open Data platform](https://www.opendata.nhs.scot) (character).
+#' @param resource_contains (optional) A character string containing a [regular expression](https://www.geeksforgeeks.org/dsa/write-regular-expressions/)
+#'  to be matched against available resource names.
 #' @param max_resources (optional) The maximum number of resources to return
 #' (integer). If not set, all resources are returned.
+#' @param confirm_latest (optional) If TRUE, the most recently created
+#' resources will be returned (applicable for a subset of datasets only).
 #' @inheritParams get_resource
 #'
 #' @seealso [get_resource()] for downloading a single resource from a dataset.
@@ -20,7 +24,7 @@
 #' }
 get_dataset <- function(
   dataset_name,
-  resource_contains,
+  resource_contains = NULL,
   max_resources = NULL,
   confirm_latest = FALSE,
   rows = NULL,
@@ -54,6 +58,12 @@ get_dataset <- function(
     all_ids <- all_id_data$resource_id
   }
 
+  if (is.null(all_ids)) {
+    cli::cli_warn(
+      "No resources found for {.arg resource_contains} = {.val {resource_contains}}. Returning an empty tibble."
+    )
+  }
+
   n_res <- length(all_ids)
   n_res_selected <- min(n_res, max_resources)
   res_index <- 1L:min(n_res, max_resources)
@@ -71,7 +81,7 @@ get_dataset <- function(
 
     # If the n resources at the top as appearing on the open data platform match the most
     # recent date created, return it. Otherwise, error
-    if (!identical(all_id_data_first_row$res_id, most_recent_date_created$res_id)
+    if (!setequal(all_id_data_first_row$resource_id, most_recent_date_created$resource_id)
     ) {
       cli::cli_abort("The most recent resource ids could not be identified")
     }
