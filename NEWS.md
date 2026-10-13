@@ -1,4 +1,4 @@
-# phsopendata (development version)
+# phsopendata 1.1.1
 
 # phsopendata 1.1.0 (2026-06-05)
 
