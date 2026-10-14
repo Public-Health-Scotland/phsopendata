@@ -20,8 +20,10 @@
 #' @return A tibble.
 #' @export
 #'
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examples
+#' \dontrun{
 #' head(list_datasets())
+#' }
 #' @seealso [list_resources()]
 list_datasets <- function() {
   # fetch the data
