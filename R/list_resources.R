@@ -17,14 +17,13 @@
 #'  `dataset_contains` and `resource_contains` arguments.
 #'
 #' @examples
-#'
-#'\dontrun{
+#' \dontrun{
 #' list_resources()
 #' list_resources(dataset_contains = "standard-populations")
 #' list_resources(
 #'   dataset_contains = "standard-populations", resource_contains = "European"
 #' )
-#'}
+#' }
 #' @export
 list_resources <- function(
   dataset_contains = NULL,
