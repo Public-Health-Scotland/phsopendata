@@ -34,7 +34,8 @@
 #'
 #' @export
 #'
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examples
+#' \dontrun{
 #' # Basic query
 #' cancelled_ops <- get_resource_sql(r"[
 #' SELECT
@@ -62,6 +63,7 @@
 #'     pops."Sex" = 'All'
 #'     AND pops."Year" > 2006
 #' ]")
+#' }
 get_resource_sql <- function(sql) {
   if (length(sql) != 1L) {
     cli::cli_abort(c(
