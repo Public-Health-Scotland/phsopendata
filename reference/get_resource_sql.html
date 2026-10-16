@@ -20,7 +20,7 @@ results."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">phsopendata</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -106,7 +106,8 @@ is <code>r"{...}"</code>, in the rare case that the query contains <code>]"</cod
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Basic query</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Basic query</span></span></span>
 <span class="r-in"><span><span class="va">cancelled_ops</span> <span class="op">&lt;-</span> <span class="fu">get_resource_sql</span><span class="op">(</span><span class="st">r"[</span></span></span>
 <span class="r-in"><span><span class="st">SELECT</span></span></span>
 <span class="r-in"><span><span class="st">    "TotalCancelled",</span></span></span>
@@ -133,6 +134,7 @@ is <code>r"{...}"</code>, in the rare case that the query contains <code>]"</cod
 <span class="r-in"><span><span class="st">    pops."Sex" = 'All'</span></span></span>
 <span class="r-in"><span><span class="st">    AND pops."Year" &gt; 2006</span></span></span>
 <span class="r-in"><span><span class="st">]"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
