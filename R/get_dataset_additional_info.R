@@ -9,8 +9,10 @@
 #'
 #' @return a [tibble][tibble::tibble-package] with the data
 #' @export
-#' @examplesIf isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)
+#' @examples
+#' \dontrun{
 #' get_dataset_additional_info("gp-practice-populations")
+#' }
 get_dataset_additional_info <- function(dataset_name) {
   # define query
 

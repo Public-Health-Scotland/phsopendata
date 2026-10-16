@@ -20,7 +20,7 @@ is taken to mean the most recent date a resource within the dataset was
 created or modified.
 }
 \examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
+\dontrun{
 get_dataset_additional_info("gp-practice-populations")
-\dontshow{\}) # examplesIf}
+}
 }

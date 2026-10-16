@@ -31,11 +31,11 @@ and resource names. The returned tibble can be used to look-up dataset
 and resource ids, and is useful for exploring the available data sets.
 }
 \examples{
-
+\dontrun{
 list_resources()
 list_resources(dataset_contains = "standard-populations")
 list_resources(
   dataset_contains = "standard-populations", resource_contains = "European"
 )
-
+}
 }
