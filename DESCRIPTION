@@ -24,6 +24,8 @@ Imports:
     dplyr (>= 1.0.0),
     httr (>= 1.0.0),
     lifecycle,
+    magrittr (>= 1.0.0),
+    memoise,
     purrr (>= 1.0.0),
     readr (>= 1.0.0),
     rlang (>= 1.0.0),
