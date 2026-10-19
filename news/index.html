@@ -48,12 +48,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.1.1" id="phsopendata-111">phsopendata 1.1.1<a class="anchor" aria-label="anchor" href="#phsopendata-111"></a></h2>
-</div>
+<h2 class="page-header" data-toc-text="1.1.1" id="phsopendata-111">phsopendata 1.1.1<small>2026-10-16</small><a class="anchor" aria-label="anchor" href="#phsopendata-111"></a></h2>
+<ul><li>No user-facing changes. Updated url-s and examples now not run on CRAN.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.0" id="phsopendata-110-2026-06-05">phsopendata 1.1.0 (2026-06-05)<small>2026-05-06</small><a class="anchor" aria-label="anchor" href="#phsopendata-110-2026-06-05"></a></h2>
 <ul><li>
-<a href="https://public-health-scotland.github.io/phsopendata/reference/list_resources.html" class="external-link"><code>list_resources()</code></a> has been upgraded. Instead of just returning all resources from a dataset (given the exact title), it can now search both resources and dataset titles and will list all resources that match the search!</li>
+<a href="https://code.publichealthscotland.scot/phsopendata/reference/list_resources.html" class="external-link"><code>list_resources()</code></a> has been upgraded. Instead of just returning all resources from a dataset (given the exact title), it can now search both resources and dataset titles and will list all resources that match the search!</li>
 <li>Csilla is back, so I’ve reinstated her as the package maintainer.</li>
 </ul></div>
     <div class="section level2">
@@ -74,31 +75,31 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.0" id="phsopendata-040-2025-02-13">phsopendata 0.4.0 (2025-02-13)<a class="anchor" aria-label="anchor" href="#phsopendata-040-2025-02-13"></a></h2>
-<ul><li>Multiple filters can now be passed to the <code>row_filter</code> arguments of <a href="https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> and <a href="https://public-health-scotland.github.io/phsopendata/reference/get_resource.html" class="external-link"><code>get_resource()</code></a>. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/54" class="external-link">#54</a>)</li>
+<ul><li>Multiple filters can now be passed to the <code>row_filter</code> arguments of <a href="https://code.publichealthscotland.scot/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> and <a href="https://code.publichealthscotland.scot/phsopendata/reference/get_resource.html" class="external-link"><code>get_resource()</code></a>. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/54" class="external-link">#54</a>)</li>
 <li>Improved error reporting. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/53" class="external-link">#53</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.0" id="phsopendata-030-2024-11-21">phsopendata 0.3.0 (2024-11-21)<a class="anchor" aria-label="anchor" href="#phsopendata-030-2024-11-21"></a></h2>
 <ul><li>
-<a href="https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> now takes the <code>col_select</code> and <code>row_filter</code> arguments allowing filtering of data. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/46" class="external-link">#46</a>)</li>
+<a href="https://code.publichealthscotland.scot/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> now takes the <code>col_select</code> and <code>row_filter</code> arguments allowing filtering of data. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/46" class="external-link">#46</a>)</li>
 <li>Failed calls will be retried up to 3 times using <a href="https://httr.r-lib.org/reference/RETRY.html" class="external-link"><code>httr::RETRY()</code></a>. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/45" class="external-link">#45</a> and <a href="https://github.com/Public-Health-Scotland/phsopendata/issues/47" class="external-link">#47</a>)</li>
-<li>Improvements to <a href="https://public-health-scotland.github.io/phsopendata/reference/get_resource_sql.html" class="external-link"><code>get_resource_sql()</code></a> error checks and messages and better handling of spaces and new lines. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/41" class="external-link">#41</a>)</li>
+<li>Improvements to <a href="https://code.publichealthscotland.scot/phsopendata/reference/get_resource_sql.html" class="external-link"><code>get_resource_sql()</code></a> error checks and messages and better handling of spaces and new lines. (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/41" class="external-link">#41</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.0" id="phsopendata-020-2024-09-18">phsopendata 0.2.0 (2024-09-18)<a class="anchor" aria-label="anchor" href="#phsopendata-020-2024-09-18"></a></h2>
 <ul><li>
-<a href="https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> and <a href="https://public-health-scotland.github.io/phsopendata/reference/get_resource.html" class="external-link"><code>get_resource()</code></a> gain a new parameter <code>include_context</code> which allows adding context such as the resource ID and modified / created dates to returned data (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/24" class="external-link">#24</a>).</li>
+<a href="https://code.publichealthscotland.scot/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> and <a href="https://code.publichealthscotland.scot/phsopendata/reference/get_resource.html" class="external-link"><code>get_resource()</code></a> gain a new parameter <code>include_context</code> which allows adding context such as the resource ID and modified / created dates to returned data (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/24" class="external-link">#24</a>).</li>
 <li>The magrittr pipe (<code>%&gt;%</code>) is now exported (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/29" class="external-link">#29</a>).</li>
 <li>
-<a href="https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> will now suggest multiple dataset names, when the dataset you’ve asked for doesn’t exist (i.e. there’s a typo) and there are multiple likely candidates (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/28" class="external-link">#28</a>).</li>
-<li>Two new functions <a href="https://public-health-scotland.github.io/phsopendata/reference/list_datasets.html" class="external-link"><code>list_datasets()</code></a> and <a href="https://public-health-scotland.github.io/phsopendata/reference/list_resources.html" class="external-link"><code>list_resources()</code></a> allow browsing available datasets and resources (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/10" class="external-link">#10</a>).</li>
-<li>The new function <a href="https://public-health-scotland.github.io/phsopendata/reference/get_latest_resource.html" class="external-link"><code>get_latest_resource()</code></a> retrieves the most recent resource from a dataset with additional context such as the resource ID and modified / created dates (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/36" class="external-link">#36</a>).</li>
+<a href="https://code.publichealthscotland.scot/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a> will now suggest multiple dataset names, when the dataset you’ve asked for doesn’t exist (i.e. there’s a typo) and there are multiple likely candidates (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/28" class="external-link">#28</a>).</li>
+<li>Two new functions <a href="https://code.publichealthscotland.scot/phsopendata/reference/list_datasets.html" class="external-link"><code>list_datasets()</code></a> and <a href="https://code.publichealthscotland.scot/phsopendata/reference/list_resources.html" class="external-link"><code>list_resources()</code></a> allow browsing available datasets and resources (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/10" class="external-link">#10</a>).</li>
+<li>The new function <a href="https://code.publichealthscotland.scot/phsopendata/reference/get_latest_resource.html" class="external-link"><code>get_latest_resource()</code></a> retrieves the most recent resource from a dataset with additional context such as the resource ID and modified / created dates (<a href="https://github.com/Public-Health-Scotland/phsopendata/issues/36" class="external-link">#36</a>).</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.0" id="phsopendata-010-2021-07-22">phsopendata 0.1.0 (2021-07-22)<a class="anchor" aria-label="anchor" href="#phsopendata-010-2021-07-22"></a></h2>
 <ul><li>Initial package release.</li>
 <li>
-<a href="https://public-health-scotland.github.io/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a>, <a href="https://public-health-scotland.github.io/phsopendata/reference/get_resource.html" class="external-link"><code>get_resource()</code></a> and <a href="https://public-health-scotland.github.io/phsopendata/reference/get_resource_sql.html" class="external-link"><code>get_resource_sql()</code></a> functions added.</li>
+<a href="https://code.publichealthscotland.scot/phsopendata/reference/get_dataset.html" class="external-link"><code>get_dataset()</code></a>, <a href="https://code.publichealthscotland.scot/phsopendata/reference/get_resource.html" class="external-link"><code>get_resource()</code></a> and <a href="https://code.publichealthscotland.scot/phsopendata/reference/get_resource_sql.html" class="external-link"><code>get_resource_sql()</code></a> functions added.</li>
 </ul></div>
   </div>
 
