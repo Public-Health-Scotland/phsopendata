@@ -1,3 +1,6 @@
+# phsopendata (development version)
+- get_resource() can now resolve a unique, exact resource title to its resource ID, with case-insensitive matching and a warning. (#81)
+
 # phsopendata 1.1.1
 - No user-facing changes. Updated url-s and examples now not run on CRAN.
 
