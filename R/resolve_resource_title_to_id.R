@@ -30,8 +30,8 @@ resolve_resource_title_to_id <- function(res_id) {
   # return invalid input unchanged for check_res_id()
   if (
     !inherits(res_id, "character") ||
-    length(res_id) != 1 ||
-    is.na(res_id)
+      length(res_id) != 1 ||
+      is.na(res_id)
   ) {
     return(res_id)
   }

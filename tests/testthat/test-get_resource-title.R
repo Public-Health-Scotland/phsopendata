@@ -14,9 +14,7 @@ test_that("get_resource resolves titles before retrieving data", {
 
   local_mocked_bindings(
     list_resources_query = function() catalogue,
-
     use_dump_check = function(...) FALSE,
-
     phs_GET = function(action, query) {
       # update the request counter defined outside this mocked function
       requests <<- requests + 1L
