@@ -5,7 +5,7 @@
 #' Contact Details") where [get_dataset()] expects the dataset name (e.g.
 #' "dispenser-location-contact-details"). Inputs that already look like a name,
 #' or that are otherwise not a single string, are passed through to the
-#' [check_dataset_name()] validator.
+#' `check_dataset_name()` validator.
 #'
 #' @details
 #' Matching is exact and case-insensitive against the titles of every dataset on
@@ -13,7 +13,7 @@
 #' platform holds fewer than 10,000 datasets. A unique match returns the name
 #' with a warning that titles are not a stable key. Input is trimmed of
 #' surrounding white space before matching. Ambiguous or non-exact entries are
-#' passed to [suggest_dataset_name()], which errors and lists any potential matches.
+#' passed to `suggest_dataset_name()`, which errors and lists any potential matches.
 #'
 #' @param dataset_name A single string: either a dataset name or a dataset title.
 #'
