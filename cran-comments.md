@@ -2,4 +2,4 @@
 
 0 errors | 0 warnings | 0 notes
 
-Some updates to `list_resources()` and passing the package maintenance back to Csilla.
+Resolves errors caused by intermittent connectivity issues on the open data platform when running examples. Examples no longer run by default.

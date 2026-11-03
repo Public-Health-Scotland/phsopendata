@@ -27,9 +27,9 @@ supports filtering by dataset titles or resource names.
 }
 
 \examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
+\dontrun{
 head(list_datasets())
-\dontshow{\}) # examplesIf}
+}
 }
 \seealso{
 \code{\link[=list_resources]{list_resources()}}

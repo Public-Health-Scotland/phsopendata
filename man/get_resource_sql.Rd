@@ -41,7 +41,7 @@ is \code{r"{...}"}, in the rare case that the query contains \verb{]"}.
 }
 
 \examples{
-\dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
+\dontrun{
 # Basic query
 cancelled_ops <- get_resource_sql(r"[
 SELECT
@@ -69,7 +69,7 @@ WHERE
     pops."Sex" = 'All'
     AND pops."Year" > 2006
 ]")
-\dontshow{\}) # examplesIf}
+}
 }
 \seealso{
 \code{\link[=get_resource]{get_resource()}} for downloading a resource without using a SQL query.
