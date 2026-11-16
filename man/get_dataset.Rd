@@ -35,6 +35,13 @@ A \link[tibble:tibble-package]{tibble} with the data.
 Downloads multiple resources from a dataset on the NHS Open Data
 platform by dataset name, with optional row limits and context columns.
 }
+\details{
+A human-readable dataset title may also be submitted as \code{dataset_name}.
+This is resolved to the corresponding name with a warning, because titles
+can change while names are stable. Note that title resolution is a feature
+of \code{get_dataset()} only and other functions taking \code{dataset_name} as an
+argument still require the name itself.
+}
 \examples{
 \dontshow{if (isTRUE(length(curl::nslookup("www.opendata.nhs.scot", error = FALSE)) > 0L)) withAutoprint(\{ # examplesIf}
 \dontrun{

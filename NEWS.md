@@ -1,6 +1,8 @@
 # phsopendata 1.1.1
 - No user-facing changes. Updated url-s and examples now not run on CRAN.
 
+- `get_dataset()` can now resolve a human-readable dataset title to its dataset name, with a warning. (#80)
+
 # phsopendata 1.1.0 (2026-06-05)
 
 - [`list_resources()`](https://code.publichealthscotland.scot/phsopendata/reference/list_resources.html) has been upgraded. Instead of just returning all resources from a dataset (given the exact title), it can now search both resources and dataset titles and will list all resources that match the search!
