@@ -1,8 +1,19 @@
 #' Get Open Data resource
 #'
-#' @description Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
+#' @description Downloads a single resource from the NHS Open Data platform
+#' by resource ID or an exact, unambiguous resource title, with optional
+#' filtering and column selection.
 #'
-#' @param res_id The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).
+#' @details
+#' Resource titles are matched exactly, ignoring case and surrounding
+#' white space. A unique title match is resolved to its resource ID with
+#' a warning. Ambiguous or unmatched titles raise an error rather than
+#' selecting a resource automatically.
+#'
+#' Titles can change. Use a resource ID for a stable reference.
+#'
+#' @param res_id A resource ID or an exact, unambiguous resource title
+#'   (character).
 #' @param rows (optional) Maximum number of rows to return (integer).
 #' @param row_filters (optional) A named list or vector specifying values of columns/fields to keep (e.g., list(Date = 20220216, Sex = "Female")).
 #' @param col_select (optional) A character vector containing the names of desired columns/fields (e.g., c("Date", "Sex")).
@@ -35,6 +46,9 @@ get_resource <- function(
   col_select = NULL,
   include_context = FALSE
 ) {
+  # resolve a resource title to its ID before validation
+  res_id <- resolve_resource_title_to_id(res_id)
+
   # check res_id
   check_res_id(res_id)
 

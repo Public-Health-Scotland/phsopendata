@@ -13,7 +13,8 @@ get_resource(
 )
 }
 \arguments{
-\item{res_id}{The resource ID as found on \href{https://www.opendata.nhs.scot/}{NHS Open Data platform} (character).}
+\item{res_id}{A resource ID or an exact, unambiguous resource title
+(character).}
 
 \item{rows}{(optional) Maximum number of rows to return (integer).}
 
@@ -27,7 +28,17 @@ get_resource(
 A \link[tibble:tibble-package]{tibble} with the data.
 }
 \description{
-Downloads a single resource from the NHS Open Data platform by resource ID, with optional filtering and column selection.
+Downloads a single resource from the NHS Open Data platform
+by resource ID or an exact, unambiguous resource title, with optional
+filtering and column selection.
+}
+\details{
+Resource titles are matched exactly, ignoring case and surrounding
+white space. A unique title match is resolved to its resource ID with
+a warning. Ambiguous or unmatched titles raise an error rather than
+selecting a resource automatically.
+
+Titles can change. Use a resource ID for a stable reference.
 }
 \examples{
 \dontrun{
