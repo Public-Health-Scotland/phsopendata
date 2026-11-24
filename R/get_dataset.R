@@ -54,6 +54,9 @@ get_dataset <- function(
   }
 
   if (!is.null(resource_contains) || !is.null(confirm_latest)) {
+    # this is needed for adding context based on correct res index
+    unfilt_id_data <- list_resources(dataset_contains = dataset_name)
+    unfilt_id_data$index <- 1:nrow(unfilt_id_data)
     all_id_data <- list_resources(dataset_contains = dataset_name, resource_contains = resource_contains)
     all_ids <- all_id_data$resource_id
   }
@@ -67,6 +70,8 @@ get_dataset <- function(
   n_res <- length(all_ids)
   n_res_selected <- min(n_res, max_resources)
   res_index <- 1L:min(n_res, max_resources)
+  #  this is needed for adding context based on correct res index
+  selected_index <- unfilt_id_data[unfilt_id_data$resource_id %in% all_ids,]$index |> head(n_res_selected)
 
   selection_ids <- all_ids[res_index]
 
@@ -148,13 +153,13 @@ get_dataset <- function(
       list(
         data = all_data,
         id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
+        name = purrr::map_chr(content$result$resources[selected_index], ~ .x$name),
         created_date = purrr::map_chr(
-          content$result$resources[res_index],
+          content$result$resources[selected_index],
           ~ .x$created
         ),
         modified_date = purrr::map_chr(
-          content$result$resources[res_index],
+          content$result$resources[selected_index],
           ~ .x$last_modified
         )
       ),
