@@ -176,7 +176,7 @@ list_resources <- function(
 
 list_resources_query <- memoise::memoise(function() {
   # query for the API call
-  query <- list(q = "*:*", rows = 3200)
+  query <- list(q = "*:*", rows = 10000)
 
   # API call
   content <- phs_GET(action = "package_search", query = query)
