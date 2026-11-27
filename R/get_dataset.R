@@ -5,9 +5,17 @@
 #'
 #' @param dataset_name Name of the dataset as found on the
 #' [NHS Open Data platform](https://www.opendata.nhs.scot) (character).
+#'
 #' @param max_resources (optional) The maximum number of resources to return
 #' (integer). If not set, all resources are returned.
 #' @inheritParams get_resource
+#'
+#' @details
+#' A human-readable dataset title may also be submitted as `dataset_name`.
+#' This is resolved to the corresponding name with a warning, because titles
+#' can change while names are stable. Note that title resolution is a feature
+#' of `get_dataset()` only and other functions taking `dataset_name` as an
+#' argument still require the name itself.
 #'
 #' @seealso [get_resource()] for downloading a single resource from a dataset.
 #'
@@ -26,27 +34,44 @@ get_dataset <- function(
   col_select = NULL,
   include_context = FALSE
 ) {
+  # check_dataset_name() assumes a length-1 character vector, so reject
+  # anything else
+  if (
+    !is.character(dataset_name) ||
+      length(dataset_name) != 1L ||
+      is.na(dataset_name)
+  ) {
+    detail <- if (length(dataset_name) == 1L && is.na(dataset_name)) {
+      "You supplied a missing value (`NA`)."
+    } else {
+      "You supplied {.obj_type_friendly {dataset_name}} of length {length(dataset_name)}."
+    }
+
+    cli::cli_abort(c(
+      "{.arg dataset_name} must be a single, non-missing character string.",
+      "x" = detail
+    ))
+  }
+
+  # resolve a title to the dataset name; submitted names pass through
+  dataset_name <- resolve_dataset_title_to_name(dataset_name)
+
   # throw error if name type/format is invalid
   check_dataset_name(dataset_name)
 
-  # define query and try API call
-  query <- list(id = dataset_name)
-  content <- try(
-    phs_GET("package_show", query),
-    silent = TRUE
-  )
+  datasets <- list_resources_query()
 
-  # if content contains a 'Not Found Error'
-  # throw error with suggested dataset name
-  if (grepl("Not Found Error", content[1L], fixed = TRUE)) {
-    suggest_dataset_name(dataset_name)
+  if (!dataset_name %in% datasets$dataset_name) {
+    suggest_dataset_name(name = dataset_name)
   }
 
+  dataset_info <- datasets[datasets$dataset_name == dataset_name, ]
+
   # define list of resource IDs to get
-  all_ids <- purrr::map_chr(content$result$resources, ~ .x$id)
+  all_ids <- dataset_info$resource_id
 
   n_res <- length(all_ids)
-  res_index <- 1L:min(n_res, max_resources)
+  res_index <- seq_len(min(n_res, max_resources))
 
   selection_ids <- all_ids[res_index]
 
@@ -68,6 +93,7 @@ get_dataset <- function(
 
   # for each df, check if next df class matches
   inconsistencies <- vector(length = length(types) - 1L, mode = "list")
+
   for (i in seq_along(types)) {
     if (i == length(types)) break
 
@@ -111,22 +137,14 @@ get_dataset <- function(
       list(
         data = all_data,
         id = selection_ids,
-        name = purrr::map_chr(content$result$resources[res_index], ~ .x$name),
-        created_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$created
-        ),
-        modified_date = purrr::map_chr(
-          content$result$resources[res_index],
-          ~ .x$last_modified
-        )
+        name = dataset_info[res_index, ]$resource_name,
+        created_date = dataset_info[res_index, ]$created,
+        modified_date = dataset_info[res_index, ]$last_modified
       ),
       add_context
     )
   }
 
   # Combine the list of resources into a single tibble
-  combined <- purrr::list_rbind(all_data)
-
-  return(combined)
+  purrr::list_rbind(all_data)
 }
